@@ -1,0 +1,876 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"read",
+				"read_time_min"
+			],
+			[
+				"rea",
+				"read_time_minutes"
+			],
+			[
+				"count",
+				"count_words"
+			],
+			[
+				"html",
+				"html_string"
+			],
+			[
+				"cont",
+				"content_type"
+			],
+			[
+				"con",
+				"content_object"
+			],
+			[
+				"Co",
+				"CommentForm"
+			],
+			[
+				"Commen",
+				"CommentForm"
+			],
+			[
+				"H",
+				"HttpResponseRedirect"
+			],
+			[
+				"Comm",
+				"CommentManager"
+			],
+			[
+				"parent",
+				"parent_qs"
+			],
+			[
+				"parent_",
+				"parent_id"
+			],
+			[
+				"Ht",
+				"HttpResponseRedirect"
+			],
+			[
+				"obje",
+				"objects"
+			],
+			[
+				"pare",
+				"parent_id"
+			],
+			[
+				"comm",
+				"CommentManager"
+			],
+			[
+				"Com",
+				"Comment"
+			],
+			[
+				"cle",
+				"clean_parent_id"
+			],
+			[
+				"obj",
+				"obj_id"
+			],
+			[
+				"COmm",
+				"CommentManager"
+			],
+			[
+				"content",
+				"content_type"
+			],
+			[
+				"co",
+				"comments"
+			],
+			[
+				"conten",
+				"content_type"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"conte",
+				"contentItem"
+			],
+			[
+				"mark",
+				"markedContent"
+			],
+			[
+				"titl",
+				"titleItem"
+			],
+			[
+				"tit",
+				"titleValue"
+			],
+			[
+				"use",
+				"username"
+			],
+			[
+				"get_o",
+				"get_object"
+			],
+			[
+				"usr",
+				"username"
+			],
+			[
+				"get_obj",
+				"get_object_or_404"
+			],
+			[
+				"sale",
+				"sale_price"
+			],
+			[
+				"ratin",
+				"rating_obj"
+			],
+			[
+				"prod",
+				"product"
+			],
+			[
+				"product",
+				"productrating_set"
+			],
+			[
+				"rai",
+				"ratings"
+			],
+			[
+				"rat",
+				"ratings"
+			],
+			[
+				"pro",
+				"product_obj"
+			],
+			[
+				"ra",
+				"rating_obj"
+			],
+			[
+				"ob",
+				"objects"
+			],
+			[
+				"Pr",
+				"ProductRating"
+			],
+			[
+				"Mu",
+				"MultipleObjectsReturned"
+			],
+			[
+				"Pro",
+				"ProductRating"
+			],
+			[
+				"inpu",
+				"inputValue"
+			],
+			[
+				"tra",
+				"transactions_today"
+			],
+			[
+				"today",
+				"today_max"
+			],
+			[
+				"date",
+				"datetime"
+			],
+			[
+				"get_",
+				"get_transactions"
+			],
+			[
+				"get",
+				"get_transactions"
+			],
+			[
+				"mode",
+				"models"
+			],
+			[
+				"is",
+				"is_active"
+			],
+			[
+				"Sell",
+				"SellerAccount"
+			],
+			[
+				"dow",
+				"download_link"
+			],
+			[
+				"w",
+				"wrap"
+			],
+			[
+				"http",
+				"Http404"
+			],
+			[
+				"produ",
+				"product_obj"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"ran",
+				"random_products"
+			],
+			[
+				"po",
+				"products"
+			],
+			[
+				"to",
+				"top_tags_idless"
+			],
+			[
+				"Tag",
+				"TagView"
+			],
+			[
+				"new",
+				"new_view"
+			],
+			[
+				"Prod",
+				"ProductDetailView"
+			],
+			[
+				"ana",
+				"analytic_obj"
+			],
+			[
+				"an",
+				"analytic_obj"
+			],
+			[
+				"model",
+				"models"
+			],
+			[
+				"tag",
+				"tag_set"
+			],
+			[
+				"tags",
+				"tags_list"
+			],
+			[
+				"in",
+				"initial"
+			],
+			[
+				"hd_",
+				"hd_max"
+			],
+			[
+				"hd",
+				"hd_created"
+			],
+			[
+				"temp",
+				"temp_loc"
+			],
+			[
+				"thu",
+				"thumb_file"
+			],
+			[
+				"Tu",
+				"Thumbnail"
+			],
+			[
+				"qu",
+				"query"
+			],
+			[
+				"mim",
+				"mimetype"
+			],
+			[
+				"file",
+				"filepath"
+			],
+			[
+				"Htt",
+				"HttpResponse"
+			],
+			[
+				"url",
+				"urlpatterns"
+			],
+			[
+				"des",
+				"decorators"
+			],
+			[
+				"form",
+				"form_valid"
+			],
+			[
+				"slug",
+				"slugify"
+			],
+			[
+				"sug",
+				"slugify"
+			],
+			[
+				"Upda",
+				"UpdateView"
+			],
+			[
+				"Crea",
+				"CreateView"
+			],
+			[
+				"mu",
+				"MultiSlugMixin"
+			],
+			[
+				"Product",
+				"ProductDetailView"
+			],
+			[
+				"ht",
+				"Http404"
+			],
+			[
+				"de",
+				"description"
+			],
+			[
+				"object",
+				"object_id"
+			],
+			[
+				"option",
+				"option1"
+			],
+			[
+				"var",
+				"variation"
+			],
+			[
+				"cat",
+				"categories"
+			],
+			[
+				"cateo",
+				"category"
+			],
+			[
+				"mod",
+				"models"
+			],
+			[
+				"order",
+				"order_id"
+			],
+			[
+				"cus",
+				"customer_id〔variable〕"
+			],
+			[
+				"user_",
+				"user_check_id"
+			],
+			[
+				"user",
+				"user_checkout〔variable〕"
+			],
+			[
+				"custo",
+				"customer_id"
+			],
+			[
+				"User",
+				"UserCheckout〔module〕"
+			],
+			[
+				"user_check",
+				"user_checkout_id"
+			],
+			[
+				"bra",
+				"braintree_id"
+			],
+			[
+				"dec",
+				"decorators〔module〕"
+			],
+			[
+				"Or",
+				"OrderList〔class〕"
+			],
+			[
+				"bill",
+				"billing_address〔variable〕"
+			],
+			[
+				"bi",
+				"billing_address"
+			],
+			[
+				"st",
+				"street〔variable〕"
+			],
+			[
+				"s",
+				"s_address"
+			],
+			[
+				"Http",
+				"HttpResponseRedirect〔class〕"
+			],
+			[
+				"b",
+				"b_address"
+			],
+			[
+				"cart",
+				"cart_total"
+			],
+			[
+				"ship",
+				"shipping_total_price"
+			],
+			[
+				"shi",
+				"shipping_total_price"
+			],
+			[
+				"or",
+				"order_id"
+			],
+			[
+				"bil",
+				"billing_address_id"
+			],
+			[
+				"shipp",
+				"shipping_address"
+			],
+			[
+				"billing",
+				"billing_address"
+			],
+			[
+				"Add",
+				"AddressSelectFormView〔class〕"
+			],
+			[
+				"ex",
+				"exists_count"
+			],
+			[
+				"do",
+				"do_convertion"
+			],
+			[
+				"web",
+				"webm_name〔variable〕"
+			],
+			[
+				"we",
+				"webm_path"
+			],
+			[
+				"get_form",
+				"get_form_class〔function〕"
+			],
+			[
+				"eami",
+				"email2"
+			],
+			[
+				"email",
+				"email2"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 287.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"mark",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"mar",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"markd",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"markdown",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"",
+				"Convert Case: Lower Case"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 575.0
+	},
+	"console":
+	{
+		"height": 125.0,
+		"history":
+		[
+			"import urllib.request,os; pr='Preferences.sublime-settings'; ip='ignored_packages'; n='Package Control'; s=sublime.load_settings(pr); ig=s.get(ip); ig.append(n); s.set(ip,ig); sublime.save_settings('Preferences.sublime-settings'); pf=n+'.sublime-package'; urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler())); by=urllib.request.urlopen('https://packagecontrol.io/'+pf.replace(' ','%20')).read(); open(os.path.join(sublime.installed_packages_path(),pf),'wb').write(by); ig.remove(n); s.set(ip,ig); sublime.save_settings(pr); print('Package Control: 3.0.0 upgrade successful!')",
+			"ls",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/X/MyGoogleDrive/MyStudy/StudyNotes/Jupyter/jupyter_notebook_config.py",
+		"/D/IEdownload/downloadlist.txt",
+		"/X/Git/MyGit/utility/LyndaDownload/links.txt",
+		"/X/Git/MyGit/utility/LyndaDownload/lyndaScrap.py",
+		"/D/IEdownload/amazonchathistory.txt",
+		"/Y/PerkinElmer/Box Sync/myprojects/phenoExplore/fl.nonraster.html",
+		"/Y/PerkinElmer/Box Sync/myprojects/phenoExplore/EBimage.R",
+		"/X/Dropbox/mystudy/school/CS673_Fall_2018/MET-CS673-Group1-TermProject/.gitignore",
+		"/X/Git/MyGit/courses/MET-CS673-Group1-TermProject/.gitignore",
+		"/X/OnlineCourses/lynda.com/Programming languages/JavaScript/React.js/Learning React.js/Ex_Files_Learning_Reactjs/Ex_Files_Learning_Reactjs/Exercise Files/Ch02/02_01/completed/index.html",
+		"/X/OnlineCourses/DataCamp/R todolist.txt",
+		"/X/OnlineCourses/DataCamp/python todolist.txt",
+		"/X/Dropbox/mystudy/Todo list.txt",
+		"/Y/PerkinElmer/git/spatial/data/Kents plot/DensityPlots.r",
+		"/Y/PerkinElmer/Box Sync/myprojects/whole slide data with micron coordinates/supportFunctions.R",
+		"/Y/PerkinElmer/projects/calculate_Hscore.txt",
+		"/X/Dropbox/mystudy/Angular/TypeScript Essential Training/Ex_Files_TypeScript_EssT/Ex_Files_TypeScript_EssT/Exercise Files/Chp_01/01_04/app.ts",
+		"/X/Dropbox/mystudy/Angular/TypeScript Essential Training/Ex_Files_TypeScript_EssT/Ex_Files_TypeScript_EssT/Exercise Files/Chp_01/01_04/index.html",
+		"/Y/PerkinElmer/projects/research questions",
+		"/E/wbfs/disc.info",
+		"/X/Dropbox/mystudy/Study to do list",
+		"/Y/PerkinElmer/projects/tissue_segmentation/segment.py",
+		"/E/PE/tissue_segmentation/Dockerfile",
+		"/X/Dropbox/mystudy/Reporting with R Markdown/FADED.CSS",
+		"/X/Dropbox/mystudy/Building Web Applications in R with Shiny - Case Studies/data/artofwar.txt",
+		"/D/IEdownload/aclImdb/README",
+		"/X/OnlineCourses/DataCamp/R courses/Statistics with R/Experimental Design in R/data/bmxarmc.txt",
+		"/X/OnlineCourses/DataCamp/R courses/Statistics with R/Experimental Design in R/data/ridreth1.txt",
+		"/D/IEdownload/weightlift_treat.txt",
+		"/X/Dropbox/mystudy/DCP/ipynotebook.bat",
+		"/X/MyGoogleDrive/MyJobs/resignation/reasonstoleave.txt",
+		"/X/OnlineCourses/DataCamp/todolist.txt",
+		"/X/OnlineCourses/DataCamp/R courses/Spatial data analysis with R/Spatial Analysis in R with sf and raster/data/trees/trees.prj",
+		"/X/OnlineCourses/DataCamp/todolist",
+		"/X/Git/MyGit/utility/LyndaDownload/content.txt",
+		"/D/IEdownload/data_portfolio_analysis.R",
+		"/Y/Tesaro/git/fcsautomation/decompose_pheno.py",
+		"/Y/Tesaro/git/RShiny/ShinyApps/CompassProject/www/custom.css",
+		"/Y/Tesaro/git/SPADEVizR/R/viewers.R",
+		"/Y/Tesaro/git/SPADEVizR/DESCRIPTION",
+		"/Y/Tesaro/Egnyte/Private/wzhang/studies/DataCamp/R courses/Finance with R/Finance Basics/Introduction to R for Finance/data/apple_micr_matrix.txt",
+		"/Y/Tesaro/Egnyte/Private/wzhang/studies/DataCamp/R courses/Finance with R/Finance Basics/Introduction to R for Finance/data/stock.txt",
+		"/Y/Tesaro/Egnyte/Private/wzhang/projects/TSR-022_NanostringData/RCC/20171027_206816501117_US-1665389-A01_05.RCC",
+		"/D/IEdownload/MyDB PW",
+		"/D/IEdownload/Inventory and Cellline DB",
+		"/Y/Tesaro/git/SPADEVizR/NAMESPACE",
+		"/X/Git/MyGit/others/new-Year.py",
+		"/Y/Tesaro/Egnyte/Private/wzhang/studies/DataCamp/R courses/Time Series/Manipulating Time Series Data in R with xts & zoo/data/z.txt",
+		"/Y/Swainlab@umass/ExpData/PCRarray/TLR pathway/PCRarray_heatmap.R",
+		"/Y/Tesaro/git/NanoStringNorm/R/NanoStringNorm.R",
+		"/Y/Tesaro/git/NanoStringNorm/R/Plot.NanoStringNorm.R",
+		"/Y/Tesaro/git/SPADEVizR/README.md",
+		"/Y/Tesaro/git/nanostring/gene_category_count.py",
+		"/K/Xdisk/VideoCourses/edX/edx_download/readme.txt",
+		"/K/Xdisk/VideoCourses/edX/edx_download/requirements.txt",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/BBBPlatforms/Bioinformatics/Repos/git/mygit/datamining/cancer_antigen/get_gtex_data.py",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/BBBPlatforms/Bioinformatics/Repos/git/mygit/datamining/cancer_antigen/download_tcga.sh",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/171010_Mike_RNAseq_TCells/scripts/RNAseqCount_LIB-3166.sh",
+		"/W/test/test/count_sortoption.sh",
+		"/W/myscripts/home.sh",
+		"/D/IEdownload/bkup.sh",
+		"/D/IEdownload/wzhang.sh",
+		"/W/myscripts/bkup.sh",
+		"/W/bkup/opt/bowtie2-2.2.5/scripts/make_mm10.sh",
+		"/X/MyGoogleDrive/MyDocuments/Jobs/resignation/resignation - bbb",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/BBBPlatforms/Bioinformatics/Repos/git/Bluebirdbio/module_preprocessing/ngs_tools/bowtie_tools.py",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/BBBPlatforms/Bioinformatics/Repos/git/Bluebirdbio/module_preprocessing/ngs_tools/config.py",
+		"/X/Git/MyGit/courses/CS341_Data_Structure_with_Cpp/workspace/.gdbinit",
+		"/X/Git/MyGit/courses/CS341_Data_Structure_with_Cpp/eclipse/.gdbinit",
+		"/X/Git/MyGit/courses/CS341_Data_Structure_with_Cpp/July6/OrderedPairNoClass.cpp",
+		"/X/Git/MyGit/courses/CS341_Data_Structure_with_Cpp/July6/OrderedPairWithClass.cpp",
+		"/X/VideoCourses/edX/03 Computer Science/Introduction_to_C/03-Module_2_Data_Types_in_C/02-MSXDV210T315-V000400-6vpY6kAXSWU.srt",
+		"/X/VideoTutorials/Programming/Python Django/CodingForEntrepreneus/Projects/Blog/Advancing the Blog/Advancing-the-Blog-master/Advancing-the-Blog-master/src/templates/post_detail.html",
+		"/X/VideoTutorials/Programming/Python Django/CodingForEntrepreneus/Projects/Blog/Advancing the Blog/Advancing-the-Blog-master/Advancing-the-Blog-master/src/posts/views.py",
+		"/D/IEdownload/Zillow-master/zillow_runfile.py",
+		"/C/Users/Wenliang/MyProjects/170424_PCSK9_invivo_run11_PCSK9/scripts/Amplicon_LIB-2260.sh",
+		"/D/IEdownload/Zillow-master/zillow_functions.py",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/scRNA-seq_HSC_Ilya/scRNAseq_GCSF_Ilya_run97/scripts/RNAseqCount_LIB-1289_CD34_C03_1.sh",
+		"/X/Git/MyGit/ngs/RNAseq/create_refgene_bed.py",
+		"/X/Git/MyGit/ngs/RNAseq/ref_gene/hg19_ref_gene.txt",
+		"/X/Git/MyGit/ngs/RNAseq/ref_gene/hg19_ref_gene.bed",
+		"/W/myprojects/BulkRNAseq_CART_Jim_run115/scripts/RNAseqCount_UTDUnstim_01.sh",
+		"/X/Git/MyGit/ipynotebooks/mysql/03 MySQL and Python/config.ini",
+		"/D/SafariVideo/ffmpeg/bin/compress.bat",
+		"/D/LyndaDownload/content.txt",
+		"/X/VideoCourses/lynda.com/Databases/MySQL/Learning MySQL Development/Ex_Files_UaR_MySQL/Ex_Files_UaR_MySQL/Exercise Files/length.sql",
+		"/W/myprojects/170424_PCSK9_invivo_run11/scripts/Amplicon_LIB-2260.sh",
+		"/W/Amplicon_LIB-2251.sh.e493",
+		"/C/Users/Wenliang/MyProjects/170424_PCSK9_invivo_run11/scripts/Amplicon_LIB-2260.sh",
+		"/X/Git/MyGit/utility/safaridowload/rename_SafariBooks.py",
+		"/X/Git/MyGit/sololearn/javascript/first.html",
+		"/X/Git/MyGit/sololearn/javascript/demo.js",
+		"/X/Git/MyGit/sololearn/javascript/second.html",
+		"/X/Git/MyGit/sololearn/javascript/var.html",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_Unsti_run112/scripts/RNAseqCount_bb2121unstim_C02_1.sh",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_CD3_run120/scripts/RNAseqCount_bb2121acd3stim_C01_1.sh",
+		"/X/Git/MyGit/ngs/RNAseq/IndexGenerate_STAR.sh",
+		"/X/Git/MyGit/ngs/sequence/hg19_ref_gene.txt",
+		"/Y/BlueBirdBio/OneDrive for Business/MyProjects/RNAseq_Mike_mRNATransfection/scripts/RNAseqCount_LIB-1588.sh",
+		"/D/SafariVideo/Red Hat Certified System Administrator (RHCSA) with Virtual Machines, Second Edition/ffmpeg-20170305-035e932-win64-static/bin/compress.bat",
+		"/D/SafariVideo/Red Hat Certified System Administrator (RHCSA) with Virtual Machines, Second Edition/compress.bat",
+		"/Y/BlueBirdBio/OneDrive for Business/MyProjects/SingleCellRNAseq_CART_Jim/sample_info/RNAspikein.fasta",
+		"/Y/BlueBirdBio/OneDrive for Business/MyProjects/SingleCellRNAseq_CART_Jim/scripts/RNAseqCount_bb2121unstim_C95_1.sh",
+		"/W/myprojects/scRNAseq_GCSF_Ilya_run97/scripts/RNAseqCount_LIB-1289_CD34_C96_1.sh",
+		"/W/myprojects/scRNAseq_GCSF_plerixifor_Ilya_run110/results/cd34_FACS_C04_1.counts",
+		"/W/test/hg19_ref_gene.bed",
+		"/W/test/hg19_bb2121_ERCC_RNAsplikein.bed",
+		"/W/myprojects/scRNAseq_GCSF_plerixifor_Ilya_run110/results/cd34_FACS_C01_1.counts",
+		"/W/myprojects/scRNAseq_GCSF_plerixifor_Ilya_run110/results/cd34FACS_C01_1.counts",
+		"/W/myprojects/scRNAseq_GCSF_Ilya_run97/results/LIB-1289_CD34_C04_1.counts",
+		"/X/Git/MyGit/ngs/sequence/hg19_ref_gene.bed",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/scRNA-seq_HSC_Ilya/scRNAseq_GCSF_plerixifor_Ilya_run110/rawcounts/cd34_FACS_C89_1.counts",
+		"/D/IEdownload/hg19.refseq.txt",
+		"/W/myprojects/scRNAseq_GCSF_plerixifor_Ilya_run110/scripts/RNAseqCount_cd34FACS_C01_1.sh",
+		"/W/myprojects/scRNAseq_GCSF_plerixifor_Ilya_run110/scripts/RNAseqCount_cd34_FACS_C54_1.sh",
+		"/W/myprojects/scRNAseq_GCSF_plerixifor_Ilya_run110/results/cd34_FACS_C05_1.counts",
+		"/W/myprojects/scRNAseq_GCSF_plerixifor_Ilya_run110/scripts/RNAseqCount_cd34_FACS_C55_1.sh",
+		"/W/myprojects/scRNAseq_GCSF_plerixifor_Ilya_run110/scripts/RNAseqCount_cd34_FACS_C96_1.sh",
+		"/W/myprojects/scRNAseq_GCSF_Ilya_run97/results/LIB-1289_CD34_C96_1.counts",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_Unsti_run112/QC/USTM_allfilters.tsv",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_CD3_run120/QC/CD3_allfilters.tsv",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_BCMA_run118/QC/BCMA_allfilters.tsv",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_combined/QC/2017-01-24_Alltrts_allfilters.tsv",
+		"/W/Amplicon_LIB-1952_SAS1b_plasmid.sh.e9763",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_BCMA_run118/QC/2017-01-24_BCMA_allfilters.tsv",
+		"/W/myprojects/SingleCellRNAseq_CART_Jim/scripts/RNAseqCount_bb2121unstim_C95_1.sh",
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_BCMA_run118/QC/BCMA_allfilters.csv",
+		"/X/Git/GitRepos/CRI-Workshop-Nov2016-RNAseq-master/CRI-Workshop-Nov2016-RNAseq-master/notebook_ext/ipynb_data/input/TCGA_OV.mirna_expression.tsv"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"url",
+			"urlprefix",
+			"url",
+			"urlPrefix",
+			"';\n",
+			"Introduction",
+			".mp4",
+			"mp4",
+			"2018",
+			"c.NotebookApp.disable_check_xsrf",
+			"anaconda",
+			"ContentSummary-title",
+			"show.on_device"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 36.0
+	},
+	"input":
+	{
+		"height": 36.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 399.0
+	},
+	"output.find_results":
+	{
+		"height": 136.0
+	},
+	"pinned_build_system": "",
+	"project": "kidsartshow.sublime-project",
+	"replace":
+	{
+		"height": 68.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"email",
+				"templates/team/email_instructions.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 314.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
