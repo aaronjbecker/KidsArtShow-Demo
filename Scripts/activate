@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="$(if [ "$OSTYPE" "==" "cygwin" ]; then cygpath -u 'X:\Git\MyGit\courses\MET-CS673-Group1-TermProject'; else echo '/X/Git/MyGit/courses/MET-CS673-Group1-TermProject'; fi;)"
+VIRTUAL_ENV="$(if [ "$OSTYPE" "==" "cygwin" ]; then cygpath -u 'x:\Git\MyGit\courses\MET-CS673-Group1-TermProject'; else echo '/x/Git/MyGit/courses/MET-CS673-Group1-TermProject'; fi;)"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

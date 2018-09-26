@@ -1,5 +1,5 @@
 @echo off
-set "VIRTUAL_ENV=X:\Git\MyGit\courses\MET-CS673-Group1-TermProject"
+set "VIRTUAL_ENV=x:\Git\MyGit\courses\MET-CS673-Group1-TermProject"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

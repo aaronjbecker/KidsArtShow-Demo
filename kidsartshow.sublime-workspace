@@ -519,6 +519,42 @@
 	},
 	"buffers":
 	[
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 86,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/kidsartshow/settings.py",
+			"settings":
+			{
+				"buffer_size": 3103,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "from django.db import models\n\n# Create your models here.\n\nclass Art(model.Model):\n\ttitle = models.CharField()\n\t\n\t\n\t\n\t\n\n",
+			"file": "src/arts/models.py",
+			"file_size": 124,
+			"file_write_time": 131823718857648391,
+			"settings":
+			{
+				"buffer_size": 119,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/kidsartshow/urls.py",
+			"settings":
+			{
+				"buffer_size": 753,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "Packages/Python/Python.sublime-build",
 	"build_system_choices":
@@ -551,6 +587,26 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: inst\t",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
 			[
 				"mark",
 				"Markdown Preview: Preview in Browser"
@@ -601,8 +657,21 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/X/Git/MyGit/courses/MET-CS673-Group1-TermProject",
+		"/X/Git/MyGit/courses/MET-CS673-Group1-TermProject/Scripts",
+		"/X/Git/MyGit/courses/MET-CS673-Group1-TermProject/src",
+		"/X/Git/MyGit/courses/MET-CS673-Group1-TermProject/src/arts",
+		"/X/Git/MyGit/courses/MET-CS673-Group1-TermProject/src/kidsartshow"
+	],
 	"file_history":
 	[
+		"/C/Users/Wenliang/AppData/Roaming/Sublime Text 3/Packages/Djaneiro/Settings/HTML (Django).sublime-settings",
+		"/C/Users/Wenliang/AppData/Roaming/Sublime Text 3/Packages/Djaneiro/Settings/Python (Django).sublime-settings",
+		"/C/Users/Wenliang/AppData/Roaming/Sublime Text 3/Packages/User/Python (Django).sublime-settings",
+		"/X/Git/MyGit/courses/MET-CS673-Group1-TermProject/src/arts/models.py",
+		"/X/Git/MyGit/courses/MET-CS673-Group1-TermProject/src/arts/admin.py",
 		"/X/MyGoogleDrive/MyStudy/StudyNotes/Jupyter/jupyter_notebook_config.py",
 		"/D/IEdownload/downloadlist.txt",
 		"/X/Git/MyGit/utility/LyndaDownload/links.txt",
@@ -725,12 +794,7 @@
 		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_Unsti_run112/QC/USTM_allfilters.tsv",
 		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_CD3_run120/QC/CD3_allfilters.tsv",
 		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_BCMA_run118/QC/BCMA_allfilters.tsv",
-		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_combined/QC/2017-01-24_Alltrts_allfilters.tsv",
-		"/W/Amplicon_LIB-1952_SAS1b_plasmid.sh.e9763",
-		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_BCMA_run118/QC/2017-01-24_BCMA_allfilters.tsv",
-		"/W/myprojects/SingleCellRNAseq_CART_Jim/scripts/RNAseqCount_bb2121unstim_C95_1.sh",
-		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_bb2121_BCMA_run118/QC/BCMA_allfilters.csv",
-		"/X/Git/GitRepos/CRI-Workshop-Nov2016-RNAseq-master/CRI-Workshop-Nov2016-RNAseq-master/notebook_ext/ipynb_data/input/TCGA_OV.mirna_expression.tsv"
+		"/Y/BlueBirdBio/OneDrive - bluebird bio/MyProjects/CART_scRNAseq_bkRNAseq_Jim/scRNAseq_combined/QC/2017-01-24_Alltrts_allfilters.tsv"
 	],
 	"find":
 	{
@@ -778,8 +842,143 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 86,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								31,
+								31
+							]
+						],
+						"settings":
+						{
+							"SL.13.region_keys":
+							[
+							],
+							"syntax": "Packages/Git Formats/Git Ignore.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/kidsartshow/settings.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3103,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1069,
+								1069
+							]
+						],
+						"settings":
+						{
+							"SL.14.region_keys":
+							[
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 729.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/arts/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 119,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								56,
+								56
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/kidsartshow/urls.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 753,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.16.region_keys":
+							[
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -789,7 +988,7 @@
 	},
 	"input":
 	{
-		"height": 36.0
+		"height": 48.0
 	},
 	"layout":
 	{
@@ -814,6 +1013,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
 	"output.exec":
 	{
 		"height": 399.0

@@ -2,6 +2,8 @@ bin/
 include/
 lib/
 tcl/
+Script/
+.idea/
 .DS_STORE
 .Python
 *.py[cod]
