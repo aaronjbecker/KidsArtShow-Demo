@@ -2,7 +2,7 @@ bin/
 include/
 lib/
 tcl/
-Script/
+Scripts/
 .idea/
 .DS_STORE
 .Python
