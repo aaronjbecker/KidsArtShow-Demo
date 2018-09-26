@@ -16,6 +16,7 @@ git clone https://github.com/wenliangz/MET-CS673-Group1-TermProject.git
     - Download the latest Python 3 release. Python 3.6 is preferred for this project.
     - Follow standard Python installation process
 2. Install requirments for django project
+
 After clone project, go to the project root folder, and run the command below to install requirements for the project. 
     
 ```
