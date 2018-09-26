@@ -6,10 +6,10 @@ The user interface will be designed as part of the project. With an account regi
 In addition, we provide progress tracking so that users(parents) can easily see their kids' growth.
 
 ## Download project
-    - Clone repo
-    ```
-    git clone https://github.com/wenliangz/MET-CS673-Group1-TermProject.git
-    ```
+- Clone repo
+```
+git clone https://github.com/wenliangz/MET-CS673-Group1-TermProject.git
+```
 
 ## Installation and set up environment:
 1. Install python
@@ -22,8 +22,8 @@ In addition, we provide progress tracking so that users(parents) can easily see 
     ```
 
 ## Run application
-   When in src folder, run the following command to run django project locally:
+When in src folder, run the following command to run django project locally:
 
-    ```
-    python manage.py runserver
-    ```
+```
+python manage.py runserver
+```
