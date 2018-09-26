@@ -24,7 +24,7 @@ pip install -r requirement.txt
 ```
 
 ## Run application
-When in src folder, run the following command to run django project locally:
+Go to `src` folder within the project, run the following command to run django project locally:
 
 ```
 python manage.py runserver
