@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Arts</h1>
+    <ul>
+    {% for instance in object_list %}
+    <li>{{ instance }} - {{ instance.description }}  </li>
+    {% empty %}
+    <li> No arts yet </li>
+     {% endfor %}
+    </ul>
+
+{% endblock %}
