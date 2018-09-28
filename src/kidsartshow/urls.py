@@ -20,7 +20,7 @@ from django.urls import include, path, re_path
 from arts.views import ArtListView as MainView
 
 urlpatterns = [
-    re_path('^$',MainView.as_view()),
+    re_path('^$',MainView.as_view(),name = 'homepage'),
     path('admin/', admin.site.urls),
     path('arts/', include('arts.urls')),
 ]

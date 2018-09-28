@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from .views import detail_view, list_view, detail_slug_view,create_view,update_view
+# from .views import detail_view, list_view, detail_slug_view,create_view,update_view
 from .views import (
     ArtListView,
     ArtDetailView,

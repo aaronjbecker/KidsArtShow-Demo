@@ -1,6 +1,8 @@
 {% extends 'base.html'%}
 {% block content %}
-<h1> Art: {{art.title}}</h1>
+<h2> Art: {{art.title}}</h2>
+    <a href={{ art.get_update_url}}>edit</a>
+{#    <a href='{% url "arts:update_slug" %}'>edit</a>#}
     <p> {{art.description}}</p>
     <p>{{ art.category }}</p>
     <p> <img src="{{ art.file.url }}" style="width: 600px;"/> </p>

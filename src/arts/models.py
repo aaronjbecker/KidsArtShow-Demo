@@ -25,6 +25,10 @@ class Art(models.Model):
         view_name = 'arts:detail_slug'
         return reverse(view_name,kwargs={'slug':self.slug})
 
+    def get_update_url(self):
+        view_name = 'arts:update_slug'
+        return reverse(view_name,kwargs={'slug':self.slug})
+
 def create_slug(instance, new_slug=None):
     slug = slugify(instance.title)
     if new_slug is not None:

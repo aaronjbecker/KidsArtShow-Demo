@@ -3,8 +3,8 @@ include/
 lib/
 tcl/
 Scripts/
-static_cdn/
 .idea/
+data/
 .DS_STORE
 .Python
 *.py[cod]
