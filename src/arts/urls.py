@@ -7,15 +7,17 @@ from .views import (
     ArtUpdateView
     )
 
+app_name = 'arts'  # app_name for name space new in django 2.0
 urlpatterns = [
     # re_path(r'^detail/(?P<object_id>\d+)/$', detail_view, name = 'detail_view'),
     # re_path(r'^detail/(?P<slug>[\w-]+)/$', detail_slug_view, name = 'detail_slug_view'),
     # re_path(r'^list/$', list_view, name = 'list_view'),
     # re_path(r'^detail/(?P<object_id>\d+)/edit/$', update_view, name = 'update_view'),
     # re_path(r'^create/$', create_view, name = 'create_view')
-    re_path(r'^list/$', ArtListView.as_view(), name = 'art_list_view'),
-    re_path(r'^detail/(?P<pk>\d+)/$', ArtDetailView.as_view(), name='art_detail_view'),
-    re_path(r'^detail/(?P<slug>[\w-]+)/$', ArtDetailView.as_view(), name = 'art_detail_slug_view'),
-    re_path(r'^detail/(?P<pk>\d+)/edit/$', ArtUpdateView.as_view(), name = 'art_update_view'),
-    re_path(r'^add/$', ArtCreateView.as_view(), name = 'art_create_view')
+    re_path(r'^$', ArtListView.as_view(), name = 'list'),
+    re_path(r'^(?P<pk>\d+)/$', ArtDetailView.as_view(), name='detail'),
+    re_path(r'^(?P<slug>[\w-]+)/$', ArtDetailView.as_view(), name = 'detail_slug'),
+    re_path(r'^(?P<pk>\d+)/edit/$', ArtUpdateView.as_view(), name = 'update'),
+    re_path(r'^(?P<slug>[\w-]+)/edit/$', ArtUpdateView.as_view(), name = 'update_slug'),
+    re_path(r'^add/$', ArtCreateView.as_view(), name = 'create')
 ]

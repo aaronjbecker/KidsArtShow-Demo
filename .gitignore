@@ -3,6 +3,7 @@ include/
 lib/
 tcl/
 Scripts/
+static_cdn/
 .idea/
 .DS_STORE
 .Python

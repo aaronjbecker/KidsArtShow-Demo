@@ -1,9 +1,13 @@
+from django.urls import reverse
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.utils.text import slugify
 
 # Create your models here.
+
+def download_file_location(instance,filename):
+    return'{}/{}'.format(instance.id,filename)
 
 class Art(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=True)
@@ -12,9 +16,14 @@ class Art(models.Model):
     slug = models.SlugField(blank=True, unique=True)
     description = models.TextField(null=True)
     category = models.CharField(max_length=20,null=True)
+    file = models.FileField(blank=True, null=True, upload_to=download_file_location)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        view_name = 'arts:detail_slug'
+        return reverse(view_name,kwargs={'slug':self.slug})
 
 def create_slug(instance, new_slug=None):
     slug = slugify(instance.title)
