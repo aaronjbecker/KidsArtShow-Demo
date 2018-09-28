@@ -4,6 +4,7 @@ lib/
 tcl/
 Scripts/
 .idea/
+data/
 .DS_STORE
 .Python
 *.py[cod]
