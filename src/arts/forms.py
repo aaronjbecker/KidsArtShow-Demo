@@ -39,9 +39,12 @@ class ArtModelForm(forms.ModelForm):
     class Meta:
         model = Art
         fields = [
+            'user',
             'title',
             'description',
-            'category'
+            'category',
+            'file'
+
         ]
         widgets = {
             forms.Textarea(

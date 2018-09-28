@@ -3,7 +3,7 @@
 <h1> Art: {{art.title}}</h1>
     <p> {{art.description}}</p>
     <p>{{ art.category }}</p>
-    {{ block.super }}
+    <p> <img src="{{ art.file.url }}" style="width: 600px;"/> </p>
 
 
 {% endblock %}

@@ -5,10 +5,12 @@
     <h1>Arts</h1>
     <ul>
     {% for instance in object_list %}
-    <li>{{ instance }} - {{ instance.description }}  </li>
-    {% empty %}
-    <li> No arts yet </li>
-     {% endfor %}
+        <li>
+            <a href="{{ instance.get_absolute_url }}"><img src="{{ instance.file.url }}" style="width: 150px;"/></a>
+        </li>
+        {% empty %}
+        <li> No arts yet </li>
+    {% endfor %}
     </ul>
 
 {% endblock %}

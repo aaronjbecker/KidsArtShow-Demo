@@ -20,6 +20,7 @@ class ArtCreateView(LoginRequiredMixin,SubmitBtnMixin,CreateView):
     def form_valid(self,form):
         user = self.request.user
         form.instance.user = user
+        form.save()
         valid_data = super(ArtCreateView,self).form_valid(form)
         form.instance.managers.add(user)
         return valid_data
