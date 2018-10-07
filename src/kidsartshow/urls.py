@@ -1,5 +1,4 @@
 """kidsartshow URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
 Examples:
@@ -18,9 +17,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
 from arts.views import ArtListView as MainView
+from arts import views
 
 urlpatterns = [
-    re_path('^$',MainView.as_view(),name = 'homepage'),
+    #re_path('^$', MainView.as_view(), name = 'homepage'),
+    path('', views.home, name='home'),
     path('admin/', admin.site.urls),
     path('arts/', include('arts.urls')),
 ]
