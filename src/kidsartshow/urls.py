@@ -22,6 +22,7 @@ from arts import views
 urlpatterns = [
     #re_path('^$', MainView.as_view(), name = 'homepage'),
     path('', views.home, name='home'),
+    path('users', views.users, name='users'),
     path('admin/', admin.site.urls),
     path('arts/', include('arts.urls')),
 ]

@@ -56,3 +56,6 @@ class ArtDetailView(MultiSlugMixin,DetailView):
 
 def home(request):
     return render(request, 'home.html')
+
+def users(request):
+    return render(request, 'users.html')
