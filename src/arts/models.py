@@ -8,7 +8,6 @@ from django.utils.text import slugify
 
 def download_file_location(instance,filename):
     return'{}/{}'.format(instance.id,filename)
-
 class Art(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=True)
     managers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='art_managers')

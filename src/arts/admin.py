@@ -7,7 +7,7 @@ class ArtAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'description','category']
     search_fields = ['title', 'description']
     list_filter = ['category']
-    list_editable = ['category']
+    list_editable = ['description']
     class Meta:
         model = Art
 
