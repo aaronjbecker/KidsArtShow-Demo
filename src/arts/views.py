@@ -54,5 +54,8 @@ class ArtListView(ListView):
 class ArtDetailView(MultiSlugMixin,DetailView):
     model = Art
 
+def home(request):
+    return render(request, 'home.html')
 
-
+def users(request):
+    return render(request, 'users.html')
