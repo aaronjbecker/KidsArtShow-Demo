@@ -29,3 +29,7 @@ Go to `src` folder within the project, run the following command to run django p
 ```
 python manage.py runserver
 ```
+
+## Admin User:
+Username: metcs673<br />
+Password: adminuser123
