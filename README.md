@@ -29,3 +29,15 @@ Go to `src` folder within the project, run the following command to run django p
 ```
 python manage.py runserver
 ```
+
+## Admin User
+Username: metcs673<br />
+Password: adminuser123
+
+## Backend Database codes:
+```
+python manage.py shell
+from kids_art_show.models import Post
+from django.contrib.auth.models import User
+User.objects.all()
+```
