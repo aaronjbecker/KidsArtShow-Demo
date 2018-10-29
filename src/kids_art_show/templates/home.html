@@ -32,20 +32,28 @@
 <!--NavBar-->
 <nav>
     <div class="nav-wrapper">
+<<<<<<< HEAD:src/kids_art_show/templates/home.html
        <a href="#" class="brand-logo">Kid Art Show</a>
        <ul class="right hide-on-med-and-down">
            <li><a href="about">About</a></li>
            <li><a href="#" class="red">Login</a></li>
            <li><a href="signup">Sign Up</a></li>
        </ul>
+=======
+        <a href="#" class="brand-logo">Kid Art Show</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#" class="red">Login</a></li>
+          <li><a href="{% url 'register' %}">Register</a></li>
+        </ul>
+>>>>>>> dev:Software_Enginner_Semester_Project/kids_art_show/templates/kids_art_show/home.html
     </div>
   </nav>
-  
+
   <!--Background Picture-->
     <section>
-  
+
     </section>
-  
+
   <!--Footer-->
   <footer class="page-footer red lighten-1">
     <div class="container">
@@ -53,13 +61,21 @@
     <a class="grey-text text-lighten-4 right" href="#!">Some Link</a>
     </div>
   </footer>
-  
+
   <!--Center Text-->
   <div class='fullscreenDiv'>
       <div class="center">
         <h1> Uncap Creativity </h1>
-        <a class="waves-effect waves-light btn-large">SignUp</a>
+        <a class="waves-effect waves-light btn-large" href="{% url 'register' %}">Register</a>
       </div>
-  </div>​    
+  </div>​
+  
+  {% if messages %}
+    {% for message in messages %}
+        <div>
+            <h1>{{ message }}</h1>
+        </div>
+    {% endfor %}
+  {% endif %}
 </body>
 </html>
