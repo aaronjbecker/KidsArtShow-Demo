@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'kids_art_show.apps.KidsArtShowConfig',
-    'users.apps.UsersConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
