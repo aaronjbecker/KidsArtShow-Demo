@@ -32,4 +32,4 @@ python manage.py runserver
 
 ## Admin User:
 Username: metcs673<br />
-Password: adminuser123
+Password: adminpwd123
