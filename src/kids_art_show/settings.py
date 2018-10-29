@@ -119,3 +119,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# set authentication user model
+AUTH_USER_MODEL = "kids_art_show.KidsArtShowUser"
+
+# login redirects, from https://wsvincent.com/django-custom-user-model-tutorial/
+# TODO: are these necessary? What are they doing?
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
