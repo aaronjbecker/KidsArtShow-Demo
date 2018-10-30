@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name = 'kids-art-show-home'),
     path('about', views.about, name = 'kids-art-show-about'),
-    path('signup', views.SignUp.as_view(), name='signup')]
+    path('signup', views.SignUp.as_view(), name='signup'),
+    # LoginView will attempt to register templates/registration/login.html
+    path('login', auth_views.LoginView.as_view(), name='login')
+]
