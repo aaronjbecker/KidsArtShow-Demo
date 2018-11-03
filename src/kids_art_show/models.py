@@ -19,8 +19,18 @@ class KidsArtShowUser(AbstractUser):
     child_name = models.CharField(max_length=100)
     birth_date = models.DateField(null=True, blank=True)
 
-    def __srt__(self):
+    def __str__(self):
         return self.first_name + " " + self.last_name
+
+
+class ContentCreator(models.Model):
+    profile_name = models.CharField(max_length=100)
+    parent_account = models.ForeignKey(KidsArtShowUser,
+                                       on_delete=models.CASCADE)
+    # TODO: other child-related fields, e.g. bio, age, favorite color, etc.
+    
+    def __str__(self):
+        return self.profile_name
 
 
 class Post(models.Model):
@@ -30,7 +40,8 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(KidsArtShowUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(KidsArtShowUser,
+                               on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
