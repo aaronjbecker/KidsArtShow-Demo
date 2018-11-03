@@ -1,59 +1,43 @@
+{% extends 'base.html' %}
 {% load static %}
 <!--
     *MET-CS-699 Term Project Prototype Landing Page
     *Maya Shen
     # TODO: inherit from base.html so same CSS styles apply to all templates
 -->
-<!DOCTYPE html>
-<html>
-<head>
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!-- Compiled and minified CSS (CDN) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<!-- Import jquery-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!--Sinal browser website is optimized for mobile-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Kids Art Show: Home Page</title>
-<!--Maya's CSS-->
-<link rel="stylesheet" type="text/css" href="{% static 'kids_art_show/Maya.css' %}">
-<style>
-    section{
-    background-image: url("{% static 'Media/cat.jpg' %}");
-    background-size: cover;
-    width: 100%;
-    height: 900px;
-    }
-</style>
-</head>
 
-<body>
+{% block title %}Kids Art Show: Home Page{% endblock %}
+
+{% block extra_styles %}
+    <style>
+        section{
+        background-image: url("{% static 'Media/cat.jpg' %}");
+        background-size: cover;
+        width: 100%;
+        height: 900px;
+        }
+    </style>
+{% endblock %}
+
 <!--NavBar-->
-<nav>
-    <div class="nav-wrapper">
-       <a href="#" class="brand-logo">Kid Art Show</a>
-       <ul class="right hide-on-med-and-down">
-           <li><a href="about">About</a></li>
-           <li><a href="{% url 'login' %}" class="red">Login</a></li>
-           <li><a href="{% url 'signup' %}">Sign Up</a></li>
-       </ul>
-    </div>
-  </nav>
+{% block nav_bar %}
+    <nav>
+        <div class="nav-wrapper">
+           <a href="#" class="brand-logo">Kid Art Show</a>
+           <ul class="right hide-on-med-and-down">
+               <li><a href="about">About</a></li>
+               <li><a href="{% url 'login' %}" class="red">Login</a></li>
+               <li><a href="{% url 'signup' %}">Sign Up</a></li>
+           </ul>
+        </div>
+    </nav>
+{% endblock nav_bar %}
 
+{% block content %}
   <!--Background Picture-->
     <section>
 
     </section>
-
-  <!--Footer-->
-  <footer class="page-footer red lighten-1">
-    <div class="container">
-    Copyright Text
-    <a class="grey-text text-lighten-4 right" href="#!">Some Link</a>
-    </div>
-  </footer>
-
   <!--Center Text-->
   <div class='fullscreenDiv'>
       <div class="center">
@@ -61,7 +45,7 @@
         <a class="waves-effect waves-light btn-large" href="{% url 'signup' %}">Register</a>
       </div>
   </div>​
-  
+
   {% if messages %}
     {% for message in messages %}
         <div>
@@ -69,5 +53,15 @@
         </div>
     {% endfor %}
   {% endif %}
-</body>
-</html>
+
+{% endblock content %}
+
+{% block footer %}
+  <!--Footer-->
+  <footer class="page-footer red lighten-1">
+    <div class="container">
+    Copyright Text
+    <a class="grey-text text-lighten-4 right" href="#!">Some Link</a>
+    </div>
+  </footer>
+{% endblock footer %}

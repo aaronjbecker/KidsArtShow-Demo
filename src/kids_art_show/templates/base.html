@@ -21,12 +21,19 @@
     <title>{% block title %}Kids Art Show{% endblock %}</title>
     <!--Maya's CSS-->
     <link rel="stylesheet" type="text/css" href="{% static 'kids_art_show/Maya.css' %}">
+    {#  section for extra styles/pieces related to particular pages  #}
+    {% block extra_styles %}{% endblock extra_styles %}
 </head>
 <body>
+<!--NavBar-->
+{% block nav_bar %}
+{% endblock nav_bar %}
   <main>
     {% block content %}
     {% endblock %}
   </main>
+{% block footer %}
+{% endblock footer %}
 </body>
 <!-- links to scripts used -->
 <!-- TODO: do we use all of these scripts? -->
