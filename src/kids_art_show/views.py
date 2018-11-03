@@ -22,7 +22,7 @@ def about(request):
 class SignUp(generic.CreateView):
     form_class = KidsArtShowUserCreationForm
     success_url = reverse_lazy('login')
-    template_name = 'signup.html'
+    template_name = r'registration/signup.html'
 
 
 # TODO: how to merge the lines below with the signup view above?
