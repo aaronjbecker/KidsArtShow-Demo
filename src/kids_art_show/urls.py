@@ -25,5 +25,7 @@ urlpatterns = [
     path('about', views.about, name = 'kids-art-show-about'),
     path('signup', views.SignUp.as_view(), name='signup'),
     # LoginView will attempt to register templates/registration/login.html
-    path('login', auth_views.LoginView.as_view(), name='login')
+    path('login',
+         auth_views.LoginView.as_view(template_name="kids_art_show/registration/login.html"),
+         name='login')
 ]

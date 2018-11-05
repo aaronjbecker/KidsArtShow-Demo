@@ -9,20 +9,20 @@ def home(request):
     context = {
         'posts': Post.objects.all()
     }
-    return render(request, 'home.html', context)
+    return render(request, 'kids_art_show/home.html', context)
 
 
 def about(request):
     context = {
         'posts': Post.objects.all()
     }
-    return render(request, 'about.html', context)
+    return render(request, 'kids_art_show/about.html', context)
 
 
 class SignUp(generic.CreateView):
     form_class = KidsArtShowUserCreationForm
     success_url = reverse_lazy('login')
-    template_name = r'registration/signup.html'
+    template_name = 'kids_art_show/registration/signup.html'
 
 
 # TODO: how to merge the lines below with the signup view above?
