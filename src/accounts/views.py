@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect
-
+from django.views.generic import View
 from .forms import loginForm, registerForm
+from .models import UserAccount
+from arts.models import Art
 from django.contrib.auth import get_user_model, authenticate, login, logout
 
 User = get_user_model()
@@ -49,4 +51,15 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+class UserDashboard(View):
+    def get(self, request, *args, **kwargs):
+        context={}
+        account = self.request.user
+        arts = Art.objects.filter(user = account)
+        context['arts'] = arts
+
+        return render(request, 'accounts/userdashboard.html',context)
+
 
