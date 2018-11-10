@@ -29,7 +29,7 @@
          <ul class="right hide-on-med-and-down">
              {%  if user.is_authenticated %}
                 <li><a href='{% url "arts:list" %}'>Arts gallery</a></li>
-                <li><a href='{% url "arts:create" %}'>Add new arts</a></li>
+{#                <li><a href='{% url "arts:create" %}'>Add new arts</a></li>#}
                 <li><a href="{% url 'logout' %}" class="red">Logout</a></li>
              {% else %}
                <li><a href="{% url 'login' %}" class="red">Login</a></li>

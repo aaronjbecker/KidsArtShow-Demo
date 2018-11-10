@@ -43,11 +43,14 @@
 
     <div class="container center_div ">
         <div class="row card">
-            {% for art in arts %}
+
+          {% for art in arts %}
+              {% empty %}
+              <li> You dont' have any arts uploaded.</li>
           <div class="col s12 m6 l4">
             <a href="{{ art.get_absolute_url }}"><img src="{{ art.file.url }}" style="width: 150px;"/></a>
           </div>
-            {% endfor %}
+           {% endfor %}
 
       </div>
 

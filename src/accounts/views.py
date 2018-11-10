@@ -24,8 +24,9 @@ def login_view(request):
                                 password=password)
             if user.is_active:
                 login(request, user)
-                print('logged in')
-                return HttpResponseRedirect('/arts/')
+                print('logged in user:'+ the_user.username)
+
+                return HttpResponseRedirect('/accounts/')
             else:
                 pass
         else:
@@ -43,7 +44,7 @@ def register_view(request):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         new_user = User.objects.create_user(username,email,password)
-        return HttpResponseRedirect('/arts/')
+        return HttpResponseRedirect('/accounts/')
     context = {'form':form,
                'view_url': view_url}
     return render(request,'accounts/authform.html',context)
@@ -57,6 +58,7 @@ class UserDashboard(View):
     def get(self, request, *args, **kwargs):
         context={}
         account = self.request.user
+        print(account)
         arts = Art.objects.filter(user = account)
         context['arts'] = arts
 
