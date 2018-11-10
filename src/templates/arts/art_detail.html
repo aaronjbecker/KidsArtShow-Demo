@@ -1,5 +1,24 @@
 {% extends 'base.html'%}
+{% block navbar %}
+    <nav>
+      <div class="nav-wrapper">
+         <a href='{% url "arts:list" %}' class="brand-logo">Kid Art Show</a>
+         <ul class="right hide-on-med-and-down">
+{#            <li><a href='{% url "arts:list" %}'>Arts gallery</a></li>#}
+             {%  if request.user.is_authenticated %}
+                    <li><a href='{% url "arts:create" %}'>Add new arts</a></li>
+                    <li><a href="{% url 'logout' %}" class="red">Logout</a></li>
+             {% else %}
+                   <li><a href="{% url 'login' %}" class="red">Login</a></li>
+                   <li><a href="{% url 'register' %}" >Register</a></li>
+             {% endif %}
+         </ul>
+      </div>
+    </nav>
+{% endblock %}
+
 {% block content %}
+    <div class="container center_div ">
     <h2> Art: {{art.title}}</h2>
     <a href={{ art.get_update_url }}>edit</a>
 {#    <a href='{% url "arts:update_slug" %}'>edit</a>#}
@@ -7,5 +26,5 @@
     <p>{{ art.category }}</p>
     <p> <img src="{{ art.file.url }}" style="width: 600px;"/> </p>
 
-
+    </div>
 {% endblock %}

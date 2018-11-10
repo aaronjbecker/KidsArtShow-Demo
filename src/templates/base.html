@@ -1,26 +1,34 @@
 {% load staticfiles %}
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Kids Art Show: Home</title>
 	<link rel='stylesheet' href='{% static "css/base.css" %}'/>
-	
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS (CDN) -->
+    <link rel="stylesheet" href={% static "css/materialize.min.css" %}>
+    <!-- Import jquery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <!-- Style -->
+    {% block style %}
+    {% endblock %}
 </head>
 <body>
-<nav class='main-nav'>
-	<ul class="pull-left first-nav">
-        <li><a href='{% url "home" %}'><h1>Kids Artshow</h1></a></li>
-	</ul>
-	<ul class='pull-right'>
-		<li><a href='{% url "arts:list" %}'>Arts gallery</a></li>
-		<li><a href='{% url "arts:create" %}'>Add arts</a></li>
-	</ul>
-</nav>
-<div class='main-content'>
+
+{% block navbar %}
+
+{% endblock %}
+
 {% block content %}
 
 {% endblock %}
-</div>
+
+{% block homepage %}
+
+{% endblock %}
 </body>
 </html>

@@ -1,0 +1,44 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block navbar %}
+    <nav>
+      <div class="nav-wrapper">
+         <a href='{% url "arts:list" %}' class="brand-logo">Kid Art Show</a>
+         <ul class="right hide-on-med-and-down">
+             {%  if user.is_authenticated %}
+                <li><a href='{% url "arts:list" %}'>Arts Gallery</a></li>
+                <li><a href='{% url "arts:create" %}'>Add Arts</a></li>
+                <li><a href="{% url 'logout' %}" class="red">Logout</a></li>
+             {% else %}
+               <li><a href="{% url 'login' %}" class="red">Login</a></li>
+               <li><a href="{% url 'register' %}" >Register</a></li>
+             {% endif %}
+         </ul>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <!-- note: the space for context variable matters with the include block -->
+{#{% include "form_include.html" with form=form submit_btn=submit_btn %}#}
+<style>
+select {
+    display: inline-block;
+}
+textarea {
+    width: 100%;
+    height: 10rem;
+    background-color: transparent;
+}
+</style>
+    <div class="container center_div ">
+        <form method = 'POST', enctype="multipart/form-data", action = "">
+        {% csrf_token %}
+            {{ form.as_p }}
+        <input class="btn btn-outline-info" type = 'submit' value = '{% if submit_btn %}{{ submit_btn }}{% else %}Submit{% endif %}'>
+        </form>
+    </div>
+{% endblock %}

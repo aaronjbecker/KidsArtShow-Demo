@@ -2,48 +2,50 @@
     *MET-CS-699 Term Project Prototype Landing Page
     *Maya Shen
 -->
-<!DOCTYPE html>
-<html>
-<head>
-{%  load static %}
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!-- Compiled and minified CSS (CDN) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<link rel="stylesheet" href="{% static 'css/base.css' %}" type = "text/css"/>
-<!-- Import jquery-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!--Sinal browser website is optimized for mobile-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Kids Art Show: Home</title>
+{% extends 'base.html' %}
 
+{% block style %}
+     <style>
 
-</head>
+        body{
+              height: 100%;
+            margin: 0;
+            padding: 0;
+          background:#f5f5f5;
+        }
 
-<body>
-    <!--NavBar-->
+        nav{
+          background: rgba(0, 0, 0, 0.2);
+          padding:0px 30px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block navbar %}
     <nav>
       <div class="nav-wrapper">
          <a href='{% url "arts:list" %}' class="brand-logo">Kid Art Show</a>
          <ul class="right hide-on-med-and-down">
-           <li><a href="#" class="red">Login</a></li>
-           <li><a href="#">Sign Up</a></li>
+             {%  if user.is_authenticated %}
+                <li><a href='{% url "arts:list" %}'>Arts gallery</a></li>
+                <li><a href='{% url "arts:create" %}'>Add new arts</a></li>
+                <li><a href="{% url 'logout' %}" class="red">Logout</a></li>
+             {% else %}
+               <li><a href="{% url 'login' %}" class="red">Login</a></li>
+               <li><a href="{% url 'register' %}" >Register</a></li>
+             {% endif %}
          </ul>
       </div>
     </nav>
+{% endblock %}
+
+{% block homepage %}
 
     <!--Background Picture-->
       <div class = 'homesection'>
 
       </div>
-
-    <!--Footer-->
-    <footer class="page-footer red lighten-1">
-      <div class="container">
-      Copyright Text
-      <a class="grey-text text-lighten-4 right" href="#!">Some Link</a>
-      </div>
-    </footer>
 
     <!--Center Text-->
     <div class='fullscreenDiv'>
@@ -53,9 +55,14 @@
         </div>
     </div>​
 
-</body>
-</html>
-
+    <!--Footer-->
+    <footer class="page-footer red lighten-1">
+      <div class="container">
+      Copyright Text
+      <a class="grey-text text-lighten-4 right" href="#!">Some Link</a>
+      </div>
+    </footer>
+{% endblock %}
 
 <!-- Script -->
 

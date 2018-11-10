@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from arts.views import ArtListView as MainView
 from arts import views
+from accounts.views import login_view,logout_view,register_view
 
 urlpatterns = [
     #re_path('^$', MainView.as_view(), name = 'homepage'),
@@ -25,6 +26,10 @@ urlpatterns = [
     path('users', views.users, name='users'),
     path('admin/', admin.site.urls),
     path('arts/', include('arts.urls')),
+    path('login/', login_view, name ='login'),
+    path('logout/', logout_view, name ='logout'),
+    path('register/', register_view, name ='register'),
+
 ]
 
 if settings.DEBUG:

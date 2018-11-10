@@ -5,14 +5,14 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse
 
-from .forms import ArtAddForm, ArtModelForm
+from .forms import ArtModelForm
 from .models import Art
 from .mixins import MultiSlugMixin, SubmitBtnMixin,LoginRequiredMixin
 # Create your views here.
 
 class ArtCreateView(SubmitBtnMixin,CreateView):
     model = Art
-    template_name = 'form.html'
+    template_name = 'artsform.html'
     form_class = ArtModelForm
     # success_url = '/arts/add'
     submit_btn = 'Add Art'
@@ -29,7 +29,7 @@ class ArtCreateView(SubmitBtnMixin,CreateView):
 
 class ArtUpdateView(SubmitBtnMixin,MultiSlugMixin,UpdateView):
     model = Art
-    template_name = 'form.html'
+    template_name = 'artsform.html'
     form_class = ArtModelForm
     # success_url = '/arts/list/'
     submit_btn = 'Update Art'
