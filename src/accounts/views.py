@@ -44,6 +44,9 @@ def register_view(request):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         new_user = User.objects.create_user(username,email,password)
+        user = authenticate(username=new_user.username,
+                            password=password)
+        login(request, user)
         return HttpResponseRedirect('/accounts/')
     context = {'form':form,
                'view_url': view_url}
