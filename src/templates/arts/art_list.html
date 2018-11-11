@@ -5,8 +5,8 @@
       <div class="nav-wrapper">
          <a href='{% url "arts:list" %}' class="brand-logo">Kid Art Show</a>
          <ul class="right hide-on-med-and-down">
-{#            <li><a href='{% url "arts:list" %}'>Arts gallery</a></li>#}
              {%  if request.user.is_authenticated %}
+                    <li><a href='{% url "dashboard" %}'>My Arts</a></li>
                     <li><a href='{% url "arts:create" %}'>Add new arts</a></li>
                     <li><a href="{% url 'logout' %}" class="red">Logout</a></li>
              {% else %}

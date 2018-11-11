@@ -9,7 +9,7 @@
          <a href='{% url "arts:list" %}' class="brand-logo">Kid Art Show</a>
          <ul class="right hide-on-med-and-down">
              {%  if user.is_authenticated %}
-                <li><a href='{% url "arts:list" %}'>Arts Gallery</a></li>
+                <li><a href='{% url "dashboard" %}'>My Arts</a></li>
                 <li><a href='{% url "arts:create" %}'>Add Arts</a></li>
                 <li><a href="{% url 'logout' %}" class="red">Logout</a></li>
              {% else %}
