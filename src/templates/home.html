@@ -28,12 +28,13 @@
          <a href='{% url "arts:list" %}' class="brand-logo">Kid Art Show</a>
          <ul class="right hide-on-med-and-down">
              {%  if user.is_authenticated %}
-                <li><a href='{% url "arts:list" %}'>Arts gallery</a></li>
+                <li><a href='{% url "arts:list" %}'>My Arts</a></li>
 {#                <li><a href='{% url "arts:create" %}'>Add new arts</a></li>#}
                 <li><a href="{% url 'logout' %}" class="red">Logout</a></li>
              {% else %}
                <li><a href="{% url 'login' %}" class="red">Login</a></li>
                <li><a href="{% url 'register' %}" >Register</a></li>
+               <li><a href="{% url 'register' %}" >Gallery</a></li>
              {% endif %}
          </ul>
       </div>
@@ -55,15 +56,6 @@
         </div>
     </div>​
 
-    <!--Footer-->
-    <footer class="page-footer red lighten-1">
-      <div class="container">
-      Copyright Text
-      <a class="grey-text text-lighten-4 right" href="#!">Some Link</a>
-      </div>
-    </footer>
 {% endblock %}
 
 <!-- Script -->
-
-
