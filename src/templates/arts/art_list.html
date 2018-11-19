@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+    <nav>
+      <div class="nav-wrapper">
+         <a href='{% url "arts:list" %}' class="brand-logo">Kid Art Show</a>
+         <ul class="right hide-on-med-and-down">
+             {%  if request.user.is_authenticated %}
+                    <li><a href='{% url "dashboard" %}'>My Arts</a></li>
+                    <li><a href='{% url "arts:create" %}'>Add new arts</a></li>
+                    <li><a href="{% url 'logout' %}" class="red">Logout</a></li>
+             {% else %}
+                   <li><a href="{% url 'login' %}" class="red">Login</a></li>
+                   <li><a href="{% url 'register' %}" >Register</a></li>
+             {% endif %}
+         </ul>
+      </div>
+    </nav>
+{% endblock %}
+
+
+{% block content %}
+<div class="container center_div ">
+    <ul>
+    {% for instance in object_list %}
+        <h4><li>{{instance.title}}</li></h4>
+        <p>{{instance.category}}</p>
+        <p>{{instance.description}}</p>
+        {#                <li>#}
+        <a href="{{ instance.get_absolute_url }}"><img src="{{ instance.file.url }}" style="width: 150px;"/></a>
+        {#                </li>#}
+        {% empty %}
+        <li> No arts yet </li>
+    {% endfor %}
+    </ul>
+<div class="container center_div ">
+{% endblock %}
