@@ -1,0 +1,16 @@
+{# AJB 11/21/18: main nav bar as included template, re-used across pages #}
+<nav>
+    <div class="nav-wrapper">
+       <a href="#" class="brand-logo">Kid Art Show</a>
+       <ul class="right hide-on-med-and-down">
+           {% if user.is_authenticated %}
+           <li><a href="{% url 'user_profile' %}">Profile</a></li>
+           <li><a href="{% url 'logout' %}">Logout</a></li>
+           {% else %}
+           <li><a href="{% url 'about' %}">About</a></li>
+           <li><a href="{% url 'login' %}" class="red">Login</a></li>
+           <li><a href="{% url 'signup' %}">Sign Up</a></li>
+           {% endif %}
+       </ul>
+    </div>
+</nav>
