@@ -11,11 +11,11 @@ class KidsArtShowUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm):
         model = KidsArtShowUser
-        fields = ('username', 'email', 'child_name', 'birth_date')
+        fields = ('username', 'email', 'birth_date')
 
 
 class KidsArtShowUserChangeForm(UserChangeForm):
 
     class Meta:
         model = KidsArtShowUser
-        fields = ('username', 'email', 'child_name', 'birth_date')
+        fields = ('username', 'email', 'birth_date')

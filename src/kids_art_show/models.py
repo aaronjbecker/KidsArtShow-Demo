@@ -51,6 +51,7 @@ def image_fn(instance, filename):
     # prepend date posted
     return "{}/{:%Y%m%d}_{}".format(instance.author.profile_name, timezone.now(), filename)
 
+
 class Post(models.Model):
     """
     Posts are associated with ContentCreator instances

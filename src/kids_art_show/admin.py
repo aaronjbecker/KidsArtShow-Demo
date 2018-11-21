@@ -17,7 +17,7 @@ class KidsArtShowAdmin(UserAdmin):
     form = KidsArtShowUserChangeForm
     model = KidsArtShowUser
     # TODO: better list of fields to display for user admin?
-    list_display = ['email', 'username', 'birth_date', 'bio']
+    # list_display = ['email', 'username', 'birth_date', 'bio']
 
 # TODO: create post administration view?
 
