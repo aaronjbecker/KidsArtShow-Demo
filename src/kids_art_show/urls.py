@@ -30,7 +30,6 @@ urlpatterns = [
     path('login',
          remember_me_login,
          kwargs = {'template_name': "kids_art_show/registration/login.html"},
-         # auth_views.LoginView.as_view(template_name="kids_art_show/registration/login.html"),
          name='login'),
     # TODO: profile with user ID as argument
     # TODO: user dashboard

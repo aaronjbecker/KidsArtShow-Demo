@@ -5,12 +5,9 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 # Avoid shadowing the login() view below.
 from django.contrib.auth import login as auth_login
 from django.contrib.sites.shortcuts import get_current_site
-# from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect
 # cf. https://stackoverflow.com/a/38739423
 from django.shortcuts import render
-# from django.shortcuts import render_to_response
-# from django.template import RequestContext
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from remember_me.forms import AuthenticationRememberMeForm
