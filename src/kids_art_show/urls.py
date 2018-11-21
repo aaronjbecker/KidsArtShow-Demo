@@ -17,15 +17,23 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from remember_me.views import remember_me_login
 
+app_name = "kids-art-show"
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name = 'kids-art-show-home'),
+    path('', views.home, name = 'home'),
     path('home', views.home, name='home'),
-    path('about', views.about, name = 'kids-art-show-about'),
+    path('about', views.about, name = 'about'),
     path('signup', views.SignUp.as_view(), name='signup'),
-    # LoginView will attempt to register templates/registration/login.html
+    # use remember-me form in helper app but with registration template defined here
     path('login',
-         auth_views.LoginView.as_view(template_name="kids_art_show/registration/login.html"),
-         name='login')
+         remember_me_login,
+         kwargs = {'template_name': "kids_art_show/registration/login.html"},
+         # auth_views.LoginView.as_view(template_name="kids_art_show/registration/login.html"),
+         name='login'),
+    # TODO: profile with user ID as argument
+    # TODO: user dashboard
+    path('user_profile', views.UserProfile.as_view(), name='user_profile'),
+    path('logout', auth_views.LogoutView.as_view(), name='logout')
 ]
