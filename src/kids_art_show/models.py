@@ -48,8 +48,9 @@ def image_fn(instance, filename):
     :param filename: original file name
     :return: storage path
     """
-    # prepend date posted
-    return "{}/{:%Y%m%d}_{}".format(instance.author.profile_name, timezone.now(), filename)
+    # prepend date posted, as utc timestamp
+    #   (timestamp includes seconds, to prevent errors on duplicate filename submissions)
+    return "{}/{}_{}".format(instance.author.profile_name, timezone.now().timestamp(), filename)
 
 
 class Post(models.Model):
