@@ -21,6 +21,7 @@ class KidsArtShowUser(AbstractUser):
     # TODO: define method to determine whether user is old enough to create an account
     birth_date = models.DateField(null=True, blank=True)
     # TODO: method to associate parent account with one or more children; these are created after account registration.
+    # TODO: method to distinguish between parent and viewer accounts
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -40,15 +41,32 @@ class ContentCreator(models.Model):
         return self.profile_name
 
 
+def image_fn(instance, filename):
+    """
+    Creates storage path for image file associated with post.
+    :param instance: post instance
+    :param filename: original file name
+    :return: storage path
+    """
+    # prepend date posted
+    return "{}/{:%Y%m%d}_{}".format(instance.author.profile_name, timezone.now(), filename)
+
 class Post(models.Model):
     """
-    Posts are associated with KidsArtShowUser classes
+    Posts are associated with ContentCreator instances
+    They contain an image as well as optional text
+    TODO: maybe more than one image?
+    TODO: maybe also comments?
     """
     title = models.CharField(max_length=100)
-    content = models.TextField()
+    content = models.TextField(null=True, default=None)
     date_posted = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(KidsArtShowUser,
+    author = models.ForeignKey(ContentCreator,
                                on_delete=models.CASCADE)
+    # note: storage manager defaults to FileSystemStorage with base at MEDIA_ROOT
+    image = models.ImageField(upload_to=image_fn, null=True, default=None)
+    # TODO: privacy level field, categorical
+    # TODO: likes should be another class, with user account, post, date fields (to avoid dupes)
 
     def __str__(self):
         return self.title
