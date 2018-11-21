@@ -34,5 +34,6 @@ urlpatterns = [
     # TODO: profile with user ID as argument
     # TODO: user dashboard
     path('user_profile', views.UserProfile.as_view(), name='user_profile'),
+    path('user_dashboard', views.UserDashboard.as_view(), name='user_dashboard'),
     path('logout', auth_views.LogoutView.as_view(), name='logout')
 ]

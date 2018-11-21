@@ -23,6 +23,10 @@ class UserProfile(generic.TemplateView):
     template_name = 'kids_art_show/user_profile.html'
 
 
+class UserDashboard(generic.TemplateView):
+    template_name = "kids_art_show/user_dashboard.html"
+
+
 class SignUp(generic.CreateView):
     form_class = KidsArtShowUserCreationForm
     success_url = reverse_lazy('login')
