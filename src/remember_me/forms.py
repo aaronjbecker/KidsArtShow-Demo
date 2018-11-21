@@ -11,5 +11,5 @@ class AuthenticationRememberMeForm(AuthenticationForm):
     
     """
     
-    remember_me = forms.BooleanField(label=_('Remember Me'), initial=False,
+    remember_me = forms.BooleanField(label='Remember Me', initial=True,
         required=False)
