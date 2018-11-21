@@ -19,10 +19,17 @@ def about(request):
     return render(request, 'kids_art_show/about.html', context)
 
 
+class UserProfile(generic.TemplateView):
+    template_name = 'kids_art_show/user_profile.html'
+
+
 class SignUp(generic.CreateView):
     form_class = KidsArtShowUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'kids_art_show/registration/signup.html'
+
+
+
 
 
 # TODO: how to merge the lines below with the signup view above?
