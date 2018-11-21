@@ -1,3 +1,6 @@
+"""
+from https://github.com/jimfmunro/django-remember-me
+"""
 import re
 
 from django.conf import settings
@@ -18,7 +21,6 @@ from remember_me.forms import AuthenticationRememberMeForm
 def remember_me_login(request, template_name='registration/login.html',
           redirect_field_name=REDIRECT_FIELD_NAME,
           authentication_form=AuthenticationRememberMeForm):
-          
     """
     Based on login view cribbed from
     https://github.com/django/django/blob/1.2.7/django/contrib/auth/views.py#L25
@@ -32,7 +34,6 @@ def remember_me_login(request, template_name='registration/login.html',
     different form class as the ``authentication_form`` parameter.
     
     """
-    
     redirect_to = request.POST.get(redirect_field_name, '')
     
     if request.method == "POST":
