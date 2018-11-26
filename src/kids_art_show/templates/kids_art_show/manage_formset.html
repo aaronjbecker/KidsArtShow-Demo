@@ -1,7 +1,11 @@
 {# dynamic formset, based on https://github.com/taranjeet/django-library-app/blob/master/djlibrary/templates/store/create_normal.html #}
-{% extends "base.html" %}
+{% extends "kids_art_show/base.html" %}
 
-{% block container %}
+{% block nav_bar %}
+    {% include 'kids_art_show/main_nav_bar.html' %}
+{% endblock nav_bar %}
+
+{% block content %}
 {% if heading %}
 <h3>{{heading}}</h3>
 {% endif %}
@@ -32,7 +36,6 @@
 {% endblock %}
 
 {% block custom_js %}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script type="text/javascript">
 function updateElementIndex(el, prefix, ndx) {
     var id_regex = new RegExp('(' + prefix + '-\\d+)');

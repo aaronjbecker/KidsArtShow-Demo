@@ -35,7 +35,7 @@ class SignUp(generic.CreateView):
 
 
 # TODO: attempt to use a FormSet/ModelFormSet to allow editing more than one child profile?
-def manage_children(request):
+def manage_artists(request):
     template_name = 'kids_art_show/manage_formset.html'
     heading_message = "Manage Artist Profiles"
     formset = None
@@ -52,7 +52,7 @@ def manage_children(request):
                 # save book instance
                 # if name:
                 #     Book(name=name).save()
-            return redirect('kids_art_show:user_dashboard')
+            return redirect('user_dashboard')
     return render(request, template_name,
                   { 'formset': formset,
                     'heading': heading_message })
