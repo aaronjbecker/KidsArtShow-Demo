@@ -27,8 +27,11 @@ class ManageChildForm(ModelForm):
     class Meta:
         model = ContentCreator
         fields = ['profile_name', 'nickname']
+        labels = {'profile_name': 'Artist Profile Name'}
 
 
 ManageChildrenFormset = \
-    modelformset_factory(ContentCreator, ManageChildForm)
+    modelformset_factory(ContentCreator,
+                         fields=['profile_name', 'nickname'],
+                         min_num=1)
 

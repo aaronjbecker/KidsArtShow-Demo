@@ -40,7 +40,7 @@ def manage_artists(request):
     heading_message = "Manage Artist Profiles"
     formset = None
     if request.method == 'GET':
-        formset = ManageChildrenFormset(request.GET or None)
+        formset = ManageChildrenFormset(queryset=ContentCreator.objects.none())
     elif request.method == 'POST':
         formset = ManageChildrenFormset(request.POST)
         if formset.is_valid():
