@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from .forms import KidsArtShowUserCreationForm
-from .models import Post
+from django.forms import formset_factory
+from .forms import KidsArtShowUserCreationForm, ManageChildrenFormset
+from .models import Post, ContentCreator
 
 
 def home(request):
@@ -33,7 +34,28 @@ class SignUp(generic.CreateView):
     template_name = 'kids_art_show/registration/signup.html'
 
 
-
+# TODO: attempt to use a FormSet/ModelFormSet to allow editing more than one child profile?
+def manage_children(request):
+    template_name = 'kids_art_show/manage_formset.html'
+    heading_message = "Manage Artist Profiles"
+    formset = None
+    if request.method == 'GET':
+        formset = ManageChildrenFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = ManageChildrenFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                cd = form.cleaned_data
+                if cd.get('profile_name', False):
+                    ContentCreator(**cd).save()
+                # name = form.cleaned_data.get('name')
+                # save book instance
+                # if name:
+                #     Book(name=name).save()
+            return redirect('kids_art_show:user_dashboard')
+    return render(request, template_name,
+                  { 'formset': formset,
+                    'heading': heading_message })
 
 
 # TODO: how to merge the lines below with the signup view above?

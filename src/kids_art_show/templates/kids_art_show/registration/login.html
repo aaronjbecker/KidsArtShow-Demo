@@ -5,6 +5,7 @@ cf. https://simpleisbetterthancomplex.com/tutorial/2016/06/27/how-to-use-djangos
 
 {% block extra_styles %}
 {# have to override materialize behavior for checkbox so that it displays.#}
+{#  cf. https://stackoverflow.com/q/49758284  #}
 {# TODO: have form generate widgets that are compatiable with materialize.css styling. #}
     <style>
         [type="checkbox"]:not(:checked), [type="checkbox"]:checked {

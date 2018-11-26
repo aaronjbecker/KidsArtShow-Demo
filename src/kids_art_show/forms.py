@@ -2,9 +2,10 @@
 AJB 10/28/18: Basic user creation and change forms.
 Adapted from https://wsvincent.com/django-custom-user-model-tutorial/
 """
-from django import forms
+from django.forms import ModelForm, modelformset_factory
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import KidsArtShowUser
+from .models import KidsArtShowUser, ContentCreator
+from django.contrib.auth.decorators import login_required
 
 
 class KidsArtShowUserCreationForm(UserCreationForm):
@@ -19,3 +20,15 @@ class KidsArtShowUserChangeForm(UserChangeForm):
     class Meta:
         model = KidsArtShowUser
         fields = ('username', 'email', 'birth_date')
+
+
+class ManageChildForm(ModelForm):
+    """form for a parent/authentication account to manage child profiles"""
+    class Meta:
+        model = ContentCreator
+        fields = ['profile_name', 'nickname']
+
+
+ManageChildrenFormset = \
+    modelformset_factory(ContentCreator, ManageChildForm)
+

@@ -22,6 +22,8 @@ class KidsArtShowUser(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
     # TODO: method to associate parent account with one or more children; these are created after account registration.
     # TODO: method to distinguish between parent and viewer accounts
+    has_children = models.BooleanField(default=False)
+    # TODO: following
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -63,8 +65,9 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(null=True, default=None)
     date_posted = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(ContentCreator,
-                               on_delete=models.CASCADE)
+    author = models.ForeignKey(ContentCreator, null=True,
+                               related_name='artist',
+                               on_delete=models.SET_NULL)
     # note: storage manager defaults to FileSystemStorage with base at MEDIA_ROOT
     image = models.ImageField(upload_to=image_fn, null=True, default=None)
     # TODO: privacy level field, categorical
