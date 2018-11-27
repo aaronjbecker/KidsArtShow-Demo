@@ -22,12 +22,12 @@ class KidsArtShowUserChangeForm(UserChangeForm):
         fields = ('username', 'email', 'birth_date')
 
 
-class ManageChildForm(ModelForm):
-    """form for a parent/authentication account to manage child profiles"""
-    class Meta:
-        model = ContentCreator
-        fields = ['profile_name', 'nickname']
-        labels = {'profile_name': 'Artist Profile Name'}
+# class ManageChildForm(ModelForm):
+#     """form for a parent/authentication account to manage child profiles"""
+#     class Meta:
+#         model = ContentCreator
+#         fields = ['profile_name', 'nickname']
+#         labels = {'profile_name': 'Artist Profile Name'}
 
 
 ManageChildrenFormset = \
