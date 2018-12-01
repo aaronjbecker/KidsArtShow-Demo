@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'kids_art_show',
     'crispy_forms',
-    'crispy_forms_materialize',
+    'bootstrap3',
     'remember_me'
 ]
 
@@ -139,9 +139,6 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 30 # One month
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-# using crispy-forms-materialize
-# cf. https://pypi.org/project/crispy-forms-materialize/
-# cf. https://github.com/Dandresfsoto/crispy-forms-materialize
-CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form', 'bootstrap3', 'bootstrap4', 'materialize_css_forms')
-CRISPY_TEMPLATE_PACK = 'materialize_css_forms'
+# project styling is based on Bootstrap3
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 

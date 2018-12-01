@@ -1,21 +1,21 @@
 <!-- AJB 10/28/18: base template with Maya's styles -->
 {% load static %}
+{% load bootstrap3 %}
 <!DOCTYPE html>
 <html>
 <head>
     <!--Import Google Icon Font-->
 {#    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
-    <!-- Compiled and minified CSS (CDN) -->
+
     <!-- TODO: Do we need both materialized and bootstrap here? -->
-{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">#}
     <!--Signal browser website is optimized for mobile-->
     <meta charset="utf-8"
           name="viewport"
           content="width=device-width, initial-scale=1.0"/>
     <!-- title block can be overridden in template subclasses -->
     <title>{% block title %}Kids Art Show{% endblock %}</title>
-    <!--Maya's CSS-->
-{#    <link rel="stylesheet" type="text/css" href="{% static 'kids_art_show/Maya.css' %}">#}
+    <!-- Compiled and minified CSS (CDN) -->
+
     {#  section for extra styles/pieces related to particular pages  #}
     {% block extra_styles %}{% endblock extra_styles %}
 </head>

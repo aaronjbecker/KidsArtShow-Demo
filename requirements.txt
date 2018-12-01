@@ -1,4 +1,4 @@
 Django==2.1.1
 pytz==2018.5
+django-bootstrap3=11.0.0
 django-crispy-forms=1.7.2
-crispy-forms-materialize=0.2
