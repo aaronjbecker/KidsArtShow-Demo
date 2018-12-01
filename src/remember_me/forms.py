@@ -8,7 +8,8 @@ from crispy_forms.bootstrap import StrictButton
 
 
 class RembmerMeAuthFormInline(AuthenticationForm):
-    """includes styling for inline/horizontal layout"""
+    """includes styling for inline/horizontal layout
+        many options are hard-coded for use with Kids_Art_Show """
 
     def __init__(self, *args, form_action="process_login", **kwargs):
         super(RembmerMeAuthFormInline, self).__init__(*args, **kwargs)

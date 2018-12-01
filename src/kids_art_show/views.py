@@ -1,6 +1,10 @@
+import re
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
 from django.forms import formset_factory
 from .forms import KidsArtShowUserCreationForm, ManageChildrenFormset
 from .models import Post, ContentCreator
@@ -20,6 +24,8 @@ def home(request):
     return render(request, 'kids_art_show/home.html', context)
 
 
+@csrf_protect
+@never_cache
 def process_remember_me_login(request,
                               redirect_field_name='next'):
     """
@@ -35,8 +41,16 @@ def process_remember_me_login(request,
     # TODO: also check for None?
     if not redirect_to:
         redirect_to = reverse_lazy('home')
+    # Light security check -- make sure redirect_to isn't garbage.
+    if not redirect_to or ' ' in redirect_to:
+        redirect_to = settings.LOGIN_REDIRECT_URL
+    # Heavier security check -- redirects to http://example.com should
+    # not be allowed, but things like /view/?param=http://example.com
+    # should be allowed. This regex checks if there is a '//' *before* a
+    # question mark.
+    elif '//' in redirect_to and re.match(r'[^\?]*//', redirect_to):
+        redirect_to = settings.LOGIN_REDIRECT_URL
     if form.is_valid():
-        # TODO: security check on next argument
         if not form.cleaned_data.get('remember_me'):
             request.session.set_expiry(0)
 
