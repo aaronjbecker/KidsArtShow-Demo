@@ -1,6 +1,9 @@
 {# AJB 11/21/18: main nav bar as included template, re-used across pages #}
 {# AJB 12/1/18: copy example navbar from bootstrap docs #}
     {# cf. https://getbootstrap.com/docs/3.3/components/#navbar #}
+{% load bootstrap3 %}
+{% load crispy_forms_tags %}
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -23,7 +26,9 @@
         <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
         <li><a href="#">Link</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+             role="button" aria-haspopup="true"
+             aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Action</a></li>
             <li><a href="#">Another action</a></li>
@@ -35,12 +40,16 @@
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
+        {% if not user.is_authenticated %}
+          {% crispy login_form %}
+
+{#            <form class="navbar-form navbar-left">#}
+{#            <div class="form-group">#}
+{#              <input type="text" class="form-control" placeholder="Search">#}
+{#            </div>#}
+{#            <button type="submit" class="btn btn-default">Submit</button>#}
+{#          </form>#}
+        {% endif %}
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Link</a></li>
         <li class="dropdown">

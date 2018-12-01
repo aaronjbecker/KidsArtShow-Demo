@@ -4,13 +4,49 @@ from django.views import generic
 from django.forms import formset_factory
 from .forms import KidsArtShowUserCreationForm, ManageChildrenFormset
 from .models import Post, ContentCreator
+# import remember_me.views as rmv
+import remember_me.forms as rmf
+import django.contrib.auth as dca
 
 
 def home(request):
+    # provide instance of login form for use in navbar quick link
+    # login_form = rmv.remember_me_login(request)
+    login_form = rmf.RembmerMeAuthFormInline(request)
     context = {
+        'login_form': login_form,
         'posts': Post.objects.all()
     }
     return render(request, 'kids_art_show/home.html', context)
+
+
+def process_remember_me_login(request,
+                              redirect_field_name='next'):
+    """
+    Only designed to be called from home page
+    :param request:
+    :param redirect_field_name:
+    :param form_ctx_fld:
+    :return:
+    """
+    # TODO: error handling if called with GET
+    form = rmf.RembmerMeAuthFormInline(data=request.POST)
+    redirect_to = request.POST.get(redirect_field_name, '')
+    # TODO: also check for None?
+    if not redirect_to:
+        redirect_to = reverse_lazy('home')
+    if form.is_valid():
+        # TODO: security check on next argument
+        if not form.cleaned_data.get('remember_me'):
+            request.session.set_expiry(0)
+
+        # Okay, security checks complete. Log the user in.
+        dca.login(request, form.get_user())
+
+        if request.session.test_cookie_worked():
+            request.session.delete_test_cookie()
+
+    return redirect(redirect_to, request)
 
 
 def about(request):
