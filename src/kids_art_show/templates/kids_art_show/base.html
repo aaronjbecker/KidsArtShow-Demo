@@ -1,21 +1,17 @@
-<!-- AJB 10/28/18: base template with Maya's styles -->
+<!-- AJB 10/28/18: base template with Bootstrap styles -->
 {% load static %}
 {% load bootstrap3 %}
 <!DOCTYPE html>
 <html>
 <head>
-    <!--Import Google Icon Font-->
-{#    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
-
-    <!-- TODO: Do we need both materialized and bootstrap here? -->
     <!--Signal browser website is optimized for mobile-->
     <meta charset="utf-8"
           name="viewport"
           content="width=device-width, initial-scale=1.0"/>
     <!-- title block can be overridden in template subclasses -->
     <title>{% block title %}Kids Art Show{% endblock %}</title>
-    <!-- Compiled and minified CSS (CDN) -->
-
+    {# Load Boostrap CSS #}
+    {% bootstrap_css %}
     {#  section for extra styles/pieces related to particular pages  #}
     {% block extra_styles %}{% endblock extra_styles %}
 </head>
@@ -31,12 +27,7 @@
 {% endblock footer %}
 </body>
 <!-- links to scripts used -->
-<!-- TODO: do we use all of these scripts? -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
+{# load both Boostrap and jquery using tags #}
+{% bootstrap_javascript jquery=1 %}
 {% block custom_js %}{% endblock %}
 </html>
