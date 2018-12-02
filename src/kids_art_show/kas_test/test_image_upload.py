@@ -133,8 +133,10 @@ class PostUploadTests(TestCase):
         post_img = create_image(None, self.post['image'])
         post_file = SimpleUploadedFile(self.post['image_fn'], post_img.getvalue())
         # TODO: how would you actually set author?
-
-        form_data = {'author': self.creator['profile_name'],
+        # author is a choicefield that expects the content creator ID
+        author_obj = kasm.ContentCreator.objects.get(profile_name=self.creator['profile_name'])
+        author_id = author_obj.id
+        form_data = {'author': author_id,
                      'title': self.post['title'],
                      'content': self.post['content'],
                      'image': post_file}

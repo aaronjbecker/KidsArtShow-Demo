@@ -28,13 +28,14 @@ def home(request):
 
 @login_required
 def create_post(request):
+    # TODO: limit author choices to user-managed profiles
     if request.method == "GET":
         # create empty form
-        form = CreatePostForm()
+        form = CreatePostForm(user=request.user)
         # populate author choices
         # form.fields['author'].choices
     else:
-        form = CreatePostForm(request.POST, request.FILES)
+        form = CreatePostForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             form.save()
             return redirect(reverse_lazy('user_dashboard'))
