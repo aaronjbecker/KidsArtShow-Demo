@@ -4,7 +4,7 @@ Adapted from https://wsvincent.com/django-custom-user-model-tutorial/
 """
 from django.forms import ModelForm, modelformset_factory
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import KidsArtShowUser, ContentCreator
+from .models import KidsArtShowUser, ContentCreator, Post
 from django.contrib.auth.decorators import login_required
 
 
@@ -21,6 +21,11 @@ class KidsArtShowUserChangeForm(UserChangeForm):
         model = KidsArtShowUser
         fields = ('username', 'email', 'birth_date')
 
+
+class CreatePostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ('title', 'content', 'image')
 
 # class ManageChildForm(ModelForm):
 #     """form for a parent/authentication account to manage child profiles"""
