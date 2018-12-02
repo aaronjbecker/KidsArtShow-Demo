@@ -9,6 +9,12 @@ from django.db import models
 from django.utils import timezone
 
 
+# define a set of privacy levels applied to profiles and posts
+# TODO: use some standard set of privacy levels if such a thing exists
+PRIVACY_CHOICES = [('PVT', 'Private'),
+                   ('FLW', 'Followers'),
+                   ('PUB', 'Public')]
+
 class KidsArtShowUser(AbstractUser):
     """
     User class that handles authentication on the KAS website.
@@ -33,10 +39,12 @@ class ContentCreator(models.Model):
     """
     Conceptually, a "child" on the platform- a parent may manage multiple child profiles
     """
-    profile_name = models.CharField(max_length=100)
+    profile_name = models.CharField(max_length=100, unique=True)
     parent_account = models.ForeignKey(KidsArtShowUser,
                                        on_delete=models.CASCADE)
     nickname = models.CharField(max_length=20, null=True, default=None)
+    bio = models.TextField(max_length=1000, null=True, default=None)
+
     # TODO: other child-related fields, e.g. bio, age, favorite color, etc.
 
     def __str__(self):

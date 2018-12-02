@@ -8,7 +8,8 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "kids_art_show.settings")
 # import model classes
 import django
 django.setup()
-from kids_art_show.models import KidsArtShowUser
+# from kids_art_show.models import KidsArtShowUser
+import kids_art_show.models as kasm
 import pandas as pd
 
 # path to excel file with tables of test data to seed database
@@ -23,13 +24,34 @@ def read_test_users(xl_path: str = None):
     test_users = pd.read_excel(xl_path, sheetname="users")
     return test_users
 
+def read_test_creators(xl_path: str = None):
+    if xl_path is None:
+        xl_path = _xl_path
+    test_creators = pd.read_excel(xl_path, sheetname="creators")
+    return test_creators
+
 if __name__ == '__main__':
     # create users
     tu = read_test_users()
     for _, urow in tu.iterrows():
         # need to use create_user to get password hashed and login supported etc.
         # cf. https://stackoverflow.com/a/23482284
-        KidsArtShowUser.objects.create_user(**urow.to_dict())
+        kasm.KidsArtShowUser.objects.create_user(**urow.to_dict())
         pass
+
+    # now create child artist profiles
+    tc = read_test_creators()
+    for _, crow in tc.iterrows():
+        cdict = crow.to_dict()
+        # have to lookup to get key for parent account
+        # cf. https://docs.djangoproject.com/en/2.1/ref/models/relations/
+        p = kasm.KidsArtShowUser.objects.get(username=cdict['parent_account'])
+        # remove parent account from dict and set as related item
+        cdict.pop('parent_account', None)
+        p.contentcreator_set.create(**cdict)
+        # kasm.ContentCreator.objects.create(**crow.to_dict())
+        pass
+
+
 
 
