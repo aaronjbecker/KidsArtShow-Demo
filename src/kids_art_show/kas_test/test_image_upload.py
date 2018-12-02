@@ -9,6 +9,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "kids_art_show.settings")
 
 from PIL import Image
 from django.core.files.base import ContentFile
+from django.core.management import call_command
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
 from django.utils.six import BytesIO
@@ -99,27 +100,60 @@ def create_image(storage, filename, size=(100, 100),
     return storage.save(filename, image_file)
 
 
-if __name__ == '__main__':
-    # factor out the stuff that works already
-    add_objects()
-    # get use and use first set of credentials to log in test client
-    tu = read_test_users()
-    creds = tu.iloc[0]
-    # _, creds = next(tu.iterrows())
+class PostUploadTests(TestCase):
+    def setUp(self):
+        # flush database w/o prompt
+        call_command('flush', interactive=False)
+        # factor out the stuff that works already:
+        # load users and creators into database
+        add_objects()
+        # use first set of credentials to log in test client
+        tu = read_test_users()
+        self.creds = tu.iloc[0].to_dict()
+        # get creator name and post names associated with this user
+        tc = read_test_creators()
+        tp = read_test_posts()
+        self.creator = tc.loc[tc['parent_account'] == self.creds['username']].iloc[0].to_dict()
+        self.post = tp.loc[tp['author'] == self.creator['profile_name']].iloc[0].to_dict()
+        # provide full path to image
+        self.post['image'] = os.path.join(_test_img_dir, self.post['image'])
 
 
-    # finally, create some sample posts
-    tp = read_test_posts()
-    for _, postRow in tp.iterrows():
-        pdict = postRow.to_dict()
-        # add post via relation to creator
-        c = kasm.ContentCreator.objects.get(profile_name=pdict['author'])
-        pdict.pop('author', None)
-        # add path to image
-        pdict['image'] = os.path.join(_test_img_dir, pdict['image'])
-        # img = pdict.pop('image')
-        # uses related_name attribute
-        # frm = kasf.CreatePostForm(data=pdict, files=[img])
-
-        c.artist.create(**pdict)
+    def tearDown(self):
+        # normally delete objects, but here you want them preserved...?
         pass
+
+    def test_uploading_image_post(self):
+        myClient = Client()
+        myClient.login(username=self.creds['username'], password=self.creds['password'])
+
+
+
+
+if __name__ == '__main__':
+    put = PostUploadTests()
+    put.run()
+    pass
+    # # factor out the stuff that works already
+    # add_objects()
+    # # get use and use first set of credentials to log in test client
+    # tu = read_test_users()
+    # creds = tu.iloc[0]
+    # # _, creds = next(tu.iterrows())
+    #
+    #
+    # # finally, create some sample posts
+    # tp = read_test_posts()
+    # for _, postRow in tp.iterrows():
+    #     pdict = postRow.to_dict()
+    #     # add post via relation to creator
+    #     c = kasm.ContentCreator.objects.get(profile_name=pdict['author'])
+    #     pdict.pop('author', None)
+    #     # add path to image
+    #     pdict['image'] = os.path.join(_test_img_dir, pdict['image'])
+    #     # img = pdict.pop('image')
+    #     # uses related_name attribute
+    #     # frm = kasf.CreatePostForm(data=pdict, files=[img])
+    #
+    #     c.artist.create(**pdict)
+    #     pass
