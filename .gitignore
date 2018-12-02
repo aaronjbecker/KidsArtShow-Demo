@@ -4,6 +4,9 @@
 # pycharm project settings
 .idea
 
+# office temp files
+~$*.xlsx
+
 ### OSX ###
 .DS_Store
 .AppleDouble
