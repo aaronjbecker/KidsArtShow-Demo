@@ -2,7 +2,6 @@
 <!-- will be picked up automagically by base Django authentication system.,
 cf. https://simpleisbetterthancomplex.com/tutorial/2016/06/27/how-to-use-djangos-built-in-login-system.html -->
 {% extends 'kids_art_show/base.html' %}
-{#{% load bootstrap3 %}#}
 {% load crispy_forms_tags %}
 
 {% block title %}Login{% endblock %}
@@ -10,13 +9,7 @@ cf. https://simpleisbetterthancomplex.com/tutorial/2016/06/27/how-to-use-djangos
 {% block content %}
 <div class="container-fluid center_div">
     <h2>Login</h2>
+{# Currently assumes that there is an associated FormHelper with a layout that provides required buttons. #}
 {% crispy form %}
 </div>
-{#    {% bootstrap_form form layout="horizontal"%}#}
-{#    {% bootstrap_button "Login" button_type="submit" %}#}
-{#<form method="post">#}
-{#  {% csrf_token %}#}
-{#  {{ form.as_p }}#}
-{#  <button type="submit">Login</button>#}
-{#</form>#}
 {% endblock %}

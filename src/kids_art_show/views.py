@@ -64,7 +64,10 @@ def process_remember_me_login(request,
 
 
 def about(request):
+    # provide instance of login form for use in navbar quick link
+    login_form = rmf.RembmerMeAuthFormInline(request)
     context = {
+        'login_form': login_form,
         'posts': Post.objects.all()
     }
     return render(request, 'kids_art_show/about.html', context)
