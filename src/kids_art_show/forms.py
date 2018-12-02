@@ -23,9 +23,11 @@ class KidsArtShowUserChangeForm(UserChangeForm):
 
 
 class CreatePostForm(ModelForm):
+    # TODO: form helper with layout, submit button, etc.
+    # note need for class to enable image upload (TODO: lookup)
     class Meta:
         model = Post
-        fields = ('title', 'content', 'image')
+        fields = ('title', 'author', 'content', 'image')
 
 # class ManageChildForm(ModelForm):
 #     """form for a parent/authentication account to manage child profiles"""

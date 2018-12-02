@@ -13,6 +13,7 @@ from django.core.management import call_command
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
 from django.utils.six import BytesIO
+from django.shortcuts import reverse
 
 # import model classes
 import django
@@ -84,7 +85,7 @@ def add_objects():
 # "borrowed" from easy_thumbnails/tests/test_processors.py
 # cf. http://blog.cynthiakiser.com/blog/2016/06/26/testing-file-uploads-in-django/
 def create_image(storage, filename, size=(100, 100),
-                 image_mode='RGB', image_format='JPG'):
+                 image_mode='RGB', image_format='JPEG'):
     """
     Generate a test image, returning the filename that it was saved as.
 
@@ -103,6 +104,7 @@ def create_image(storage, filename, size=(100, 100),
 class PostUploadTests(TestCase):
     def setUp(self):
         # flush database w/o prompt
+        # for options cf. https://github.com/django/django/blob/master/django/core/management/commands/flush.py
         call_command('flush', interactive=False)
         # factor out the stuff that works already:
         # load users and creators into database
@@ -116,6 +118,7 @@ class PostUploadTests(TestCase):
         self.creator = tc.loc[tc['parent_account'] == self.creds['username']].iloc[0].to_dict()
         self.post = tp.loc[tp['author'] == self.creator['profile_name']].iloc[0].to_dict()
         # provide full path to image
+        self.post['image_fn'] = self.post['image'] # keep track of just file name
         self.post['image'] = os.path.join(_test_img_dir, self.post['image'])
 
 
@@ -127,6 +130,27 @@ class PostUploadTests(TestCase):
         myClient = Client()
         myClient.login(username=self.creds['username'], password=self.creds['password'])
 
+        post_img = create_image(None, self.post['image'])
+        post_file = SimpleUploadedFile(self.post['image_fn'], post_img.getvalue())
+        # TODO: how would you actually set author?
+
+        form_data = {'author': self.creator['profile_name'],
+                     'title': self.post['title'],
+                     'content': self.post['content'],
+                     'image': post_file}
+        response = myClient.post(reverse('create_post'), form_data, follow=True)
+        pass
+        # self.assertRegex(response.redirect_chain[0][0], r'/user_dashboard/$')
+
+        # # set up form data
+        # avatar = create_image(None, 'avatar.png')
+        # avatar_file = SimpleUploadedFile('front.png', avatar.getvalue())
+        # form_data = {'avatar': avatar}
+        #
+        # response = myClient.post(reverse('avatar_form'), form_data, follow=True)
+        # self.assertRegex(response.redirect_chain[0][0], r'/users/profile/$')
+        # # And now there is a user profile with an avatar
+        # self.assertIsNotNone(self.user.profile.avatar)
 
 
 

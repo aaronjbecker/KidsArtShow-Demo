@@ -29,8 +29,8 @@ SECRET_KEY = 'wbgos(+)q@5unvm2ttdjd$5@+7_84r08c026lrxtxp7ds-vc42'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+# allow unit test framework to execute views etc.
+ALLOWED_HOSTS = ['testserver', '127.0.0.1']
 
 # required by remember_me application
 # cf. https://stackoverflow.com/a/35389220

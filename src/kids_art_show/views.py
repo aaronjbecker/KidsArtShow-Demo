@@ -6,11 +6,13 @@ from django.views import generic
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.forms import formset_factory
-from .forms import KidsArtShowUserCreationForm, ManageChildrenFormset
+from .forms import KidsArtShowUserCreationForm, ManageChildrenFormset, CreatePostForm
 from .models import Post, ContentCreator
 # import remember_me.views as rmv
 import remember_me.forms as rmf
 import django.contrib.auth as dca
+from django.contrib.auth.decorators import login_required
+from django.template.response import TemplateResponse
 
 
 def home(request):
@@ -22,6 +24,22 @@ def home(request):
         'posts': Post.objects.all()
     }
     return render(request, 'kids_art_show/home.html', context)
+
+
+@login_required
+def create_post(request):
+    if request.method == "GET":
+        # create empty form
+        form = CreatePostForm()
+        # populate author choices
+        # form.fields['author'].choices
+    else:
+        form = CreatePostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('user_dashboard'))
+    return TemplateResponse(request, 'kids_art_show/create_post.html',
+                            {'user': request.user, 'create_form': form})
 
 
 @csrf_protect
