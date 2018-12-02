@@ -34,5 +34,16 @@ class AuthenticationRememberMeForm(AuthenticationForm):
     checkbox.
     """
 
+    def __init__(self, *args, form_action="login", **kwargs):
+        super(AuthenticationRememberMeForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_action = form_action
+        self.helper.layout = Layout(
+            'username',
+            'password',
+            'remember_me',
+            StrictButton('Login', css_class='btn-default', type='submit'),
+        )
+
     remember_me = forms.BooleanField(label='Remember Me', initial=True,
         required=False)

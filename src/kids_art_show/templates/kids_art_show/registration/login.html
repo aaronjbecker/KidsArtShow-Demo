@@ -2,27 +2,21 @@
 <!-- will be picked up automagically by base Django authentication system.,
 cf. https://simpleisbetterthancomplex.com/tutorial/2016/06/27/how-to-use-djangos-built-in-login-system.html -->
 {% extends 'kids_art_show/base.html' %}
-
-{#{% block extra_styles %}#}
-{# have to override materialize behavior for checkbox so that it displays.#}
-{#  cf. https://stackoverflow.com/q/49758284  #}
-{# TODO: have form generate widgets that are compatiable with materialize.css styling. #}
-{#    <style>#}
-{#        [type="checkbox"]:not(:checked), [type="checkbox"]:checked {#}
-{#            position: relative;#}
-{#            opacity: 1;#}
-{#            pointer-events: auto;#}
-{#        }#}
-{#    </style>#}
-{#{% endblock %}#}
+{#{% load bootstrap3 %}#}
+{% load crispy_forms_tags %}
 
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+<div class="container-fluid center_div">
+    <h2>Login</h2>
+{% crispy form %}
+</div>
+{#    {% bootstrap_form form layout="horizontal"%}#}
+{#    {% bootstrap_button "Login" button_type="submit" %}#}
+{#<form method="post">#}
+{#  {% csrf_token %}#}
+{#  {{ form.as_p }}#}
+{#  <button type="submit">Login</button>#}
+{#</form>#}
 {% endblock %}
