@@ -2,3 +2,6 @@
 {% load static %}
 {# TODO: profile name in page title #}
 {% block title %}Profile Page{% endblock %}
+{% block nav_bar %}
+    {% include 'kids_art_show/main_nav_bar.html' with activePage="profile" %}
+{% endblock nav_bar %}

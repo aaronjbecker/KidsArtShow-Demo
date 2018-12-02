@@ -24,9 +24,12 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
           {% if not user.is_authenticated %}
-              <li><a href="{% url 'about' %}">About</a></li>
+              <li {% if activePage == "about" %}class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
+          {% else %}
+              <li {% if activePage == "dashboard" %}class="active"{% endif %}><a href="{% url 'user_dashboard' %}">Dashboard</a></li>
+              <li {% if activePage == "profile" %}class="active"{% endif %}><a href="{% url 'user_profile' %}">Profile</a></li>
           {% endif %}
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+{#        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>#}
         <li><a href="#">Link</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"
@@ -51,20 +54,22 @@
       <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
               <li><a href="{% url 'logout' %}">Logout</a></li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle"
+                     data-toggle="dropdown" role="button"
+                     aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'manage_artists' %}">Manage Artists</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+              </li>
           {% else %}
               <li><a href="{% url 'login' %}">Login</a></li>
               <li><a href="{% url 'signup' %}">Sign Up</a></li>
           {% endif %}
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
