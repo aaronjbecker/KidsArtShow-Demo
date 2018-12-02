@@ -1,0 +1,7 @@
+form.form-inline {
+    display:inline;
+}
+div.inline_form_spacer {
+    padding:5px;
+    display:inline-block;
+}

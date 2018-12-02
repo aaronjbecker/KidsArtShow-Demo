@@ -41,10 +41,16 @@
         </li>
       </ul>
         {% if not user.is_authenticated %}
-          {% crispy login_form %}
+          <div class="inline_form_spacer">
+            {% crispy login_form %}
+          </div>
         {% endif %}
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
+          {% if user.is_authenticated %}
+              <li><a href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+              <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          {% endif %}
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -71,7 +77,7 @@
 {#               <li><a href="{% url 'logout' %}">Logout</a></li>#}
 {#           {% else %}#}
 {#               <li><a href="{% url 'login' %}" class="red">Login</a></li>#}
-{#               <li><a href="{% url 'signup' %}">Sign Up</a></li>#}
+{#               <li><a href="">Sign Up</a></li>#}
 {#           {% endif %}#}
 {#       </ul>#}
 {#    </div>#}
