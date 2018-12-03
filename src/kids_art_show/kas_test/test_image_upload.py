@@ -136,10 +136,11 @@ class PostUploadTests(TestCase):
         # author is a choicefield that expects the content creator ID
         author_obj = kasm.ContentCreator.objects.get(profile_name=self.creator['profile_name'])
         author_id = author_obj.id
-        form_data = {'author': author_id,
+        form_data = {'author': str(author_id),
                      'title': self.post['title'],
                      'content': self.post['content'],
                      'image': post_file}
+        form_content = myClient.get(reverse('create_post'))
         response = myClient.post(reverse('create_post'), form_data, follow=True)
         pass
         # self.assertRegex(response.redirect_chain[0][0], r'/user_dashboard/$')

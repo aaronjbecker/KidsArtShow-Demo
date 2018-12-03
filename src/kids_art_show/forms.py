@@ -9,6 +9,8 @@ from .models import KidsArtShowUser, ContentCreator, Post
 from django.contrib.auth.decorators import login_required
 from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.bootstrap import StrictButton
+from django.forms.models import ModelChoiceField
+
 
 class KidsArtShowUserCreationForm(UserCreationForm):
 
@@ -35,15 +37,22 @@ class CreatePostForm(ModelForm):
         if form_action is None:
             # TODO: is this the right way to do this?
             form_action = reverse("create_post")
+        author = None
+        # if 'author' in kwargs:
+        #     author = kwargs.pop('author')
         self.user = kwargs.pop('user')
         super(CreatePostForm, self).__init__(*args, **kwargs)
-        self.fields['author'].queryset = ContentCreator.objects.filter(parent_account=self.user.id)
-        # create form helper
+        # problem is that queryset is not evaluated until form is rendered...
+        qs = ContentCreator.objects.filter(parent_account=self.user.id)
+        mcf = ModelChoiceField(qs)
+        self.fields['author'] = mcf
+        # force full clean after specifying valid author choices
+        self.full_clean()
+        # create form helper to assist with crispy forms formatting
         self.helper = FormHelper(self)
         self.helper.form_action = form_action
         self.helper.layout = Layout('title', 'author', 'content', 'image',
             StrictButton('Login', css_class='btn-default', type='submit'))
-        pass
 
 # class ManageChildForm(ModelForm):
 #     """form for a parent/authentication account to manage child profiles"""
