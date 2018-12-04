@@ -28,17 +28,16 @@ def home(request):
 
 @login_required
 def create_post(request):
-    # TODO: limit author choices to user-managed profiles
+    """author is limited to user-managed artists in CreatePostForm ctor"""
     if request.method == "GET":
         # create empty form
         form = CreatePostForm(user=request.user)
-        # populate author choices
-        # form.fields['author'].choices
     else:
         form = CreatePostForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             form.save()
             return redirect(reverse_lazy('user_dashboard'))
+    # TODO: why TemplateResponse instead of render?
     return TemplateResponse(request, 'kids_art_show/create_post.html',
                             {'user': request.user, 'create_form': form})
 

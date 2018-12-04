@@ -37,9 +37,10 @@ class CreatePostForm(ModelForm):
         if form_action is None:
             # TODO: is this the right way to do this?
             form_action = reverse("create_post")
-        author = None
+        # author = None
         # if 'author' in kwargs:
         #     author = kwargs.pop('author')
+        # user is used to select ContentCreators, not fed to superclass ctor
         self.user = kwargs.pop('user')
         super(CreatePostForm, self).__init__(*args, **kwargs)
         # problem is that queryset is not evaluated until form is rendered...

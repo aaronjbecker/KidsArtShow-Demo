@@ -140,27 +140,13 @@ class PostUploadTests(TestCase):
                      'title': self.post['title'],
                      'content': self.post['content'],
                      'image': post_file}
-        form_content = myClient.get(reverse('create_post'))
         response = myClient.post(reverse('create_post'), form_data, follow=True)
-        pass
-        # self.assertRegex(response.redirect_chain[0][0], r'/user_dashboard/$')
-
-        # # set up form data
-        # avatar = create_image(None, 'avatar.png')
-        # avatar_file = SimpleUploadedFile('front.png', avatar.getvalue())
-        # form_data = {'avatar': avatar}
-        #
-        # response = myClient.post(reverse('avatar_form'), form_data, follow=True)
-        # self.assertRegex(response.redirect_chain[0][0], r'/users/profile/$')
-        # # And now there is a user profile with an avatar
-        # self.assertIsNotNone(self.user.profile.avatar)
+        # TODO: test that response resulted in successful creation of post image
+        # successful post creation should return to user dashboard
+        self.assertTrue('user_dashboard' in response.redirect_chain[0][0],
+                        "Successful post creation should redirect to user dashboard!")
 
 
-
-if __name__ == '__main__':
-    put = PostUploadTests()
-    put.run()
-    pass
     # # factor out the stuff that works already
     # add_objects()
     # # get use and use first set of credentials to log in test client
