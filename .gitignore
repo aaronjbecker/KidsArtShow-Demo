@@ -4,6 +4,10 @@
 # pycharm project settings
 .idea
 
+# AJB 12/3/18: don’t track database or migrations
+migrations/
+db.sqlite3
+
 # office temp files
 ~$*.xlsx
 
