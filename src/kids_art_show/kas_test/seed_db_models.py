@@ -173,22 +173,3 @@ if __name__ == '__main__':
 
     # now re-insert objects from the pre-defined test data
     add_objects()
-
-    # # finally, create some sample posts
-    # tp = read_test_posts()
-    # for _, postRow in tp.iterrows():
-    #     pdict = postRow.to_dict()
-    #     # add post via relation to creator
-    #     c = kasm.ContentCreator.objects.get(profile_name=pdict['author'])
-    #     pdict.pop('author', None)
-    #     # add path to image
-    #     pdict['image'] = os.path.join(_test_img_dir, pdict['image'])
-    #     # img = pdict.pop('image')
-    #     # uses related_name attribute
-    #     # frm = kasf.CreatePostForm(data=pdict, files=[img])
-    #
-    #     c.artist.create(**pdict)
-    #     pass
-
-
-

@@ -6,22 +6,16 @@ AJB 12/2/18: another take at testing post creation, this time
 # TODO: cleanup imports and setup
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "kids_art_show.settings")
-
-from PIL import Image
-from django.core.files.base import ContentFile
+# TODO: do you need the setup call in a unit test file?
+import django
+django.setup()
+# import django components used in tests
 from django.core.management import call_command
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
-from django.utils.six import BytesIO
 from django.shortcuts import reverse
-
-# import model classes
-import django
-django.setup()
-# from kids_art_show.models import KidsArtShowUser
 # import aliasing to support module reloading during interactive
 import kids_art_show.models as kasm
-import kids_art_show.forms as kasf
 import pandas as pd
 
 
@@ -109,11 +103,10 @@ class PostUploadTests(TestCase):
         # get creator name and post names associated with this user
         tc = read_test_creators()
         tp = read_test_posts()
+        # get first artist associated with this user
         self.creator = tc.loc[tc['parent_account'] == self.creds['username']].iloc[0].to_dict()
+        # get the first post by this artist
         self.post = tp.loc[tp['author'] == self.creator['profile_name']].iloc[0].to_dict()
-        # # provide full path to image
-        # self.post['image_fn'] = self.post['image'] # keep track of just file name
-        # self.post['image'] = os.path.join(_test_img_dir, self.post['image'])
 
 
     def tearDown(self):
@@ -123,9 +116,8 @@ class PostUploadTests(TestCase):
     def test_uploading_image_post(self):
         myClient = Client()
         myClient.login(username=self.creds['username'], password=self.creds['password'])
-
+        # read image from test directory as per module-level defaults above
         post_file = read_image_file(self.post['image'])
-        # post_file = SimpleUploadedFile(self.post['image_fn'], post_img.getvalue())
         # author is a choicefield that expects the content creator ID
         author_obj = kasm.ContentCreator.objects.get(profile_name=self.creator['profile_name'])
         author_id = author_obj.id
@@ -138,28 +130,3 @@ class PostUploadTests(TestCase):
         # successful post creation should return to user dashboard
         self.assertTrue('user_dashboard' in response.redirect_chain[0][0],
                         "Successful post creation should redirect to user dashboard!")
-
-
-    # # factor out the stuff that works already
-    # add_objects()
-    # # get use and use first set of credentials to log in test client
-    # tu = read_test_users()
-    # creds = tu.iloc[0]
-    # # _, creds = next(tu.iterrows())
-    #
-    #
-    # # finally, create some sample posts
-    # tp = read_test_posts()
-    # for _, postRow in tp.iterrows():
-    #     pdict = postRow.to_dict()
-    #     # add post via relation to creator
-    #     c = kasm.ContentCreator.objects.get(profile_name=pdict['author'])
-    #     pdict.pop('author', None)
-    #     # add path to image
-    #     pdict['image'] = os.path.join(_test_img_dir, pdict['image'])
-    #     # img = pdict.pop('image')
-    #     # uses related_name attribute
-    #     # frm = kasf.CreatePostForm(data=pdict, files=[img])
-    #
-    #     c.artist.create(**pdict)
-    #     pass
