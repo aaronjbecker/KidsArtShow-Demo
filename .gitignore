@@ -7,6 +7,8 @@
 # AJB 12/3/18: don’t track database or migrations
 migrations/
 db.sqlite3
+# don't track media directory (should match settings.MEDIA_ROOT
+media/
 
 # office temp files
 ~$*.xlsx
