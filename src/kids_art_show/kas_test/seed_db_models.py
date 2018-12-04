@@ -7,19 +7,14 @@ AJB 12/1/18: script to populate user, artist, Post, etc. w/ initial data
         cf. https://timonweb.com/posts/how-to-run-an-arbitrary-script-in-the-context-of-the-django-project/
 """
 # TODO: cleanup imports and setup
-from PIL import Image
-from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase, Client
-from django.utils.six import BytesIO
 from django.core.management import call_command
+import glob
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "kids_art_show.settings")
-# import model classes
+# set up django env so you can use models, etc.
 import django
 django.setup()
-# from kids_art_show.models import KidsArtShowUser
 # import aliasing to support module reloading during interactive
 import kids_art_show.models as kasm
 import kids_art_show.forms as kasf
@@ -74,23 +69,23 @@ def read_image_file(image_fn: str,
 
 
 def add_objects():
-    # # create users
-    # tu = read_test_users()
-    # for _, urow in tu.iterrows():
-    #     # need to use create_user to get password hashed and login supported etc.
-    #     # cf. https://stackoverflow.com/a/23482284
-    #     kasm.KidsArtShowUser.objects.create_user(**urow.to_dict())
-    #
-    # # now create child artist profiles
-    # tc = read_test_creators()
-    # for _, crow in tc.iterrows():
-    #     cdict = crow.to_dict()
-    #     # add content creator via relation to parent account
-    #     # cf. https://docs.djangoproject.com/en/2.1/ref/models/relations/
-    #     p = kasm.KidsArtShowUser.objects.get(username=cdict['parent_account'])
-    #     # remove parent account from dict and set as related item
-    #     cdict.pop('parent_account', None)
-    #     p.contentcreator_set.create(**cdict)
+    # create users
+    tu = read_test_users()
+    for _, urow in tu.iterrows():
+        # need to use create_user to get password hashed and login supported etc.
+        # cf. https://stackoverflow.com/a/23482284
+        kasm.KidsArtShowUser.objects.create_user(**urow.to_dict())
+
+    # now create child artist profiles
+    tc = read_test_creators()
+    for _, crow in tc.iterrows():
+        cdict = crow.to_dict()
+        # add content creator via relation to parent account
+        # cf. https://docs.djangoproject.com/en/2.1/ref/models/relations/
+        p = kasm.KidsArtShowUser.objects.get(username=cdict['parent_account'])
+        # remove parent account from dict and set as related item
+        cdict.pop('parent_account', None)
+        p.contentcreator_set.create(**cdict)
 
     # create sample posts
     tp = read_test_posts()
@@ -107,17 +102,76 @@ def add_objects():
         frm_files = {'image': post_img}
         frm = kasf.CreatePostForm(frm_data, frm_files, user=parent)
         frm.save()
-        pass
-        # need to lookup user object
 
 
+def navigate_to_root(root_dir: str = 'src'):
+    # navigate up directories until you find specified root directory
+    # TODO: what happens if you can't find root?
+    while True:
+        # will always be a directory
+        wd = os.getcwd()
+        # get final folder part of path
+        curr_folder = os.path.basename(os.path.normpath(wd))
+        if curr_folder == root_dir:
+            break
+        else:
+            # move up one level
+            os.chdir('..')
 
+
+def nukedir(dir):
+    """cf. https://stackoverflow.com/a/13766571"""
+    if dir[-1] == os.sep: dir = dir[:-1]
+    files = os.listdir(dir)
+    for file in files:
+        if file == '.' or file == '..': continue
+        path = dir + os.sep + file
+        if os.path.isdir(path):
+            nukedir(path)
+        else:
+            os.unlink(path)
+    os.rmdir(dir)
+
+
+# default values for database/migration clearing
+_db_name = 'db.sqlite3'
+_media_folder = 'media'
+
+
+def completely_clear_db():
+    """AJB 12/3/18: delete database and all migrations, then re-run migrations.
+        Designed to provide a complete reset prior to seeding the database."""
+    # TODO: refactor into separate script and call from shell for windows
+    # note: Windows users may see permission errors.
+    # assumes you start in project root directory
+    # find all migrations using unix-style glob syntax
+    res = glob.glob("*/migrations/*.py", recursive=True)
+    # also delete compiled/cached migrations, but use 1 loop
+    res += glob.glob("*/migrations/*.pyc", recursive=True)
+    for f in res:
+        if f.endswith('__init__.py'):
+            # don't delete init from migrations
+            continue
+        os.remove(f)
+    # nuke and recreate media folder where images are stored server-side
+    nukedir(_media_folder)
+    os.mkdir(_media_folder)
+    # now delete the database itself
+    os.remove(_db_name)
 
 
 if __name__ == '__main__':
+    # save initial working directory
+    init_wd = os.getcwd()
+    # navigate to root directory
+    navigate_to_root()
     # clear pre-existing database contents
+    completely_clear_db()
+    # remake migrations (on top of empty db) and build db
+    call_command('makemigrations', interactive=False)
+    call_command('migrate', interactive=False)
 
-    # factor out the stuff that works already
+    # now re-insert objects from the pre-defined test data
     add_objects()
 
     # # finally, create some sample posts
