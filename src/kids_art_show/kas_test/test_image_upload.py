@@ -82,23 +82,17 @@ def add_objects():
         pass
 
 
-# "borrowed" from easy_thumbnails/tests/test_processors.py
-# cf. http://blog.cynthiakiser.com/blog/2016/06/26/testing-file-uploads-in-django/
-def create_image(storage, filename, size=(100, 100),
-                 image_mode='RGB', image_format='JPEG'):
-    """
-    Generate a test image, returning the filename that it was saved as.
-
-    If ``storage`` is ``None``, the BytesIO containing the image data
-    will be passed instead.
-    """
-    data = BytesIO()
-    Image.new(image_mode, size).save(data, image_format)
-    data.seek(0)
-    if not storage:
-        return data
-    image_file = ContentFile(data.read())
-    return storage.save(filename, image_file)
+def read_image_file(image_fn: str,
+                    image_dir: str = None,
+                    content_type: str = 'image/jpeg'):
+    """AJB 12/3/18: read an image file from specified/default directory into a Django upload container"""
+    if image_dir is None:
+        image_dir = _test_img_dir
+    img_path = os.path.join(image_dir, image_fn)
+    with open(img_path, 'rb') as img:
+        # convert bytes to uploaded file so you can attach it to form as a file
+        return SimpleUploadedFile(image_fn, img.read(),
+                                  content_type=content_type)
 
 
 class PostUploadTests(TestCase):
@@ -117,9 +111,9 @@ class PostUploadTests(TestCase):
         tp = read_test_posts()
         self.creator = tc.loc[tc['parent_account'] == self.creds['username']].iloc[0].to_dict()
         self.post = tp.loc[tp['author'] == self.creator['profile_name']].iloc[0].to_dict()
-        # provide full path to image
-        self.post['image_fn'] = self.post['image'] # keep track of just file name
-        self.post['image'] = os.path.join(_test_img_dir, self.post['image'])
+        # # provide full path to image
+        # self.post['image_fn'] = self.post['image'] # keep track of just file name
+        # self.post['image'] = os.path.join(_test_img_dir, self.post['image'])
 
 
     def tearDown(self):
@@ -130,9 +124,8 @@ class PostUploadTests(TestCase):
         myClient = Client()
         myClient.login(username=self.creds['username'], password=self.creds['password'])
 
-        post_img = create_image(None, self.post['image'])
-        post_file = SimpleUploadedFile(self.post['image_fn'], post_img.getvalue())
-        # TODO: how would you actually set author?
+        post_file = read_image_file(self.post['image'])
+        # post_file = SimpleUploadedFile(self.post['image_fn'], post_img.getvalue())
         # author is a choicefield that expects the content creator ID
         author_obj = kasm.ContentCreator.objects.get(profile_name=self.creator['profile_name'])
         author_id = author_obj.id

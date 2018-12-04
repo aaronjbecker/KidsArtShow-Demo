@@ -59,23 +59,18 @@ def read_test_posts(xl_path: str = None):
     test_posts = pd.read_excel(xl_path, sheetname="posts")
     return test_posts
 
-# "borrowed" from easy_thumbnails/tests/test_processors.py
-# cf. http://blog.cynthiakiser.com/blog/2016/06/26/testing-file-uploads-in-django/
-def create_image(storage, filename, size=(100, 100),
-                 image_mode='RGB', image_format='JPEG'):
-    """
-    Generate a test image, returning the filename that it was saved as.
 
-    If ``storage`` is ``None``, the BytesIO containing the image data
-    will be passed instead.
-    """
-    data = BytesIO()
-    Image.new(image_mode, size).save(data, image_format)
-    data.seek(0)
-    if not storage:
-        return data
-    image_file = ContentFile(data.read())
-    return storage.save(filename, image_file)
+def read_image_file(image_fn: str,
+                    image_dir: str = None,
+                    content_type: str = 'image/jpeg'):
+    """AJB 12/3/18: read an image file from specified/default directory into a Django upload container"""
+    if image_dir is None:
+        image_dir = _test_img_dir
+    img_path = os.path.join(image_dir, image_fn)
+    with open(img_path, 'rb') as img:
+        # convert bytes to uploaded file so you can attach it to form as a file
+        return SimpleUploadedFile(image_fn, img.read(),
+                                  content_type=content_type)
 
 
 def add_objects():
@@ -104,12 +99,8 @@ def add_objects():
         # get creator object and associated parent user
         c = kasm.ContentCreator.objects.get(profile_name=prow['author'])
         parent = c.parent_account
-        # create image w/o storage
-        post_img = create_image(None, prow['image'])
-        # convert to uploaded file so you can attach it to form as a file
-        post_img = SimpleUploadedFile(prow['image'],
-                                      post_img.getvalue(),
-                                      content_type='image/jpeg')
+        # load specified image into upload container
+        post_img = read_image_file(prow['image'])
         frm_data = {'author': str(c.pk),
                     'title': prow['title'],
                     'content': prow['content']}
