@@ -144,6 +144,7 @@ def completely_clear_db():
     # TODO: refactor into separate script and call from shell for windows
     # note: Windows users may see permission errors.
     # assumes you start in project root directory
+    # cf. https://simpleisbetterthancomplex.com/tutorial/2016/07/26/how-to-reset-migrations.html
     # find all migrations using unix-style glob syntax
     res = glob.glob("*/migrations/*.py", recursive=True)
     # also delete compiled/cached migrations, but use 1 loop

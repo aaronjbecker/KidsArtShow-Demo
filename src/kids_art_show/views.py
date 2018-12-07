@@ -13,12 +13,17 @@ import remember_me.forms as rmf
 import django.contrib.auth as dca
 from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
+from django.views.decorators.http import require_POST
 
 
 def home(request):
     # provide instance of login form for use in navbar quick link
     # login_form = rmv.remember_me_login(request)
-    login_form = rmf.RembmerMeAuthFormInline(request)
+    # note that url already includes backslash
+    login_redirect = "process_login{}/".format(reverse_lazy('home'))
+    # TODO: is it correct to pass request here?
+    login_form = rmf.RembmerMeAuthFormInline(request,
+                                             form_action=login_redirect)
     context = {
         'login_form': login_form,
         'posts': Post.objects.all()
@@ -40,6 +45,39 @@ def create_post(request):
     # TODO: why TemplateResponse instead of render?
     return TemplateResponse(request, 'kids_art_show/create_post.html',
                             {'user': request.user, 'create_form': form})
+
+# TODO: re_path on inline login, pass environment variable to form action (request.url)
+
+@csrf_protect
+@never_cache
+@require_POST
+def process_inline_login(request, src):
+    """
+    Explicitly designed to be called only from inline navbar login form
+    :param request:
+    :param redirect_field_name:
+    :param form_ctx_fld:
+    :return:
+    """
+    if request.method == 'GET':
+        # TODO: error handling if called with GET
+        return
+    else:
+        form = rmf.RembmerMeAuthFormInline(data=request.POST)
+        context = {
+            'login_form': form,
+            'posts': Post.objects.all()
+        }
+        if form.is_valid():
+            if not form.cleaned_data.get('remember_me'):
+                request.session.set_expiry(0)
+
+            # Okay, security checks complete. Log the user in.
+            dca.login(request, form.get_user())
+
+            if request.session.test_cookie_worked():
+                request.session.delete_test_cookie()
+        return render(request, 'kids_art_show/home.html', context)
 
 
 @csrf_protect

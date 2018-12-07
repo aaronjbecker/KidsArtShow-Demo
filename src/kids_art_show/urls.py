@@ -31,7 +31,9 @@ urlpatterns = [
          remember_me_login,
          kwargs = {'template_name': "kids_art_show/registration/login.html"},
          name='login'),
-    path('process_login', views.process_remember_me_login, name="process_login"),
+    re_path(r'^process_login(/(?P<src>.*)/)?$',
+            views.process_inline_login,
+            name="process_login"),
     # TODO: profile with user ID as argument
     # TODO: user dashboard
     path('user_profile', views.UserProfile.as_view(), name='user_profile'),
