@@ -6,7 +6,6 @@
       {% thumbnail art.image "300x300" crop="100%" as im %}
         <a href="{{ art.get_absolute_url }}">
           <img src="{{ im.url }}">
-        <p>{{ im.url }}</p>
         </a>
       {% endthumbnail %}
     </a>
