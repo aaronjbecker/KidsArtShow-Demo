@@ -7,7 +7,7 @@ TODO: define requirements for intended user types and associated classes
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
-
+from django.utils.text import slugify
 
 # define a set of privacy levels applied to profiles and posts
 # TODO: use some standard set of privacy levels if such a thing exists
@@ -70,16 +70,32 @@ class Post(models.Model):
     TODO: maybe more than one image?
     TODO: maybe also comments?
     """
-    title = models.CharField(max_length=100)
-    content = models.TextField(null=True, default=None)
-    date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(ContentCreator, null=True,
                                related_name='artist',
                                on_delete=models.SET_NULL)
+    title = models.CharField(max_length=100)
     # note: storage manager defaults to FileSystemStorage with base at MEDIA_ROOT
     image = models.ImageField(upload_to=image_fn, null=True, default=None)
+    # use slugs rather than primary keys for navigation, for security purposes
+    slug = models.SlugField(max_length=200, blank=True)
+    # TODO: make description a markdown field?
+    description = models.TextField(null=True, default=None)
+    # automatically use current time at creation; create an index in database for posting date.
+    date_posted = models.DateTimeField(default=timezone.now,
+                                       auto_now_add=True,
+                                       db_index=True)
     # TODO: privacy level field, categorical
-    # TODO: likes should be another class, with user account, post, date fields (to avoid dupes)
+
+    # track which users have liked an image so that you don't allow duplicate likes
+    users_like = models.ManyToManyField(KidsArtShowUser,
+                                        related_name='posts_liked',
+                                        blank=True)
+    # use both post date and title when generating slug
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug_basis = "{}_{}".format(timezone.now().strftime('%y%m%d_%H%M%s'), self.title)
+            self.slug = slugify(slug_basis)
+        super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} by {self.author} on {self.date_posted}"
