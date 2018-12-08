@@ -16,7 +16,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # path settings
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
@@ -49,7 +50,8 @@ INSTALLED_APPS = [
     'kids_art_show',
     'crispy_forms',
     'bootstrap3',
-    'remember_me'
+    'remember_me',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [

@@ -1,8 +1,9 @@
 import re
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
+from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.forms import formset_factory
@@ -14,6 +15,7 @@ import django.contrib.auth as dca
 from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
+from common.decorators import ajax_required
 
 
 def home(request):
@@ -119,6 +121,27 @@ def process_remember_me_login(request,
     return redirect(redirect_to, request)
 
 
+def art_feed(request):
+    if request.user.is_authenticated:
+        # use user's queryset/manager to get related entitled posts
+        pass
+    else:
+        pass
+    # for now, just public
+    # return public posts
+    ctx = {'arts': Post.public_posts.all() }
+    return render(request, 'kids_art_show/list.html', context=ctx)
+
+
+def art_detail(request, slug):
+    # TODO: permission checking of some sort
+    art = get_object_or_404(Post, slug=slug)
+    return render(request,
+                  'kids_art_show/art_detail.html',
+                  {'art': art})
+    pass
+
+
 def about(request):
     # provide instance of login form for use in navbar quick link
     login_form = rmf.RembmerMeAuthFormInline(request)
@@ -166,3 +189,22 @@ def manage_artists(request):
                   { 'formset': formset,
                     'heading': heading_message })
 
+
+@ajax_required
+@login_required
+@require_POST
+def art_like(request):
+    image_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if image_id and action:
+        try:
+            image = Post.objects.get(id=image_id)
+            if action == 'like':
+                image.users_like.add(request.user)
+                # create_action(request.user, 'likes', image)
+            else:
+                image.users_like.remove(request.user)
+            return JsonResponse({'status':'ok'})
+        except:
+            pass
+    return JsonResponse({'status':'ko'})

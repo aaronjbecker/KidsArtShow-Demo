@@ -12,6 +12,7 @@
     <title>{% block title %}Kids Art Show{% endblock %}</title>
     {# Load Boostrap CSS #}
     {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'kids_art_show/base.css' %}">
     <link rel="stylesheet" href="{% static 'kids_art_show/design.css' %}">
     {#  section for extra styles/pieces related to particular pages  #}
     {% block extra_styles %}{% endblock extra_styles %}

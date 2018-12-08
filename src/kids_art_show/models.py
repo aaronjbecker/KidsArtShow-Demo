@@ -8,6 +8,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from django.urls import reverse
 
 # define a set of privacy levels applied to profiles and posts
 # TODO: use some standard set of privacy levels if such a thing exists
@@ -27,6 +28,9 @@ PRIVACY_CHOICES = ((1, 'Private'),
 #             .filter(status='published')
 
 
+
+
+
 class KidsArtShowUser(AbstractUser):
     """
     User class that handles authentication on the KAS website.
@@ -35,14 +39,11 @@ class KidsArtShowUser(AbstractUser):
     """
     # TODO: define a more appropriate set of fields
     bio = models.TextField(max_length=500)
-    # child_name = models.CharField(max_length=100)
     # TODO: define method to determine whether user is old enough to create an account
     birth_date = models.DateField(null=True, blank=True)
     # TODO: method to associate parent account with one or more children; these are created after account registration.
     # TODO: method to distinguish between parent and viewer accounts
-    # has_children = models.BooleanField(default=False)
     # TODO: following
-
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -62,6 +63,9 @@ class ContentCreator(models.Model):
     default_privacy = models.IntegerField(choices=PRIVACY_CHOICES, default=1)
     # TODO: other child-related fields, e.g. bio, age, favorite color, etc.
 
+    # TODO: manager for public profiles; should be indexed by number of followers?
+
+
     def __str__(self):
         return self.profile_name
 
@@ -76,6 +80,12 @@ def image_fn(instance, filename):
     # prepend date posted, as utc timestamp
     #   (timestamp includes seconds, to prevent errors on duplicate filename submissions)
     return "{}/{}_{}".format(instance.author.profile_name, timezone.now().timestamp(), filename)
+
+
+class PublicPostManager(models.Manager):
+    def get_queryset(self):
+        # encoding for public posts
+        return super().get_queryset().filter(privacy_level=3)
 
 
 class Post(models.Model):
@@ -104,12 +114,21 @@ class Post(models.Model):
     users_like = models.ManyToManyField(KidsArtShowUser,
                                         related_name='posts_liked',
                                         blank=True)
+    # still want default manager available
+    objects = models.Manager()
+    public_posts = PublicPostManager()
+
     # use both post date and title when generating slug
     def save(self, *args, **kwargs):
+        # if not self.privacy_level:
+        #     self.privacy_level = self.author.default_privacy
         if not self.slug:
-            slug_basis = "{}_{}".format(timezone.now().strftime('%y%m%d_%H%M%s'), self.title)
+            slug_basis = "{}_{}_{}".format(timezone.now().strftime('%y%m%d_%H%M%s'), self.author, self.title)
             self.slug = slugify(slug_basis)
         super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.title} by {self.author} on {self.date_posted}"
+
+    def get_absolute_url(self):
+        return reverse('detail', args=[self.slug])

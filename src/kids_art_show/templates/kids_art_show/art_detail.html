@@ -1,20 +1,20 @@
 {# based on example from https://github.com/PacktPublishing/Django-2-by-Example #}
 
-{% extends "base.html" %}
+{% extends "kids_art_show/base.html" %}
 
-{% block title %}{{ image.title }}{% endblock %}
+{% block title %}{{ art.title }}{% endblock %}
 
 {% block content %}
-  <h1>{{ image.title }}</h1>
+  <h1>{{ art.title }}</h1>
   {% load thumbnail %}
 
-  {% thumbnail image.image "300" as im %}
-    <a href="{{ image.image.url }}">
+  {% thumbnail art.image "300" as im %}
+    <a href="{{ art.image.url }}">
       <img src="{{ im.url }}" class="image-detail">
     </a>
   {% endthumbnail %}
 
-  {% with total_likes=image.users_like.count users_like=image.users_like.all %}
+  {% with total_likes=art.users_like.count users_like=art.users_like.all %}
     <div class="image-info">
       <div>
         <span class="count">
@@ -32,25 +32,25 @@
           {% endif %}
         </a>
       </div>
-      {{ image.description|linebreaks }}
+      {{ art.description|linebreaks }}
     </div>
-    <div class="image-likes">
-      {% for user in image.users_like.all %}
-        <div>
-          <img src="{{ user.profile.photo.url }}">
-          <p>{{ user.first_name }}</p>
-        </div>
-      {% empty %}
-        Nobody likes this image yet.
-      {% endfor %}
-    </div>
+{#    <div class="image-likes">#}
+{#      {% for user in art.users_like.all %}#}
+{#        <div>#}
+{#          <img src="{{ user.profile.photo.url }}">#}
+{#          <p>{{ user.first_name }}</p>#}
+{#        </div>#}
+{#      {% empty %}#}
+{#        Nobody likes this image yet.#}
+{#      {% endfor %}#}
+{#    </div>#}
   {% endwith %}
 {% endblock %}
 
 {% block domready %}
   $('a.like').click(function(e){
     e.preventDefault();
-    $.post('{% url "images:like" %}',
+    $.post('{% url "like" %}',
       {
         id: $(this).data('id'),
         action: $(this).data('action')
