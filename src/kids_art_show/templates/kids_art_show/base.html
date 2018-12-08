@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static 'kids_art_show/design.css' %}">
     {#  section for extra styles/pieces related to particular pages  #}
     {% block extra_styles %}{% endblock extra_styles %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 <!--NavBar-->
@@ -31,7 +32,6 @@
 <!-- links to scripts used -->
 {% bootstrap_javascript jquery=0 %}
 {# use js cookies to deal with csrf protection in AJAX queries, as per Django by Example 2 #}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <script>
     var csrftoken = Cookies.get('csrftoken');
@@ -47,8 +47,8 @@
       }
     });
     $(document).ready(function(){
-      {% block domready %}
-      {% endblock %}
+        {% block domready %}
+        {% endblock %}
        });
   </script>
 {% block custom_js %}{% endblock %}

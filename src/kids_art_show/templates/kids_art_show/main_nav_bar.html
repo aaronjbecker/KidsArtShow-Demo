@@ -78,6 +78,25 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+{#<script type="text/javascript">#}
+{#    var frm = $('#FORM-ID');#}
+{#    frm.submit(function () {#}
+{#        $.ajax({#}
+{#            type: frm.attr('method'),#}
+{#            url: frm.attr('action'),#}
+{#            data: frm.serialize(),#}
+{#            success: function (data) {#}
+{#                $("#SOME-DIV").html(data);#}
+{#            },#}
+{#            error: function(data) {#}
+{#                $("#MESSAGE-DIV").html("Something went wrong!");#}
+{#            }#}
+{#        });#}
+{#        return false;#}
+{#    });#}
+{#</script>#}
+
 {#<nav>#}
 {#    <div class="nav-wrapper">#}
 {#       <a href="{% url 'home' %}" class="brand-logo">Kid Art Show</a>#}

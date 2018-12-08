@@ -1,6 +1,6 @@
 import re
 from django.conf import settings
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.urls import reverse_lazy
 from django.views import generic
 from django.http import JsonResponse
@@ -18,14 +18,30 @@ from django.views.decorators.http import require_POST
 from common.decorators import ajax_required
 
 
-def home(request):
-    # provide instance of login form for use in navbar quick link
-    # login_form = rmv.remember_me_login(request)
+def get_login_form(request):
+    """helper to build login form with error messages and redirects for pages that have one"""
+    # provides instance of login form for use in navbar quick link
     # note that url already includes backslash
-    login_redirect = "process_login{}/".format(reverse_lazy('home'))
-    # TODO: is it correct to pass request here?
-    login_form = rmf.RembmerMeAuthFormInline(request,
+    login_redirect = "process_login{}/".format(request.path)
+    login_data = {}
+    # use post data, or session, or nothing
+    if request.POST:
+        login_data = request.POST
+    else:
+        if 'login_data' in request.session.keys():
+            login_data = request.session['login_data']
+    login_form = rmf.RembmerMeAuthFormInline(data=login_data,
                                              form_action=login_redirect)
+    # if you had a non-empty dict, check for errors
+    if login_data:
+        login_form.full_clean()
+    return login_form
+
+
+def home(request):
+    """render the home page"""
+    # use helper above to get login_form
+    login_form = get_login_form(request)
     context = {
         'login_form': login_form,
         'posts': Post.objects.all()
@@ -56,30 +72,40 @@ def create_post(request):
 def process_inline_login(request, src):
     """
     Explicitly designed to be called only from inline navbar login form
+    src must be a valid URL recognized by django
     :param request:
     :param redirect_field_name:
     :param form_ctx_fld:
     :return:
     """
-    if request.method == 'GET':
-        # TODO: error handling if called with GET
-        return
+    form = rmf.RembmerMeAuthFormInline(data=request.POST)
+    # context = {
+    #     'login_form': form,
+    #     'posts': Post.objects.all()
+    # }
+    # store post data, force clean in view if present on session
+    form_data = {}
+    if form.is_valid():
+        if not form.cleaned_data.get('remember_me'):
+            request.session.set_expiry(0)
+
+        # Okay, security checks complete. Log the user in.
+        dca.login(request, form.get_user())
+
+        if request.session.test_cookie_worked():
+            request.session.delete_test_cookie()
     else:
-        form = rmf.RembmerMeAuthFormInline(data=request.POST)
-        context = {
-            'login_form': form,
-            'posts': Post.objects.all()
-        }
-        if form.is_valid():
-            if not form.cleaned_data.get('remember_me'):
-                request.session.set_expiry(0)
-
-            # Okay, security checks complete. Log the user in.
-            dca.login(request, form.get_user())
-
-            if request.session.test_cookie_worked():
-                request.session.delete_test_cookie()
-        return render(request, 'kids_art_show/home.html', context)
+        # only record data if there was an error, so the form can validate and show errors on redirect
+        # TODO: this is probably insecure for some reason?
+        form_data = {str(k):str(v) for k, v in form.data.items() if str(k) != 'csrfmiddlewaretoken'}
+        # error_messages = dict(form.error_messages)
+    # return render(request, 'kids_art_show/home.html', context)
+    # use session to store form errors; this is imperfect but should suffice for basic stuff here
+    # cf. https://stackoverflow.com/a/9000663
+    # have to force serialization, cf. https://stackoverflow.com/a/19734757
+    # request.session['login_data'] = {str(k):str(v) for k, v in error_messages.items()}
+    request.session['login_data'] = form_data
+    return redirect(reverse(src))
 
 
 @csrf_protect
@@ -122,6 +148,10 @@ def process_remember_me_login(request,
 
 
 def art_feed(request):
+    """displays feed of artworks that user is allowed to see, or only public art if not authenticated."""
+    # get login form to use in navigation bar
+    login_form = get_login_form(request)
+
     if request.user.is_authenticated:
         # use user's queryset/manager to get related entitled posts
         pass
@@ -129,11 +159,14 @@ def art_feed(request):
         pass
     # for now, just public
     # return public posts
-    ctx = {'arts': Post.public_posts.all() }
+    ctx = {'arts': Post.public_posts.all(),
+           'login_form': login_form}
     return render(request, 'kids_art_show/list.html', context=ctx)
 
 
 def art_detail(request, slug):
+    # get login form to use in navigation bar
+    login_form = get_login_form(request)
     # TODO: permission checking of some sort
     art = get_object_or_404(Post, slug=slug)
     return render(request,
@@ -143,8 +176,8 @@ def art_detail(request, slug):
 
 
 def about(request):
-    # provide instance of login form for use in navbar quick link
-    login_form = rmf.RembmerMeAuthFormInline(request)
+    # get login form to use in navigation bar
+    login_form = get_login_form(request)
     context = {
         'login_form': login_form,
         'posts': Post.objects.all()
@@ -167,6 +200,7 @@ class SignUp(generic.CreateView):
 
 
 # TODO: attempt to use a FormSet/ModelFormSet to allow editing more than one child profile?
+@login_required
 def manage_artists(request):
     template_name = 'kids_art_show/manage_formset.html'
     heading_message = "Manage Artist Profiles"
