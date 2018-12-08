@@ -23,5 +23,10 @@ class KidsArtShowAdmin(UserAdmin):
 
 # register admin objects and/or model classes
 admin.site.register(KidsArtShowUser, KidsArtShowAdmin)
-admin.site.register(Post)
+
+# admin.site.register(Post)
+# register admin view for Post with customized settings
+class PostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author', 'image', 'date_posted', 'slug']
+    list_filter = ['date_posted']
 

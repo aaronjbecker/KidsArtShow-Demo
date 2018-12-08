@@ -10,6 +10,9 @@ from django.contrib.auth.decorators import login_required
 from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.bootstrap import StrictButton
 from django.forms.models import ModelChoiceField
+from crispy_forms.layout import Button
+from django.forms import fields
+from kids_art_show.models import PRIVACY_CHOICES
 
 
 class KidsArtShowUserCreationForm(UserCreationForm):
@@ -29,31 +32,32 @@ class KidsArtShowUserChangeForm(UserChangeForm):
 class CreatePostForm(ModelForm):
     # TODO: form helper with layout, submit button, etc.
     # note need for class to enable image upload (TODO: lookup)
+
+    privacy_level = fields.ChoiceField(choices=PRIVACY_CHOICES)
+
     class Meta:
         model = Post
-        fields = ('title', 'author', 'content', 'image')
+        fields = ('title', 'author', 'description', 'image', 'privacy_level')
 
     def __init__(self, *args, form_action:str = None, **kwargs):
         if form_action is None:
             # TODO: is this the right way to do this?
+            # no, correct default would be to use the model's get_success_url at the end?
             form_action = reverse("create_post")
-        # author = None
-        # if 'author' in kwargs:
-        #     author = kwargs.pop('author')
         # user is used to select ContentCreators, not fed to superclass ctor
-        self.user = kwargs.pop('user')
+        user = kwargs.pop('user')
         super(CreatePostForm, self).__init__(*args, **kwargs)
-        # problem is that queryset is not evaluated until form is rendered...
-        qs = ContentCreator.objects.filter(parent_account=self.user.id)
-        mcf = ModelChoiceField(qs)
+        # TODO: does this actually track the relations?
+        qs = user.children.all()
+        mcf = ModelChoiceField(queryset=qs)
         self.fields['author'] = mcf
         # force full clean after specifying valid author choices
         self.full_clean()
         # create form helper to assist with crispy forms formatting
         self.helper = FormHelper(self)
         self.helper.form_action = form_action
-        self.helper.layout = Layout('title', 'author', 'content', 'image',
-            StrictButton('Login', css_class='btn-default', type='submit'))
+        self.helper.layout = Layout('title', 'author', 'description', 'image', 'privacy_level',
+            StrictButton('Post Your Art!', css_class='btn-default', type='submit'))
 
 # class ManageChildForm(ModelForm):
 #     """form for a parent/authentication account to manage child profiles"""

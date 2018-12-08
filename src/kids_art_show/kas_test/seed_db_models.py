@@ -67,6 +67,10 @@ def read_image_file(image_fn: str,
         return SimpleUploadedFile(image_fn, img.read(),
                                   content_type=content_type)
 
+_privacy_mapping = {'private': 1,
+                    'public': 3,
+                    'followers': 2}
+
 
 def add_objects():
     # create users
@@ -85,7 +89,11 @@ def add_objects():
         p = kasm.KidsArtShowUser.objects.get(username=cdict['parent_account'])
         # remove parent account from dict and set as related item
         cdict.pop('parent_account', None)
-        p.contentcreator_set.create(**cdict)
+        dp = cdict.pop('default_privacy')
+        # hack- manual mappign from test to db formats
+        dp = _privacy_mapping[dp]
+        p.children.create(**cdict, default_privacy=dp)
+
 
     # create sample posts
     tp = read_test_posts()
@@ -98,7 +106,9 @@ def add_objects():
         post_img = read_image_file(prow['image'])
         frm_data = {'author': str(c.pk),
                     'title': prow['title'],
-                    'content': prow['content']}
+                    'description': prow['description'],
+                    'privacy_level': _privacy_mapping[prow['privacy']]}
+        # TODO: load privacy
         frm_files = {'image': post_img}
         frm = kasf.CreatePostForm(frm_data, frm_files, user=parent)
         frm.save()
