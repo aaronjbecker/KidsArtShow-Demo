@@ -10,9 +10,6 @@ from django.contrib.auth.decorators import login_required
 from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.bootstrap import StrictButton
 from django.forms.models import ModelChoiceField
-from crispy_forms.layout import Button
-from django.forms import fields
-from kids_art_show.models import PRIVACY_CHOICES
 
 
 class KidsArtShowUserCreationForm(UserCreationForm):
@@ -30,10 +27,6 @@ class KidsArtShowUserChangeForm(UserChangeForm):
 
 
 class CreatePostForm(ModelForm):
-    # TODO: form helper with layout, submit button, etc.
-    # note need for class to enable image upload (TODO: lookup)
-
-    privacy_level = fields.ChoiceField(choices=PRIVACY_CHOICES)
 
     class Meta:
         model = Post
@@ -47,7 +40,6 @@ class CreatePostForm(ModelForm):
         # user is used to select ContentCreators, not fed to superclass ctor
         user = kwargs.pop('user')
         super(CreatePostForm, self).__init__(*args, **kwargs)
-        # TODO: does this actually track the relations?
         qs = user.children.all()
         mcf = ModelChoiceField(queryset=qs)
         self.fields['author'] = mcf
