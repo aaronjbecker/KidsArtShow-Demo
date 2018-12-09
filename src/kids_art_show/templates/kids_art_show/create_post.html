@@ -5,7 +5,13 @@
 {% endblock nav_bar %}
 {% block content %}
     <div class="container-fluid center_div">
-    <h2>Create Post</h2>
-    {% crispy create_form %}
+    {% if user.children.all %}
+        {#  user has children, show create form #}
+        <h2>Create Post</h2>
+        {% crispy create_form %}
+    {% else %}
+        <h2>Please Create an Artist Profile Before Posting</h2>
+        <a href="{% url "manage_artists" %}">Manage Artists</a>
+    {% endif %}
     </div>
 {% endblock %}
