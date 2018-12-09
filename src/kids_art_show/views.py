@@ -161,7 +161,8 @@ def process_remember_me_login(request):
         # create new login form
         form = rmf.AuthenticationRememberMeForm()
     else:
-        form = rmf.AuthenticationRememberMeForm(request.POST)
+        form = rmf.AuthenticationRememberMeForm(data=request.POST)
+        form.full_clean()
         if form.is_valid():
             if not form.cleaned_data.get('remember_me'):
                 request.session.set_expiry(0)
@@ -169,9 +170,8 @@ def process_remember_me_login(request):
             dca.login(request, form.get_user())
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
-            # redirect after successful login
-            return redirect(settings.LOGIN_REDIRECT,
-                            request)
+            # redirect after successful login, assumes no args
+            return redirect(settings.LOGIN_REDIRECT_URL)
     # render form into template, empty or with errors
     return render(request,
                   "kids_art_show/registration/login.html",

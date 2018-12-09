@@ -40,6 +40,7 @@ class AuthenticationRememberMeForm(AuthenticationForm):
     def __init__(self, *args, form_action="login", **kwargs):
         super(AuthenticationRememberMeForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_class = 'form-horizontal'
         self.helper.form_action = form_action
         self.helper.layout = Layout(
             Div('username', 'password',
