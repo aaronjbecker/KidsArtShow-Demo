@@ -140,14 +140,14 @@ def art_feed(request):
     """displays feed of artworks that user is allowed to see, or only public art if not authenticated."""
     # get login form to use in navigation bar
     login_form = get_login_form(request)
+    # for now, just public
+    arts = Post.public_posts.all()
     if request.user.is_authenticated:
         # use user's queryset/manager to get related entitled posts
-        pass
-    else:
-        pass
-    # for now, just public
+        # use OR to merge querysets, cf. https://simpleisbetterthancomplex.com/tips/2016/06/20/django-tip-5-how-to-merge-querysets.html
+        arts = arts | Post.owned_posts(request.user)
     # return public posts
-    ctx = {'arts': Post.public_posts.all(),
+    ctx = {'arts': arts,
            'login_form': login_form}
     return render(request, 'kids_art_show/list.html', context=ctx)
 

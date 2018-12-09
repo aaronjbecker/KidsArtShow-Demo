@@ -88,6 +88,16 @@ class PublicPostManager(models.Manager):
         return super().get_queryset().filter(privacy_level=3)
 
 
+class OwnedPostManager(models.Manager):
+    def get_queryset(self):
+        """should have access to request and user via self"""
+        if self.request.user.is_authenticated:
+            creators = self.user.children
+            if creators:
+                return super().get_queryset().filter(author__in=creators)
+        return None
+
+
 class Post(models.Model):
     """
     Posts are associated with ContentCreator instances
@@ -117,6 +127,15 @@ class Post(models.Model):
     # still want default manager available
     objects = models.Manager()
     public_posts = PublicPostManager()
+
+    @staticmethod
+    def owned_posts(user):
+        if user.is_authenticated:
+            creators = user.children.all()
+            if creators:
+                return __class__.objects.get_queryset().filter(author__in=creators)
+        return None
+
 
     # use both post date and title when generating slug
     def save(self, *args, **kwargs):

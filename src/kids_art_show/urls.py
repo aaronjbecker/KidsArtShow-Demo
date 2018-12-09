@@ -47,7 +47,7 @@ urlpatterns = [
     path('create_post', views.create_post, name='create_post'),
     path('feed', views.art_feed, name='feed'),
     path('detail/<slug:slug>/', views.art_detail, name='detail'),
-    path('like/', views.art_like, name='like'),
+    path('like', views.art_like, name='like'),
 ]
 
 if settings.DEBUG:
