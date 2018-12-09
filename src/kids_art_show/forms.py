@@ -54,12 +54,37 @@ class CreatePostForm(ModelForm):
         self.helper.layout = Layout('title', 'author', 'description', 'image', 'privacy_level',
             StrictButton('Post Your Art!', css_class='btn-default', type='submit'))
 
-# class ManageChildForm(ModelForm):
-#     """form for a parent/authentication account to manage child profiles"""
-#     class Meta:
-#         model = ContentCreator
-#         fields = ['profile_name', 'nickname']
-#         labels = {'profile_name': 'Artist Profile Name'}
+
+
+class EditArtForm(ModelForm):
+    """needs to allow changes without submitting a new image file..."""
+    class Meta:
+        model = Post
+        fields = ('title', 'author', 'description', 'image', 'privacy_level')
+
+    def __init__(self, *args, form_action:str = None, **kwargs):
+        if form_action is None:
+            # pass completed form back to create post view for processing/possible redirect
+            form_action = reverse("create_post")
+        # user is used to select ContentCreators, not fed to superclass ctor
+        user = kwargs.pop('user')
+        super(EditArtForm, self).__init__(*args, **kwargs)
+        # these intermediate assignments do help with forcing evaluation,
+        #   at least while debugging (in practice)
+        qs = user.children.all()
+        mcf = ModelChoiceField(queryset=qs)
+        self.fields['author'] = mcf
+        # set initial privacy to user's default privacy
+        self.fields['privacy_level'].initial = user.default_privacy
+        # force full clean after specifying valid author choices
+        self.full_clean()
+        # create form helper to assist with crispy forms formatting
+        self.helper = FormHelper(self)
+        self.helper.form_action = form_action
+        self.helper.layout = Layout('title', 'author', 'description', 'image', 'privacy_level',
+            StrictButton('Post Your Art!', css_class='btn-default', type='submit'))
+
+
 
 class ManageChildrenFormsetHelper(FormHelper):
     def __init__(self, *args, form_action='manage_artists', **kwargs):

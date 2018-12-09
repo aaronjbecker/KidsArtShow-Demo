@@ -39,6 +39,9 @@
       </div>
       {{ art.description|linebreaks }}
     </div>
+      {% if is_owner %}
+        <a href="{% url 'edit_art' art.slug %}">Edit Art</a>
+      {% endif %}
 {#    <div class="image-likes">#}
 {#      {% for user in art.users_like.all %}#}
 {#        <div>#}

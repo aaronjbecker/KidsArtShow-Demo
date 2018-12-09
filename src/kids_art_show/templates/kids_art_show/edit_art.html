@@ -1,0 +1,11 @@
+{% extends "kids_art_show/base.html" %}
+{% load crispy_forms_tags %}
+{% block nav_bar %}
+    {% include 'kids_art_show/main_nav_bar.html'%}
+{% endblock nav_bar %}
+{% block content %}
+    <div class="container-fluid center_div">
+    <h2>Edit Post</h2>
+    {% crispy edit_form %}
+    </div>
+{% endblock %}

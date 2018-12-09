@@ -51,6 +51,14 @@ def home(request):
 
 
 @login_required
+def edit_art(request, slug):
+    # use existing create post form, but populate with initial data?
+    art = get_object_or_404(Post, slug=slug)
+    form = CreatePostForm(instance=art, user=request.user)
+    return render(request, 'kids_art_show/edit_art.html', {'edit_form': form})
+
+
+@login_required
 def create_post(request):
     """author is limited to user-managed artists in CreatePostForm ctor"""
     if request.method == "GET":
@@ -158,10 +166,15 @@ def art_detail(request, slug):
     login_form = get_login_form(request)
     # TODO: permission checking of some sort
     art = get_object_or_404(Post, slug=slug)
+    is_owner = False
+    if request.user.is_authenticated:
+        owner = art.author.parent_account
+        is_owner = owner.pk == request.user.pk
     return render(request,
                   'kids_art_show/art_detail.html',
                   {'art': art,
-                   'login_form': login_form})
+                   'login_form': login_form,
+                   'is_owner': is_owner})
 
 
 def about(request):
@@ -187,7 +200,6 @@ class SignUp(generic.CreateView):
     template_name = 'kids_art_show/registration/signup.html'
 
 
-# TODO: attempt to use a FormSet/ModelFormSet to allow editing more than one child profile?
 @login_required
 def manage_artists(request):
     template_name = 'kids_art_show/manage_formset.html'
