@@ -63,6 +63,7 @@ def edit_art(request, slug):
         # TODO: incorporate valid changes
         clear_img = 'image-clear' in request.POST and request.POST['image-clear'] == 'on'
         # QueryDict is immutable and returns a list for each element, when you just want the raw value, so use .dict()
+        # cf. https://stackoverflow.com/a/15283515
         post_data = request.POST.dict()
         form = kasf.EditArtForm(post_data, request.FILES, form_action=form_action)
         form.full_clean()
@@ -186,7 +187,9 @@ def art_feed(request):
     if request.user.is_authenticated:
         # use user's queryset/manager to get related entitled posts
         # use OR to merge querysets, cf. https://simpleisbetterthancomplex.com/tips/2016/06/20/django-tip-5-how-to-merge-querysets.html
-        arts = arts | Post.owned_posts(request.user)
+        owned = Post.owned_posts(request.user)
+        if owned:
+            arts = arts | owned
     # return public posts
     ctx = {'arts': arts,
            'login_form': login_form}
