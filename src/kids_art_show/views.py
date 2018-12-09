@@ -272,13 +272,6 @@ class UserProfile(generic.TemplateView):
     template_name = 'kids_art_show/user_profile.html'
 
 
-
-
-#
-# class UserDashboard(generic.TemplateView):
-#     template_name = "kids_art_show/user_dashboard.html"
-
-
 def signup(request):
     """function-based so you can automatically log user in"""
     if request.method == 'GET':

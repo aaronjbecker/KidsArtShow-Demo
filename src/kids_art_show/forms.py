@@ -2,7 +2,6 @@
 AJB 10/28/18: Basic user creation and change forms.
 Adapted from https://wsvincent.com/django-custom-user-model-tutorial/
 """
-# TODO: cleanup imports
 from django.shortcuts import reverse
 import django.forms as djf
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -11,10 +10,8 @@ from .models import KidsArtShowUser, ContentCreator, Post
 from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.bootstrap import StrictButton
 from django.forms.models import ModelChoiceField
-# import crispy_forms.layout as cfl
-from crispy_forms.layout import Submit, HTML
-from django.forms.widgets import ClearableFileInput, CheckboxInput
-from django.utils.html import mark_safe, conditional_escape, escape
+from crispy_forms.layout import Submit
+from django.forms.widgets import ClearableFileInput
 
 
 class KidsArtShowUserCreationForm(UserCreationForm):
@@ -111,8 +108,6 @@ class ManageChildrenFormsetHelper(FormHelper):
         self.form_action = form_action
         self.render_required_fields = True
 
-
-# class ManageChildrenFormset(ModelFormset):
 
 
 ManageChildrenFormset = \

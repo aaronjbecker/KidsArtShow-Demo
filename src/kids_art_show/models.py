@@ -13,7 +13,6 @@ from django.urls import reverse
 # define a set of privacy levels applied to profiles and posts
 # define privacy choices using integer field
 PRIVACY_CHOICES = ((1, 'Private'),
-                   (2, 'Followers'),
                    (3, 'Public'))
 
 
@@ -29,7 +28,6 @@ class KidsArtShowUser(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
     default_privacy = models.IntegerField(choices=PRIVACY_CHOICES, default=1)
     # TODO: method to distinguish between parent and viewer accounts
-    # TODO: following
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -78,6 +76,10 @@ class Post(models.Model):
     TODO: maybe more than one image?
     TODO: maybe also comments?
     """
+    class Meta:
+        # sort by most recent first, by default
+        ordering = ('-date_posted',)
+
     author = models.ForeignKey(ContentCreator, null=True,
                                related_name='artist',
                                on_delete=models.SET_NULL)
