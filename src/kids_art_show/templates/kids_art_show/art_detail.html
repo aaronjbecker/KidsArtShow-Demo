@@ -10,11 +10,11 @@
 
 {% block content %}
   <h1>{{ art.title }}</h1>
-    <div class="container-fluid">
+    {% if art.image %}
     <a href="{{ art.image.url }}">
       <img src="{{ art.image.url }}" class="image-detail">
     </a>
-    </div>
+    {% endif %}
   {% with total_likes=art.users_like.count users_like=art.users_like.all %}
     <div class="image-info">
       <div>
@@ -33,10 +33,14 @@
         </a>
       {% endif %}
       </div>
+    <div class="inline-group">
+        By {{ art.author.nickname }} on {{ art.date_posted|date:"l"}}
+    </div>
       {{ art.description|linebreaks }}
     </div>
       {% if is_owner %}
-        <a href="{% url 'edit_art' art.slug %}">Edit Art</a>
+          <br />
+        <a class="button" href="{% url 'edit_art' art.slug %}">Edit Art</a>
       {% endif %}
   {% endwith %}
 {% endblock %}
