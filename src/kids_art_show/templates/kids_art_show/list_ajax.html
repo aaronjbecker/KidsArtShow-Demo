@@ -3,7 +3,7 @@
 {% for art in arts %}
   <div class="image">
     <a href="{{ art.get_absolute_url }}">
-      {% thumbnail art.image "300x300" crop="100%" as im %}
+      {% thumbnail art.image "350x350" crop="100%" as im %}
         <a href="{{ art.get_absolute_url }}">
           <img src="{{ im.url }}">
         </a>
@@ -13,6 +13,11 @@
       <a href="{{ art.get_absolute_url }}" class="title">
         {{ art.title }}
       </a>
+        <div class="inline-group">
+        By {{ art.author.nickname }} on {{ art.date_posted|date:"l"}}<br>
+        {% with total_likes=art.users_like.count %}
+            {{ total_likes }} like{{ total_likes|pluralize }}</div>
+        {% endwith %}
     </div>
   </div>
 {% endfor %}

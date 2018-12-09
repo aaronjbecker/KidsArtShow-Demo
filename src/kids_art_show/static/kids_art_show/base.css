@@ -194,12 +194,15 @@ ul.messages li a.close {
 
 /* images */
 
-.image-preview, .image-detail {
+.image-preview {
     max-width:300px;
     float:left;
     margin:0 20px 20px 0;
 }
-.image-detail { margin-top:20px; }
+.image-detail { margin:20px 20px 20px 0;
+    max-width:100%;
+    max-height:100%;
+}
 .image-info div {
     padding:20px 0;
     overflow:auto;

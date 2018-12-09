@@ -10,14 +10,11 @@
 
 {% block content %}
   <h1>{{ art.title }}</h1>
-  {% load thumbnail %}
-
-  {% thumbnail art.image "300" as im %}
+    <div class="container-fluid">
     <a href="{{ art.image.url }}">
-      <img src="{{ im.url }}" class="image-detail">
+      <img src="{{ art.image.url }}" class="image-detail">
     </a>
-  {% endthumbnail %}
-
+    </div>
   {% with total_likes=art.users_like.count users_like=art.users_like.all %}
     <div class="image-info">
       <div>
