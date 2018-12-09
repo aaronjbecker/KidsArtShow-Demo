@@ -1,8 +1,29 @@
 {# Overrides default ClearableFileInput template from https://github.com/django/django/blob/master/django/forms/templates/django/forms/widgets/clearable_file_input.html #}
 {# has access to the context of the page in which it's rendered; not intended for generalized usage #}
-
-{% if widget.is_initial %}{{ widget.initial_text }}: <a href="{{ widget.value.url }}">{{ widget.value }}</a>{% if not widget.required %}
-<input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}">
-<label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>{% endif %}<br>
-{{ widget.input_text }}:{% endif %}
-<input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+{# does not have access to page scope, only has access to widget #}
+{% if widget.is_initial %}
+    <h2>Current Image:</h2>
+    <div class="image-box">
+        <img class="img-responsive" src="{{ widget.value.url }}"/>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-sm-4">
+    {% if not widget.required %}
+        <input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}">
+        <label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>
+    {% endif %}
+        </div>
+    <div class="col-sm-2">
+        <p>Change Post Image:</p>
+    </div>
+{% else %}
+    <div class="row">
+    <div class="col-sm-4">
+        <p>Attach New Image to Post:</p>
+    </div>
+{% endif %}
+<div class="col-sm-4">
+    <input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+</div>
+</div>

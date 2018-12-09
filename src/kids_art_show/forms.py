@@ -64,36 +64,8 @@ class ArtInput(ClearableFileInput):
     """renders the input file as an avatar image, and removes the 'currently' html
         take 2: override template, more contemporary version.
         cf. https://stackoverflow.com/a/52901700 """
+    clear_checkbox_label = 'Remove Saved Art?'
     template_name = 'kids_art_show/art_input_widget.html'
-
-
-# class ArtInput(ClearableFileInput):
-#     """renders the input file as an avatar image, and removes the 'currently' html"""
-#
-#     template_with_initial = u'%(initial)s %(clear_template)s<br />%(input_text)s: %(input)s'
-#
-#     def render(self, name, value, attrs=None, renderer=None):
-#         substitutions = {
-#             'input_text': self.input_text,
-#             'clear_template': '',
-#             'clear_checkbox_label': self.clear_checkbox_label,
-#         }
-#         template = u'%(input)s'
-#         substitutions['input'] = super(ArtInput, self).render(name, value, attrs)
-#
-#         if value and hasattr(value, "url"):
-#             template = self.template_with_initial
-#             substitutions['initial'] = (u'<img src="%s" width="60" height="60"></img>'
-#                                         % (escape(value.url)))
-#             if not self.is_required:
-#                 checkbox_name = self.clear_checkbox_name(name)
-#                 checkbox_id = self.clear_checkbox_id(checkbox_name)
-#                 substitutions['clear_checkbox_name'] = conditional_escape(checkbox_name)
-#                 substitutions['clear_checkbox_id'] = conditional_escape(checkbox_id)
-#                 substitutions['clear'] = CheckboxInput().render(checkbox_name, False, attrs={'id': checkbox_id})
-#                 substitutions['clear_template'] = self.template_with_initial % substitutions
-#
-#         return mark_safe(template % substitutions)
 
 
 class EditArtForm(djf.ModelForm):
@@ -102,7 +74,8 @@ class EditArtForm(djf.ModelForm):
 
     # fields not listed here will not be editable
     title =  djf.CharField(required=False)
-    image = djf.ImageField(required=False, widget=ArtInput)
+    # note: label is handled by customized widget template
+    image = djf.ImageField(required=False, widget=ArtInput, label='')
     # note that text fields differ from char fields only in their input widget, and don't have a separate class
     description = djf.CharField(required=False, widget=djf.Textarea)
     privacy_level = djf.ChoiceField(choices=kasm.PRIVACY_CHOICES, required=False)
@@ -133,8 +106,6 @@ class EditArtForm(djf.ModelForm):
         # self.helper.form_class = 'form-horizontal'
         # include preview of image before image edit controls, assumes that art is in context of rendered page
         self.helper.layout = Layout('title', 'privacy_level', 'description',
-                                    HTML("""{% if art.image %}<h3>Current Image:</h3>{% endif %}"""),
-                                    HTML("""{% if art.image %}<img class="img-responsive" src="{{ art.image.url }}">{% endif %}"""),
                                     'image',
                                     StrictButton('Update Your Art!', css_class='btn-default', type='submit'))
 
