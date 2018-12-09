@@ -115,7 +115,7 @@ class Post(models.Model):
         # if not self.privacy_level:
         #     self.privacy_level = self.author.default_privacy
         if not self.slug:
-            slug_basis = "{}_{}_{}".format(timezone.now().strftime('%y%m%d_%H%M%s'), self.author, self.title)
+            slug_basis = "{}_{}_{}".format(timezone.now().strftime('%y%m%d_%H%M%S'), self.author, self.title)
             self.slug = slugify(slug_basis)
         super(Post, self).save(*args, **kwargs)
 
