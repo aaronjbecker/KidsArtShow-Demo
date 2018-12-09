@@ -62,20 +62,16 @@ def edit_art(request, slug):
     else:
         # TODO: incorporate valid changes
         clear_img = 'image-clear' in request.POST and request.POST['image-clear'] == 'on'
-        # if you want to clear the image, pop the image key from POST so the form validates
-        # the field can't be empty, but it can be missing (weird)
-        # QueryDict is immutable and returns a list for each element, when you just want the raw value
-        # post_data = dict(request.POST.dict)
+        # QueryDict is immutable and returns a list for each element, when you just want the raw value, so use .dict()
         post_data = request.POST.dict()
-        # hack: ignore errors on image file input if you're clearing the image
         form = kasf.EditArtForm(post_data, request.FILES, form_action=form_action)
         form.full_clean()
         if clear_img:
+            # hack: ignore errors on image file input if you're clearing the image
             form.errors.pop('image', None)
-        # TODO: test form with errors
+        # TODO: test form with errors other than missing image?
         if not form.errors:
-        # if form.is_valid():
-            # cleaned data is valid, but how do you check for cleared image?
+            # cleaned data is the valid set of fields we should change
             cd = form.cleaned_data
             # if you didn't want to clear the image and the image is None, pop that key
             if not clear_img and 'image' in cd and not cd['image']:

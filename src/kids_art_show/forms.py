@@ -73,12 +73,12 @@ class EditArtForm(djf.ModelForm):
         overrides default fields with non-required values and prevents changes to fields that aren't editable. """
 
     # fields not listed here will not be editable
-    title =  djf.CharField(required=False)
+    title =  djf.CharField(required=True)
     # note: label is handled by customized widget template
     image = djf.ImageField(required=False, widget=ArtInput, label='')
     # note that text fields differ from char fields only in their input widget, and don't have a separate class
     description = djf.CharField(required=False, widget=djf.Textarea)
-    privacy_level = djf.ChoiceField(choices=kasm.PRIVACY_CHOICES, required=False)
+    privacy_level = djf.ChoiceField(choices=kasm.PRIVACY_CHOICES, required=True)
 
     class Meta:
         model = Post
@@ -95,10 +95,7 @@ class EditArtForm(djf.ModelForm):
         # create form helper to assist with crispy forms formatting
         self.helper = FormHelper(self)
         self.helper.form_action = form_action
-        # self.helper.form_class = 'form-horizontal'
-        # include preview of image before image edit controls, assumes that art is in context of rendered page
-        self.helper.layout = Layout('title', 'privacy_level', 'description',
-                                    'image',
+        self.helper.layout = Layout('title', 'privacy_level', 'description', 'image',
                                     StrictButton('Update Your Art!', css_class='btn-default', type='submit'))
 
 
