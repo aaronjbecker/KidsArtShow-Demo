@@ -16,16 +16,27 @@ from django.forms.widgets import ClearableFileInput
 
 class KidsArtShowUserCreationForm(UserCreationForm):
 
+    # TODO: add add'l fields for children ?
     class Meta(UserCreationForm):
         model = KidsArtShowUser
-        fields = ('username', 'email', 'birth_date')
+        fields = ('username', 'email', 'birth_date', 'first_name', 'last_name', 'default_privacy', 'password1', 'password2')
+
+    def __init__(self, *args, form_action="signup", **kwargs):
+        super(KidsArtShowUserCreationForm, self).__init__(*args, **kwargs)
+        # create form helper
+        self.helper = FormHelper(self)
+        self.helper.form_action = reverse(form_action)
+        self.helper.layout = Layout('username', 'email', 'birth_date', 'first_name',
+                                    'last_name', 'default_privacy', 'password1', 'password2',
+                                    StrictButton('Create Account', css_class="btn-default", type='submit'))
 
 
 class KidsArtShowUserChangeForm(UserChangeForm):
 
     class Meta:
         model = KidsArtShowUser
-        fields = ('username', 'email', 'birth_date')
+        fields = ('username', 'email', 'birth_date', 'first_name', 'last_name', 'default_privacy')
+
 
 
 class CreatePostForm(djf.ModelForm):
