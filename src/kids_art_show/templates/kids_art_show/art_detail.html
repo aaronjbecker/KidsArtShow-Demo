@@ -4,6 +4,10 @@
 
 {% block title %}{{ art.title }}{% endblock %}
 
+{% block nav_bar %}
+    {% include "kids_art_show/main_nav_bar.html" %}
+{% endblock %}
+
 {% block content %}
   <h1>{{ art.title }}</h1>
   {% load thumbnail %}

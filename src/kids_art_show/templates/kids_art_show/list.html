@@ -1,9 +1,17 @@
 {% extends "kids_art_show/base.html" %}
 
-{% block title %}Images bookmarked{% endblock %}
+{% block title %}Kids' Art Show{% endblock %}
+
+{% block nav_bar %}
+    {% include "kids_art_show/main_nav_bar.html" %}
+{% endblock %}
 
 {% block content %}
-  <h1>Your Art Feed</h1>
+    {% if user.is_authenticated %}
+        <h1>{{ user.get_full_name }}'s Art Feed</h1>
+    {% else %}
+        <h1>Art for everyone to see!</h1>
+    {% endif %}
   <div id="image-list">
     {% include "kids_art_show/list_ajax.html" %}
   </div>

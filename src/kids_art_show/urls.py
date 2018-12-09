@@ -25,6 +25,7 @@ app_name = "kids_art_show"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name = 'home'),
+    path('/', views.home, name = 'home'),
     path('home', views.home, name='home'),
     path('about', views.about, name = 'about'),
     path('signup', views.SignUp.as_view(), name='signup'),
@@ -33,9 +34,10 @@ urlpatterns = [
          remember_me_login,
          kwargs = {'template_name': "kids_art_show/registration/login.html"},
          name='login'),
-    re_path(r'^process_login(/(?P<src>.*)/)?$',
-            views.process_inline_login,
-            name="process_login"),
+    # re_path(r'^process_login(/(?P<src>.*)/)?$',
+    #         views.process_inline_login,
+    #         name="process_login"),
+    path('process_login/<path:src>', views.process_inline_login, name='process_login'),
     # TODO: profile with user ID as argument
     # TODO: user dashboard
     path('user_profile', views.UserProfile.as_view(), name='user_profile'),

@@ -1,6 +1,6 @@
 import re
 from django.conf import settings
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import render, redirect, get_object_or_404, reverse, resolve_url
 from django.urls import reverse_lazy
 from django.views import generic
 from django.http import JsonResponse
@@ -21,8 +21,8 @@ from common.decorators import ajax_required
 def get_login_form(request):
     """helper to build login form with error messages and redirects for pages that have one"""
     # provides instance of login form for use in navbar quick link
-    # note that url already includes backslash
-    login_redirect = "process_login{}/".format(request.path)
+    # generate the URL from reverse so you know your redirect will be valid
+    login_redirect = reverse('process_login', args=[request.path])
     login_data = {}
     # use post data, or session, or nothing
     if request.POST:
@@ -69,26 +69,17 @@ def create_post(request):
 @csrf_protect
 @never_cache
 @require_POST
-def process_inline_login(request, src):
+def process_inline_login(request, src=None):
     """
     Explicitly designed to be called only from inline navbar login form
     src must be a valid URL recognized by django
-    :param request:
-    :param redirect_field_name:
-    :param form_ctx_fld:
-    :return:
     """
     form = rmf.RembmerMeAuthFormInline(data=request.POST)
-    # context = {
-    #     'login_form': form,
-    #     'posts': Post.objects.all()
-    # }
-    # store post data, force clean in view if present on session
+    # store post data, force clean in view if present in request.session when view is loaded
     form_data = {}
     if form.is_valid():
         if not form.cleaned_data.get('remember_me'):
             request.session.set_expiry(0)
-
         # Okay, security checks complete. Log the user in.
         dca.login(request, form.get_user())
 
@@ -97,15 +88,13 @@ def process_inline_login(request, src):
     else:
         # only record data if there was an error, so the form can validate and show errors on redirect
         # TODO: this is probably insecure for some reason?
+        # have to force serialization, cf. https://stackoverflow.com/a/19734757
         form_data = {str(k):str(v) for k, v in form.data.items() if str(k) != 'csrfmiddlewaretoken'}
-        # error_messages = dict(form.error_messages)
-    # return render(request, 'kids_art_show/home.html', context)
-    # use session to store form errors; this is imperfect but should suffice for basic stuff here
+    # use session to store form data; this is imperfect but should suffice for basic stuff here
     # cf. https://stackoverflow.com/a/9000663
-    # have to force serialization, cf. https://stackoverflow.com/a/19734757
-    # request.session['login_data'] = {str(k):str(v) for k, v in error_messages.items()}
     request.session['login_data'] = form_data
-    return redirect(reverse(src))
+    # resolve URL using any available patterns
+    return redirect(resolve_url(src))
 
 
 @csrf_protect
@@ -151,7 +140,6 @@ def art_feed(request):
     """displays feed of artworks that user is allowed to see, or only public art if not authenticated."""
     # get login form to use in navigation bar
     login_form = get_login_form(request)
-
     if request.user.is_authenticated:
         # use user's queryset/manager to get related entitled posts
         pass
@@ -171,8 +159,8 @@ def art_detail(request, slug):
     art = get_object_or_404(Post, slug=slug)
     return render(request,
                   'kids_art_show/art_detail.html',
-                  {'art': art})
-    pass
+                  {'art': art,
+                   'login_form': login_form})
 
 
 def about(request):
@@ -180,7 +168,6 @@ def about(request):
     login_form = get_login_form(request)
     context = {
         'login_form': login_form,
-        'posts': Post.objects.all()
     }
     return render(request, 'kids_art_show/about.html', context)
 
