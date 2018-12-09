@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'bootstrap3',
     'remember_me',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    'django.forms',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +145,6 @@ LOGOUT_REDIRECT_URL = 'home'
 # project styling is based on Bootstrap3
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+# allows overriding widget templates
+# cf. https://stackoverflow.com/a/52901700
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'

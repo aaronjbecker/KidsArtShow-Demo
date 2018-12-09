@@ -2,15 +2,20 @@
 AJB 10/28/18: Basic user creation and change forms.
 Adapted from https://wsvincent.com/django-custom-user-model-tutorial/
 """
+# TODO: cleanup imports
 from django.shortcuts import reverse
-from django.forms import ModelForm, modelformset_factory
+import django.forms as djf
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+import kids_art_show.models as kasm
 from .models import KidsArtShowUser, ContentCreator, Post
-from django.contrib.auth.decorators import login_required
 from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.bootstrap import StrictButton
 from django.forms.models import ModelChoiceField
-from crispy_forms.layout import Submit
+# import crispy_forms.layout as cfl
+from crispy_forms.layout import Submit, HTML
+from django.forms.widgets import ClearableFileInput, CheckboxInput
+from django.utils.html import mark_safe, conditional_escape, escape
+
 
 class KidsArtShowUserCreationForm(UserCreationForm):
 
@@ -26,7 +31,7 @@ class KidsArtShowUserChangeForm(UserChangeForm):
         fields = ('username', 'email', 'birth_date')
 
 
-class CreatePostForm(ModelForm):
+class CreatePostForm(djf.ModelForm):
 
     class Meta:
         model = Post
@@ -55,12 +60,56 @@ class CreatePostForm(ModelForm):
             StrictButton('Post Your Art!', css_class='btn-default', type='submit'))
 
 
+class ArtInput(ClearableFileInput):
+    """renders the input file as an avatar image, and removes the 'currently' html
+        take 2: override template, more contemporary version.
+        cf. https://stackoverflow.com/a/52901700 """
+    template_name = 'kids_art_show/art_input_widget.html'
 
-class EditArtForm(ModelForm):
-    """needs to allow changes without submitting a new image file..."""
+
+# class ArtInput(ClearableFileInput):
+#     """renders the input file as an avatar image, and removes the 'currently' html"""
+#
+#     template_with_initial = u'%(initial)s %(clear_template)s<br />%(input_text)s: %(input)s'
+#
+#     def render(self, name, value, attrs=None, renderer=None):
+#         substitutions = {
+#             'input_text': self.input_text,
+#             'clear_template': '',
+#             'clear_checkbox_label': self.clear_checkbox_label,
+#         }
+#         template = u'%(input)s'
+#         substitutions['input'] = super(ArtInput, self).render(name, value, attrs)
+#
+#         if value and hasattr(value, "url"):
+#             template = self.template_with_initial
+#             substitutions['initial'] = (u'<img src="%s" width="60" height="60"></img>'
+#                                         % (escape(value.url)))
+#             if not self.is_required:
+#                 checkbox_name = self.clear_checkbox_name(name)
+#                 checkbox_id = self.clear_checkbox_id(checkbox_name)
+#                 substitutions['clear_checkbox_name'] = conditional_escape(checkbox_name)
+#                 substitutions['clear_checkbox_id'] = conditional_escape(checkbox_id)
+#                 substitutions['clear'] = CheckboxInput().render(checkbox_name, False, attrs={'id': checkbox_id})
+#                 substitutions['clear_template'] = self.template_with_initial % substitutions
+#
+#         return mark_safe(template % substitutions)
+
+
+class EditArtForm(djf.ModelForm):
+    """needs to allow changes without submitting a new image file...
+        overrides default fields with non-required values and prevents changes to fields that aren't editable. """
+
+    # fields not listed here will not be editable
+    title =  djf.CharField(required=False)
+    image = djf.ImageField(required=False, widget=ArtInput)
+    # note that text fields differ from char fields only in their input widget, and don't have a separate class
+    description = djf.CharField(required=False, widget=djf.Textarea)
+    privacy_level = djf.ChoiceField(choices=kasm.PRIVACY_CHOICES, required=False)
+
     class Meta:
         model = Post
-        fields = ('title', 'author', 'description', 'image', 'privacy_level')
+        fields = ('title', 'description', 'image', 'privacy_level')
 
     def __init__(self, *args, form_action:str = None, **kwargs):
         if form_action is None:
@@ -81,8 +130,13 @@ class EditArtForm(ModelForm):
         # create form helper to assist with crispy forms formatting
         self.helper = FormHelper(self)
         self.helper.form_action = form_action
-        self.helper.layout = Layout('title', 'author', 'description', 'image', 'privacy_level',
-            StrictButton('Post Your Art!', css_class='btn-default', type='submit'))
+        # self.helper.form_class = 'form-horizontal'
+        # include preview of image before image edit controls, assumes that art is in context of rendered page
+        self.helper.layout = Layout('title', 'privacy_level', 'description',
+                                    HTML("""{% if art.image %}<h3>Current Image:</h3>{% endif %}"""),
+                                    HTML("""{% if art.image %}<img class="img-responsive" src="{{ art.image.url }}">{% endif %}"""),
+                                    'image',
+                                    StrictButton('Update Your Art!', css_class='btn-default', type='submit'))
 
 
 
@@ -102,7 +156,7 @@ class ManageChildrenFormsetHelper(FormHelper):
 
 
 ManageChildrenFormset = \
-    modelformset_factory(ContentCreator,
+    djf.modelformset_factory(ContentCreator,
                          fields=('profile_name', 'nickname', 'bio'),
                          min_num=1)
 

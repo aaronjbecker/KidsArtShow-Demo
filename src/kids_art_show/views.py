@@ -54,8 +54,9 @@ def home(request):
 def edit_art(request, slug):
     # use existing create post form, but populate with initial data?
     art = get_object_or_404(Post, slug=slug)
-    form = CreatePostForm(instance=art, user=request.user)
-    return render(request, 'kids_art_show/edit_art.html', {'edit_form': form})
+    form = kasf.EditArtForm(instance=art, user=request.user)
+    return render(request, 'kids_art_show/edit_art.html', {'edit_form': form,
+                                                           'art': art})
 
 
 @login_required
