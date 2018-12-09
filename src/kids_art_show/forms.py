@@ -39,6 +39,29 @@ class KidsArtShowUserChangeForm(UserChangeForm):
 
 
 
+class KasUserUpdateForm(djf.ModelForm):
+
+    class Meta:
+        model = KidsArtShowUser
+        # none of these elements can be blank
+        fields = ('username', 'email', 'birth_date', 'first_name', 'last_name', 'default_privacy')
+
+
+    def __init__(self, *args, form_action:str = None, **kwargs):
+        super(KasUserUpdateForm, self).__init__(*args, **kwargs)
+        if form_action is None:
+            # pass completed form back to create post view for processing/possible redirect
+            form_action = reverse("account_settings")
+        # force a full clean
+        self.full_clean()
+        self.helper = FormHelper(self)
+        self.helper.form_action = form_action
+        self.helper.layout = Layout('username', 'email', 'birth_date', 'first_name', 'last_name', 'default_privacy',
+                                    StrictButton('Update Account', css_class='btn-default', type='submit'))
+
+
+
+
 class CreatePostForm(djf.ModelForm):
 
     class Meta:

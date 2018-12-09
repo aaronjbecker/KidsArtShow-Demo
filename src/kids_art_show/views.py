@@ -179,6 +179,31 @@ def process_remember_me_login(request):
 
 
 @login_required
+def user_settings(request):
+    """
+    Basic wrapper around KidsArtShowUserChangeForm
+    :param request:
+    :return:
+    """
+    if request.method == "GET":
+        # create new login form
+        form = kasf.KasUserUpdateForm(instance=request.user)
+    else:
+        # TODO: check for required/submitted fields?
+        form = kasf.KasUserUpdateForm(data=request.POST or None, instance=request.user)
+        form.full_clean()
+        if form.is_valid():
+            # update the user by saving form
+            form.save()
+            # redirect after successful login, assumes no args
+            return redirect(reverse('user_dashboard'))
+    # render form into template, empty or with errors
+    return render(request,
+                  "kids_art_show/registration/user_change.html",
+                  {'form': form})
+
+
+@login_required
 def user_dashboard(request):
     """displays list of artworks, but only those that are owned by this user"""
     arts = Post.owned_posts(request.user)

@@ -1,0 +1,16 @@
+<!-- basic account settings form -->
+{% extends 'kids_art_show/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Change Account Settings{% endblock %}
+
+{% block nav_bar %}
+    {% include "kids_art_show/main_nav_bar.html" with disable_login_widget=True %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="text-center">Change Your Account Settings</h1>
+        {% crispy form %}
+    </div>
+{% endblock %}

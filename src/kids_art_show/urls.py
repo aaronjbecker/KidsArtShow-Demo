@@ -44,6 +44,7 @@ urlpatterns = [
     path('detail/<slug:slug>/', views.art_detail, name='detail'),
     path('edit_art/<slug:slug>', views.edit_art, name='edit_art'),
     path('like', views.art_like, name='like'),
+    path('account_settings', views.user_settings, name='account_settings')
 ]
 
 if settings.DEBUG:
