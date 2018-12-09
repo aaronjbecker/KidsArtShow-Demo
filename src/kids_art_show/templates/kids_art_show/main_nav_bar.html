@@ -32,7 +32,7 @@
               <li {% if activePage == "createPost" %}class="active"{% endif %}><a href="{% url 'create_post' %}">Create Post</a></li>
           {% endif %}
       </ul>
-        {% if not user.is_authenticated %}
+        {% if not user.is_authenticated and not disable_login %}
           <div class="inline_form_spacer">
             {% crispy login_form %}
           </div>
