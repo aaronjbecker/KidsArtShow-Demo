@@ -1,3 +1,4 @@
+# TODO: Cleanup imports!
 import re
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404, reverse, resolve_url
@@ -17,6 +18,17 @@ from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 from common.decorators import ajax_required
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from common.decorators import ajax_required
+from django.conf import settings
+
 
 
 def get_login_form(request):
@@ -170,7 +182,6 @@ def art_feed(request):
     """displays feed of artworks that user is allowed to see, or only public art if not authenticated."""
     # get login form to use in navigation bar
     login_form = get_login_form(request)
-    # for now, just public
     arts = Post.public_posts.all()
     if request.user.is_authenticated:
         # use user's queryset/manager to get related entitled posts
@@ -178,10 +189,29 @@ def art_feed(request):
         owned = Post.owned_posts(request.user)
         if owned:
             arts = arts | owned
-    # return public posts
+    # get paginator
+    paginator = Paginator(arts, 8)
+    page = request.GET.get('page')
+    try:
+        arts = paginator.page(page)
+    except PageNotAnInteger:
+        arts = paginator.page(1)
+    except EmptyPage:
+        if request.is_ajax():
+            # If the request is AJAX and the page is out of range
+            # return an empty page
+            return HttpResponse('')
+        # If page is out of range deliver last page of results
+        arts = paginator.page(paginator.num_pages)
     ctx = {'arts': arts,
            'login_form': login_form}
-    return render(request, 'kids_art_show/list.html', context=ctx)
+    if request.is_ajax():
+        return render(request,
+                      'kids_art_show/list_ajax.html',
+                      ctx)
+    return render(request,
+                  'kids_art_show/list.html',
+                   ctx)
 
 
 def art_detail(request, slug):
