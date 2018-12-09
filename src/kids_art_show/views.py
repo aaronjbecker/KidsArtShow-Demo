@@ -141,41 +141,29 @@ def process_inline_login(request, src=None):
 
 @csrf_protect
 @never_cache
-def process_remember_me_login(request,
-                              redirect_field_name='next'):
+def process_remember_me_login(request):
     """
-    Only designed to be called from home page
-    :param request:
-    :param redirect_field_name:
-    :param form_ctx_fld:
-    :return:
+    Updated to reflect better understanding of how forms work
     """
-    # TODO: error handling if called with GET
-    form = rmf.RembmerMeAuthFormInline(data=request.POST)
-    redirect_to = request.POST.get(redirect_field_name, '')
-    # TODO: also check for None?
-    if not redirect_to:
-        redirect_to = reverse_lazy('home')
-    # Light security check -- make sure redirect_to isn't garbage.
-    if not redirect_to or ' ' in redirect_to:
-        redirect_to = settings.LOGIN_REDIRECT_URL
-    # Heavier security check -- redirects to http://example.com should
-    # not be allowed, but things like /view/?param=http://example.com
-    # should be allowed. This regex checks if there is a '//' *before* a
-    # question mark.
-    elif '//' in redirect_to and re.match(r'[^\?]*//', redirect_to):
-        redirect_to = settings.LOGIN_REDIRECT_URL
-    if form.is_valid():
-        if not form.cleaned_data.get('remember_me'):
-            request.session.set_expiry(0)
-
-        # Okay, security checks complete. Log the user in.
-        dca.login(request, form.get_user())
-
-        if request.session.test_cookie_worked():
-            request.session.delete_test_cookie()
-
-    return redirect(redirect_to, request)
+    if request.method == "GET":
+        # create new login form
+        form = rmf.AuthenticationRememberMeForm()
+    else:
+        form = rmf.AuthenticationRememberMeForm(request.POST)
+        if form.is_valid():
+            if not form.cleaned_data.get('remember_me'):
+                request.session.set_expiry(0)
+            # Okay, security checks complete. Log the user in.
+            dca.login(request, form.get_user())
+            if request.session.test_cookie_worked():
+                request.session.delete_test_cookie()
+            # redirect after successful login
+            return redirect(settings.LOGIN_REDIRECT,
+                            request)
+    # render form into template, empty or with errors
+    return render(request,
+                  "kids_art_show/registration/login.html",
+                  {'form': form})
 
 
 def art_feed(request):
@@ -229,10 +217,26 @@ class UserDashboard(generic.TemplateView):
     template_name = "kids_art_show/user_dashboard.html"
 
 
-class SignUp(generic.CreateView):
-    form_class = KidsArtShowUserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'kids_art_show/registration/signup.html'
+def signup(request):
+    """function-based so you can automatically log user in"""
+    if request.method == 'GET':
+        form = KidsArtShowUserCreationForm()
+    else:
+        form = KidsArtShowUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = dca.authenticate(username=username, password=raw_password)
+            # don't remember when processing sign up
+            # log the user in securely
+            dca.login(request, user)
+            # assumes that redirect url takes no args
+            return redirect(settings.LOGIN_REDIRECT_URL)
+    # render blank form, or form with errors
+    return render(request,
+                  'kids_art_show/registration/signup.html',
+                  {'form': form})
 
 
 @login_required

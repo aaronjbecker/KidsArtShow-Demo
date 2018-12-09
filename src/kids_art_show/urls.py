@@ -28,15 +28,10 @@ urlpatterns = [
     # path('/', views.home, name = 'home'),
     path('home', views.home, name='home'),
     path('about', views.about, name = 'about'),
-    path('signup', views.SignUp.as_view(), name='signup'),
-    # use remember-me form in helper app but with registration template defined here
+    path('signup', views.signup, name='signup'),
     path('login',
-         remember_me_login,
-         kwargs = {'template_name': "kids_art_show/registration/login.html"},
+         views.process_remember_me_login,
          name='login'),
-    # re_path(r'^process_login(/(?P<src>.*)/)?$',
-    #         views.process_inline_login,
-    #         name="process_login"),
     path('process_login/<path:src>', views.process_inline_login, name='process_login'),
     # TODO: profile with user ID as argument
     # TODO: user dashboard

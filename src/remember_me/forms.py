@@ -11,6 +11,9 @@ class RembmerMeAuthFormInline(AuthenticationForm):
     """includes styling for inline/horizontal layout
         many options are hard-coded for use with Kids_Art_Show """
 
+    remember_me = forms.BooleanField(label='Remember Me', initial=True,
+                                     required=False)
+
     def __init__(self, *args, form_action="process_login", **kwargs):
         super(RembmerMeAuthFormInline, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -23,8 +26,7 @@ class RembmerMeAuthFormInline(AuthenticationForm):
             'remember_me',
             StrictButton('Login', css_class='btn-default', type='submit'),
         )
-    remember_me = forms.BooleanField(label='Remember Me', initial=True,
-                                     required=False)
+
 
 
 
@@ -38,6 +40,7 @@ class AuthenticationRememberMeForm(AuthenticationForm):
         super(AuthenticationRememberMeForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_action = form_action
+        self.helper.form_class = 'form-horizontal'
         self.helper.layout = Layout(
             'username',
             'password',

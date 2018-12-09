@@ -139,8 +139,8 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 30 # One month
 
 # login redirects, from https://wsvincent.com/django-custom-user-model-tutorial/
 # TODO: are these necessary? What are they doing?
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'feed'
+LOGOUT_REDIRECT_URL = 'feed'
 
 # project styling is based on Bootstrap3
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
