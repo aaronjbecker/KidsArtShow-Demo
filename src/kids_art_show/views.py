@@ -178,6 +178,35 @@ def process_remember_me_login(request):
                   {'form': form})
 
 
+@login_required
+def user_dashboard(request):
+    """displays list of artworks, but only those that are owned by this user"""
+    arts = Post.owned_posts(request.user)
+    if arts:
+        # get paginator
+        paginator = Paginator(arts, 8)
+        page = request.GET.get('page')
+        try:
+            arts = paginator.page(page)
+        except PageNotAnInteger:
+            arts = paginator.page(1)
+        except EmptyPage:
+            if request.is_ajax():
+                # If the request is AJAX and the page is out of range
+                # return an empty page
+                return HttpResponse('')
+            # If page is out of range deliver last page of results
+            arts = paginator.page(paginator.num_pages)
+    ctx = {'arts': arts}
+    if request.is_ajax():
+        return render(request,
+                      'kids_art_show/list_ajax.html',
+                      ctx)
+    return render(request,
+                  'kids_art_show/user_dashboard.html',
+                  ctx)
+
+
 def art_feed(request):
     """displays feed of artworks that user is allowed to see, or only public art if not authenticated."""
     # get login form to use in navigation bar
@@ -243,8 +272,11 @@ class UserProfile(generic.TemplateView):
     template_name = 'kids_art_show/user_profile.html'
 
 
-class UserDashboard(generic.TemplateView):
-    template_name = "kids_art_show/user_dashboard.html"
+
+
+#
+# class UserDashboard(generic.TemplateView):
+#     template_name = "kids_art_show/user_dashboard.html"
 
 
 def signup(request):

@@ -1,7 +1,44 @@
-{# AJB 11/21/18: user dashboard; sections/links for content creation, feed, child mgmt, etc. #}
 {% extends "kids_art_show/base.html" %}
-{# TODO: title with admin user name #}
-<!--NavBar-->
+
+{% block title %}Kids' Art Show{% endblock %}
+
 {% block nav_bar %}
-    {% include 'kids_art_show/main_nav_bar.html' with activePage="dashboard" %}
-{% endblock nav_bar %}
+    {% include "kids_art_show/main_nav_bar.html" %}
+{% endblock %}
+
+{% block content %}
+    <h1>Manage Your Artwork</h1>
+    {% if not arts %}
+    <div class="center-div">
+        <h2>No Artworks to View</h2>
+    </div>
+    {% else %}
+    <div id="image-list">
+        {% include "kids_art_show/list_ajax.html" %}
+    </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block domready %}
+  var page = 1;
+  var empty_page = false;
+  var block_request = false;
+
+  $(window).scroll(function() {
+    var margin = $(document).height() - $(window).height() - 200;
+    if  ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+     block_request = true;
+      page += 1;
+      $.get('?page=' + page, function(data) {
+       if(data == '') {
+          empty_page = true;
+        }
+        else {
+          block_request = false;
+          $('#image-list').append(data);
+        }
+      });
+    }
+  });
+{% endblock %}
