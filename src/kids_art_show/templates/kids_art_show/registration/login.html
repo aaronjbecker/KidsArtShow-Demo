@@ -6,10 +6,14 @@ cf. https://simpleisbetterthancomplex.com/tutorial/2016/06/27/how-to-use-djangos
 
 {% block title %}Login{% endblock %}
 
+{% block nav_bar %}
+    {% include "kids_art_show/main_nav_bar.html" with disable_login=True %}
+{% endblock %}
+
 {% block content %}
-<div class="container-fluid center_div">
+    <div class="container-fluid">
     <h2>Login</h2>
-{# Currently assumes that there is an associated FormHelper with a layout that provides required buttons. #}
-{% crispy form %}
-</div>
+    {# Currently assumes that there is an associated FormHelper with a layout that provides required buttons. #}
+    {% crispy form %}
+    </div>
 {% endblock %}

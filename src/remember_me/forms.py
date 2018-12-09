@@ -5,6 +5,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.bootstrap import StrictButton
+from crispy_forms.layout import HTML, Div
 
 
 class RembmerMeAuthFormInline(AuthenticationForm):
@@ -40,11 +41,9 @@ class AuthenticationRememberMeForm(AuthenticationForm):
         super(AuthenticationRememberMeForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_action = form_action
-        self.helper.form_class = 'form-horizontal'
         self.helper.layout = Layout(
-            'username',
-            'password',
-            'remember_me',
+            Div('username', 'password',
+                'remember_me', css_class='container-fluid'),
             StrictButton('Login', css_class='btn-default', type='submit'),
         )
 
