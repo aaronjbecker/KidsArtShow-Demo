@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.bootstrap import StrictButton
 from django.forms.models import ModelChoiceField
-
+from crispy_forms.layout import Submit
 
 class KidsArtShowUserCreationForm(UserCreationForm):
 
@@ -39,6 +39,8 @@ class CreatePostForm(ModelForm):
         # user is used to select ContentCreators, not fed to superclass ctor
         user = kwargs.pop('user')
         super(CreatePostForm, self).__init__(*args, **kwargs)
+        # these intermediate assignments do help with forcing evaluation,
+        #   at least while debugging (in practice)
         qs = user.children.all()
         mcf = ModelChoiceField(queryset=qs)
         self.fields['author'] = mcf
@@ -59,9 +61,23 @@ class CreatePostForm(ModelForm):
 #         fields = ['profile_name', 'nickname']
 #         labels = {'profile_name': 'Artist Profile Name'}
 
+class ManageChildrenFormsetHelper(FormHelper):
+    def __init__(self, *args, form_action='manage_artists', **kwargs):
+        super(ManageChildrenFormsetHelper, self).__init__(*args, **kwargs)
+        self.form_method = 'post'
+        self.layout = Layout('profile_name', 'nickname', 'bio',
+                             StrictButton('Update Children', css_class='btn-default', type='submit'))
+        self.template = 'bootstrap/table_inline_formset.html'
+        self.add_input(Submit('submit', 'Save Artist Profiles'))
+        self.form_action = form_action
+        self.render_required_fields = True
+
+
+# class ManageChildrenFormset(ModelFormset):
+
 
 ManageChildrenFormset = \
     modelformset_factory(ContentCreator,
-                         fields=['profile_name', 'nickname'],
+                         fields=('profile_name', 'nickname', 'bio'),
                          min_num=1)
 

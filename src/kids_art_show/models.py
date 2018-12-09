@@ -45,9 +45,9 @@ class ContentCreator(models.Model):
                                        related_name='children')
     nickname = models.CharField(max_length=20, null=True, default=None)
     bio = models.TextField(max_length=1000, null=True, default=None)
-    # TODO: what should default privacy setting be?
-    # TODO: other child-related fields, e.g. bio, age, favorite color, etc.
+    # TODO: profile visibility
     # TODO: manager for public profiles; should be indexed by number of followers?
+    # TODO: other child-related fields, e.g. bio, age, favorite color, etc.
 
     def __str__(self):
         return self.profile_name
