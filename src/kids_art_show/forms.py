@@ -34,8 +34,7 @@ class CreatePostForm(ModelForm):
 
     def __init__(self, *args, form_action:str = None, **kwargs):
         if form_action is None:
-            # TODO: is this the right way to do this?
-            # no, correct default would be to use the model's get_success_url at the end?
+            # pass completed form back to create post view for processing/possible redirect
             form_action = reverse("create_post")
         # user is used to select ContentCreators, not fed to superclass ctor
         user = kwargs.pop('user')
@@ -43,6 +42,8 @@ class CreatePostForm(ModelForm):
         qs = user.children.all()
         mcf = ModelChoiceField(queryset=qs)
         self.fields['author'] = mcf
+        # set initial privacy to user's default privacy
+        self.fields['privacy_level'].initial = user.default_privacy
         # force full clean after specifying valid author choices
         self.full_clean()
         # create form helper to assist with crispy forms formatting

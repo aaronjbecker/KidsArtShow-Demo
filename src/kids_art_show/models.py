@@ -11,24 +11,10 @@ from django.utils.text import slugify
 from django.urls import reverse
 
 # define a set of privacy levels applied to profiles and posts
-# TODO: use some standard set of privacy levels if such a thing exists
-# PRIVACY_CHOICES = [('PVT', 'Private'),
-#                    ('FLW', 'Followers'),
-#                    ('PUB', 'Public')]
 # define privacy choices using integer field
 PRIVACY_CHOICES = ((1, 'Private'),
                    (2, 'Followers'),
                    (3, 'Public'))
-
-# create children queryset for parent account to simplify access
-# class ChildrenManager(models.Manager):
-#     def get_queryset(self):
-#         return super(ChildrenManager,
-#                      self).get_queryset() \
-#             .filter(status='published')
-
-
-
 
 
 class KidsArtShowUser(AbstractUser):
@@ -41,7 +27,7 @@ class KidsArtShowUser(AbstractUser):
     bio = models.TextField(max_length=500)
     # TODO: define method to determine whether user is old enough to create an account
     birth_date = models.DateField(null=True, blank=True)
-    # TODO: method to associate parent account with one or more children; these are created after account registration.
+    default_privacy = models.IntegerField(choices=PRIVACY_CHOICES, default=1)
     # TODO: method to distinguish between parent and viewer accounts
     # TODO: following
 
@@ -60,11 +46,8 @@ class ContentCreator(models.Model):
     nickname = models.CharField(max_length=20, null=True, default=None)
     bio = models.TextField(max_length=1000, null=True, default=None)
     # TODO: what should default privacy setting be?
-    default_privacy = models.IntegerField(choices=PRIVACY_CHOICES, default=1)
     # TODO: other child-related fields, e.g. bio, age, favorite color, etc.
-
     # TODO: manager for public profiles; should be indexed by number of followers?
-
 
     def __str__(self):
         return self.profile_name
@@ -86,16 +69,6 @@ class PublicPostManager(models.Manager):
     def get_queryset(self):
         # encoding for public posts
         return super().get_queryset().filter(privacy_level=3)
-
-
-class OwnedPostManager(models.Manager):
-    def get_queryset(self):
-        """should have access to request and user via self"""
-        if self.request.user.is_authenticated:
-            creators = self.user.children
-            if creators:
-                return super().get_queryset().filter(author__in=creators)
-        return None
 
 
 class Post(models.Model):

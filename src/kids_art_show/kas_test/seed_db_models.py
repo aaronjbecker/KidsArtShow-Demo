@@ -78,7 +78,11 @@ def add_objects():
     for _, urow in tu.iterrows():
         # need to use create_user to get password hashed and login supported etc.
         # cf. https://stackoverflow.com/a/23482284
-        kasm.KidsArtShowUser.objects.create_user(**urow.to_dict())
+        udict = urow.to_dict()
+        dp = udict.pop('default_privacy')
+        # hack- manual mappign from test to db formats
+        dp = _privacy_mapping[dp]
+        kasm.KidsArtShowUser.objects.create_user(**udict, default_privacy=dp)
 
     # now create child artist profiles
     tc = read_test_creators()
@@ -89,10 +93,8 @@ def add_objects():
         p = kasm.KidsArtShowUser.objects.get(username=cdict['parent_account'])
         # remove parent account from dict and set as related item
         cdict.pop('parent_account', None)
-        dp = cdict.pop('default_privacy')
-        # hack- manual mappign from test to db formats
-        dp = _privacy_mapping[dp]
-        p.children.create(**cdict, default_privacy=dp)
+        p.children.create(**cdict)
+        # p.children.create(**cdict, default_privacy=dp)
 
 
     # create sample posts

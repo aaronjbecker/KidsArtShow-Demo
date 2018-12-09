@@ -192,6 +192,7 @@ def manage_artists(request):
     template_name = 'kids_art_show/manage_formset.html'
     heading_message = "Manage Artist Profiles"
     formset = None
+
     if request.method == 'GET':
         formset = ManageChildrenFormset(queryset=ContentCreator.objects.none())
     elif request.method == 'POST':
