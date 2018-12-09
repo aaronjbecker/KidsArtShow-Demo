@@ -54,7 +54,42 @@ def home(request):
 def edit_art(request, slug):
     # use existing create post form, but populate with initial data?
     art = get_object_or_404(Post, slug=slug)
-    form = kasf.EditArtForm(instance=art, user=request.user)
+    # form action returns to this view on submit for processing
+    form_action = reverse('edit_art', args=[slug])
+    if request.method == "GET":
+        # no changed data to validate
+        form = kasf.EditArtForm(instance=art, form_action=form_action)
+    else:
+        # TODO: incorporate valid changes
+        clear_img = 'image-clear' in request.POST and request.POST['image-clear'] == 'on'
+        # if you want to clear the image, pop the image key from POST so the form validates
+        # the field can't be empty, but it can be missing (weird)
+        # QueryDict is immutable and returns a list for each element, when you just want the raw value
+        # post_data = dict(request.POST.dict)
+        post_data = request.POST.dict()
+        # hack: ignore errors on image file input if you're clearing the image
+        form = kasf.EditArtForm(post_data, request.FILES, form_action=form_action)
+        form.full_clean()
+        if clear_img:
+            form.errors.pop('image', None)
+        # TODO: test form with errors
+        if not form.errors:
+        # if form.is_valid():
+            # cleaned data is valid, but how do you check for cleared image?
+            cd = form.cleaned_data
+            # if you didn't want to clear the image and the image is None, pop that key
+            if not clear_img and 'image' in cd and not cd['image']:
+                cd.pop('image')
+            elif clear_img:
+                # explicitly clear the image if that's what user wanted to do
+                cd['image'] = None
+            for fld, val in cd.items():
+                setattr(art, fld, val)
+            art.save()
+            # TODO: redirect to success url on save of valid data
+            # will call get_absolute_url on model object
+            return redirect(art)
+    # return new form, or form with errors
     return render(request, 'kids_art_show/edit_art.html', {'edit_form': form,
                                                            'art': art})
 

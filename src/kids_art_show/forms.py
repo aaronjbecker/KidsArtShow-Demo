@@ -87,17 +87,9 @@ class EditArtForm(djf.ModelForm):
     def __init__(self, *args, form_action:str = None, **kwargs):
         if form_action is None:
             # pass completed form back to create post view for processing/possible redirect
-            form_action = reverse("create_post")
+            form_action = reverse("edit_art")
         # user is used to select ContentCreators, not fed to superclass ctor
-        user = kwargs.pop('user')
         super(EditArtForm, self).__init__(*args, **kwargs)
-        # these intermediate assignments do help with forcing evaluation,
-        #   at least while debugging (in practice)
-        qs = user.children.all()
-        mcf = ModelChoiceField(queryset=qs)
-        self.fields['author'] = mcf
-        # set initial privacy to user's default privacy
-        self.fields['privacy_level'].initial = user.default_privacy
         # force full clean after specifying valid author choices
         self.full_clean()
         # create form helper to assist with crispy forms formatting
