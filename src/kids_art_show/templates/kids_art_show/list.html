@@ -8,7 +8,11 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h1>{{ user.get_full_name }}'s Art Feed</h1>
+        {% if user.get_full_name %}
+            <h1>{{ user.get_full_name }}'s Art Feed</h1>
+        {% else %}
+            <h1>{{ user.username }}'s Art Feed</h1>
+        {% endif %}
     {% else %}
         <h1>Art for everyone to see!</h1>
     {% endif %}
