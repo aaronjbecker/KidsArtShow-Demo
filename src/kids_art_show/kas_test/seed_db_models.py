@@ -9,6 +9,7 @@ AJB 12/1/18: script to populate user, artist, Post, etc. w/ initial data
 # TODO: cleanup imports and setup
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
+import logging
 import glob
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "kids_art_show.settings")
@@ -20,11 +21,19 @@ import kids_art_show.models as kasm
 import kids_art_show.forms as kasf
 import pandas as pd
 
+# configure logger to display information messages to console
+_log = logging.getLogger(__name__)
+_log.setLevel(logging.INFO)
+_log.addHandler(logging.StreamHandler())
+
 # path to excel file with tables of test data to seed database
 _xl_path = "test_data_seed.xlsx"
 # path to version-controlled test images
 _test_img_dir = "test_images"
-# account for different interactive/console contexts
+# default values for database/migration clearing
+_db_name = 'db.sqlite3'
+_media_folder = 'media'
+# amend path to account for different interactive/console contexts
 wd = os.getcwd()
 if "kas_test" not in wd:
     _xl_path = os.path.join(wd, "kas_test", _xl_path)
@@ -34,25 +43,25 @@ else:
     _test_img_dir = os.path.join(wd, _test_img_dir)
 
 
-def read_test_users(xl_path: str = None):
+def read_model_wks(sheetname:str,
+                   xl_path: str = None):
+    """DRY refactoring"""
     if xl_path is None:
         xl_path = _xl_path
-    test_users = pd.read_excel(xl_path, sheetname="users")
-    return test_users
+    models = pd.read_excel(xl_path, sheetname=sheetname)
+    return models
+
+
+def read_test_users(xl_path: str = None):
+    return read_model_wks('users', xl_path)
 
 
 def read_test_creators(xl_path: str = None):
-    if xl_path is None:
-        xl_path = _xl_path
-    test_creators = pd.read_excel(xl_path, sheetname="creators")
-    return test_creators
+    return read_model_wks('creators', xl_path)
 
 
 def read_test_posts(xl_path: str = None):
-    if xl_path is None:
-        xl_path = _xl_path
-    test_posts = pd.read_excel(xl_path, sheetname="posts")
-    return test_posts
+    return read_model_wks('posts', xl_path)
 
 
 def read_image_file(image_fn: str,
@@ -67,14 +76,15 @@ def read_image_file(image_fn: str,
         return SimpleUploadedFile(image_fn, img.read(),
                                   content_type=content_type)
 
+# AJB 12/10/18: no followers privacy level, so remove from valid values
 _privacy_mapping = {'private': 1,
-                    'public': 3,
-                    'followers': 2}
+                    'public': 3}
 
 
 def add_objects():
     # create users
     tu = read_test_users()
+    _log.info(f"adding {len(tu)} users...\n")
     for _, urow in tu.iterrows():
         # need to use create_user to get password hashed and login supported etc.
         # cf. https://stackoverflow.com/a/23482284
@@ -86,6 +96,7 @@ def add_objects():
 
     # now create child artist profiles
     tc = read_test_creators()
+    _log.info(f"adding {len(tc)} children...\n")
     for _, crow in tc.iterrows():
         cdict = crow.to_dict()
         # add content creator via relation to parent account
@@ -94,11 +105,10 @@ def add_objects():
         # remove parent account from dict and set as related item
         cdict.pop('parent_account', None)
         p.children.create(**cdict)
-        # p.children.create(**cdict, default_privacy=dp)
-
 
     # create sample posts
     tp = read_test_posts()
+    _log.info(f"adding {len(tp)} posts...\n")
     for _, prow in tp.iterrows():
         # add post by creating and saving ModelForm
         # get creator object and associated parent user
@@ -133,6 +143,10 @@ def navigate_to_root(root_dir: str = 'src'):
 
 def nukedir(dir):
     """cf. https://stackoverflow.com/a/13766571"""
+    # if path does not exist, return
+    _log.info(f'deleting directory {dir}\n')
+    if not os.path.exists(dir) or not os.path.isdir(dir):
+        raise FileExistsError('{} does not exist!'.format(dir))
     if dir[-1] == os.sep: dir = dir[:-1]
     files = os.listdir(dir)
     for file in files:
@@ -143,11 +157,6 @@ def nukedir(dir):
         else:
             os.unlink(path)
     os.rmdir(dir)
-
-
-# default values for database/migration clearing
-_db_name = 'db.sqlite3'
-_media_folder = 'media'
 
 
 def completely_clear_db():
@@ -167,7 +176,10 @@ def completely_clear_db():
             continue
         os.remove(f)
     # nuke and recreate media folder where images are stored server-side
-    nukedir(_media_folder)
+    try:
+        nukedir(_media_folder)
+    except FileExistsError:
+        pass
     os.mkdir(_media_folder)
     # now delete the database itself
     os.remove(_db_name)
