@@ -17,16 +17,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'home' %}">Kids Art Show</a>
+      <a class="navbar-brand" href="{% url 'feed' %}">Kids Art Show</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
           <li><a href="{% url 'feed' %}">Art Feed</a></li>
-          {% if not user.is_authenticated %}
-              <li {% if activePage == "about" %}class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
-          {% else %}
+          {% if user.is_authenticated %}
             {# TODO: fix this styling using a basic css selector #}
               <li {% if activePage == "dashboard" %}class="active"{% endif %}><a href="{% url 'user_dashboard' %}">Dashboard</a></li>
               <li {% if activePage == "createPost" %}class="active"{% endif %}><a href="{% url 'create_post' %}">Create Post</a></li>
@@ -57,39 +55,3 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-{#<script type="text/javascript">#}
-{#    var frm = $('#FORM-ID');#}
-{#    frm.submit(function () {#}
-{#        $.ajax({#}
-{#            type: frm.attr('method'),#}
-{#            url: frm.attr('action'),#}
-{#            data: frm.serialize(),#}
-{#            success: function (data) {#}
-{#                $("#SOME-DIV").html(data);#}
-{#            },#}
-{#            error: function(data) {#}
-{#                $("#MESSAGE-DIV").html("Something went wrong!");#}
-{#            }#}
-{#        });#}
-{#        return false;#}
-{#    });#}
-{#</script>#}
-
-{#<nav>#}
-{#    <div class="nav-wrapper">#}
-{#       <a href="{% url 'home' %}" class="brand-logo">Kid Art Show</a>#}
-{#       <ul class="right hide-on-med-and-down">#}
-{#           <li><a href="{% url 'about' %}">About</a></li>#}
-{#           {% if user.is_authenticated %}#}
-{#               <li><a href="{% url 'user_dashboard' %}">Dashboard</a></li>#}
-{#               <li><a href="{% url 'manage_artists' %}">Manage Artists</a></li>#}
-{#               <li><a href="{% url 'user_profile' %}">Profile</a></li>#}
-{#               <li><a href="{% url 'logout' %}">Logout</a></li>#}
-{#           {% else %}#}
-{#               <li><a href="{% url 'login' %}" class="red">Login</a></li>#}
-{#               <li><a href="">Sign Up</a></li>#}
-{#           {% endif %}#}
-{#       </ul>#}
-{#    </div>#}
-{#</nav>#}

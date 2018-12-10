@@ -51,17 +51,6 @@ def get_login_form(request):
     return login_form
 
 
-def home(request):
-    """render the home page"""
-    # use helper above to get login_form
-    login_form = get_login_form(request)
-    context = {
-        'login_form': login_form,
-        'posts': Post.objects.all()
-    }
-    return render(request, 'kids_art_show/home.html', context)
-
-
 @login_required
 def edit_art(request, slug):
     # use existing create post form, but populate with initial data?
