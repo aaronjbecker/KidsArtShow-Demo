@@ -273,19 +273,6 @@ def art_detail(request, slug):
                    'is_owner': is_owner})
 
 
-def about(request):
-    # get login form to use in navigation bar
-    login_form = get_login_form(request)
-    context = {
-        'login_form': login_form,
-    }
-    return render(request, 'kids_art_show/about.html', context)
-
-
-class UserProfile(generic.TemplateView):
-    template_name = 'kids_art_show/user_profile.html'
-
-
 def signup(request):
     """function-based so you can automatically log user in"""
     if request.method == 'GET':

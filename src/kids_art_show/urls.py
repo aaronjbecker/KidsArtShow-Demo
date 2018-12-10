@@ -19,22 +19,18 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 from . import views
-from remember_me.views import remember_me_login
+
 
 app_name = "kids_art_show"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.art_feed, name = 'feed'),
     path('feed', views.art_feed, name='feed'),
-    path('about', views.about, name = 'about'),
     path('signup', views.signup, name='signup'),
     path('login',
          views.process_remember_me_login,
          name='login'),
     path('process_login/<path:src>', views.process_inline_login, name='process_login'),
-    # TODO: profile with user ID as argument
-    # TODO: user dashboard
-    path('user_profile', views.UserProfile.as_view(), name='user_profile'),
     path('user_dashboard', views.user_dashboard, name='user_dashboard'),
     path('logout', auth_views.LogoutView.as_view(), name='logout'),
     path('manage_artists', views.manage_artists, name='manage_artists'),
