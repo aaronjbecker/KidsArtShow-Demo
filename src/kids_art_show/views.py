@@ -1,34 +1,24 @@
 # TODO: Cleanup imports!
-import re
+import django.contrib.auth as dca
 from django.conf import settings
-from django.shortcuts import render, redirect, get_object_or_404, reverse, resolve_url
-from django.urls import reverse_lazy
-from django.views import generic
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
 from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import reverse, resolve_url
+from django.template.response import TemplateResponse
+from django.urls import reverse_lazy
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
-from django.forms import formset_factory
-import kids_art_show.forms as kasf
-from .forms import KidsArtShowUserCreationForm, ManageChildrenFormset, CreatePostForm, ManageChildrenFormsetHelper
-from .models import Post, ContentCreator
-# import remember_me.views as rmv
-import remember_me.forms as rmf
-import django.contrib.auth as dca
-from django.contrib.auth.decorators import login_required
-from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
-from common.decorators import ajax_required
-from django.core.paginator import Paginator
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from django.http import HttpResponse
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from common.decorators import ajax_required
-from django.conf import settings
 
+import kids_art_show.forms as kasf
+import remember_me.forms as rmf
+from common.decorators import ajax_required
+from .forms import KidsArtShowUserCreationForm, ManageChildrenFormset, CreatePostForm
+from .models import Post, ContentCreator
+from django.db.models import Count
 
 
 def get_login_form(request):
@@ -107,6 +97,7 @@ def create_post(request):
     return TemplateResponse(request, 'kids_art_show/create_post.html',
                             {'user': request.user, 'create_form': form})
 
+
 # TODO: re_path on inline login, pass environment variable to form action (request.url)
 
 @csrf_protect
@@ -132,7 +123,7 @@ def process_inline_login(request, src=None):
         # only record data if there was an error, so the form can validate and show errors on redirect
         # TODO: this is probably insecure for some reason?
         # have to force serialization, cf. https://stackoverflow.com/a/19734757
-        form_data = {str(k):str(v) for k, v in form.data.items() if str(k) != 'csrfmiddlewaretoken'}
+        form_data = {str(k): str(v) for k, v in form.data.items() if str(k) != 'csrfmiddlewaretoken'}
     # use session to store form data; this is imperfect but should suffice for basic stuff here
     # cf. https://stackoverflow.com/a/9000663
     request.session['login_data'] = form_data
@@ -221,7 +212,7 @@ def user_dashboard(request):
                   ctx)
 
 
-def art_feed(request):
+def art_feed(request, sort_by=None):
     """displays feed of artworks that user is allowed to see, or only public art if not authenticated."""
     # get login form to use in navigation bar
     login_form = get_login_form(request)
@@ -232,6 +223,18 @@ def art_feed(request):
         owned = Post.owned_posts(request.user)
         if owned:
             arts = arts | owned
+    # apply sort logic
+    if sort_by:
+        if sort_by == 'likes':
+            # have to use custom logic for this; descending in number of likes, by date within same #
+            # cf. https://stackoverflow.com/a/2454022
+            arts = arts.annotate(like_count=Count('users_like')).order_by('-like_count', '-date_posted')
+        else:
+            # assume it's a regular field, no error checking, just ignore errors
+            try:
+                arts = arts.order_by(sort_by)
+            except Exception as e:
+                pass
     # get paginator
     paginator = Paginator(arts, 8)
     page = request.GET.get('page')
@@ -254,7 +257,7 @@ def art_feed(request):
                       ctx)
     return render(request,
                   'kids_art_show/list.html',
-                   ctx)
+                  ctx)
 
 
 def art_detail(request, slug):
@@ -320,9 +323,9 @@ def manage_artists(request):
                     ContentCreator(**cd).save()
             return redirect('user_dashboard')
     return render(request, template_name,
-                  { 'formset': formset,
-                    'helper': helper,
-                    'heading': heading_message })
+                  {'formset': formset,
+                   'helper': helper,
+                   'heading': heading_message})
 
 
 @ajax_required
@@ -339,7 +342,7 @@ def art_like(request):
                 # create_action(request.user, 'likes', image)
             else:
                 image.users_like.remove(request.user)
-            return JsonResponse({'status':'ok'})
+            return JsonResponse({'status': 'ok'})
         except:
             pass
-    return JsonResponse({'status':'ko'})
+    return JsonResponse({'status': 'ko'})

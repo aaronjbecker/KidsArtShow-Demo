@@ -19,13 +19,13 @@
       </button>
       <a class="navbar-brand" href="{% url 'feed' %}">Kids Art Show</a>
     </div>
-
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
           <li><a href="{% url 'feed' %}">Art Feed</a></li>
           {% if user.is_authenticated %}
             {# TODO: fix this styling using a basic css selector #}
+              <li><a href="{% url 'feed' sort_by="likes" %}">Popular Art</a></li>
               <li {% if activePage == "dashboard" %}class="active"{% endif %}><a href="{% url 'user_dashboard' %}">Dashboard</a></li>
               <li {% if activePage == "createPost" %}class="active"{% endif %}><a href="{% url 'create_post' %}">Create Post</a></li>
           {% endif %}

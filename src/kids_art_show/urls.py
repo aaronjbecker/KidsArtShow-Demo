@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 
@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.art_feed, name = 'feed'),
     path('feed', views.art_feed, name='feed'),
+    path('feed/<str:sort_by>', views.art_feed, name='feed'),
     path('signup', views.signup, name='signup'),
     path('login',
          views.process_remember_me_login,
