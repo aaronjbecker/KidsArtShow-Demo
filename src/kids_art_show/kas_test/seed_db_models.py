@@ -85,6 +85,8 @@ def add_objects():
     # create users
     tu = read_test_users()
     _log.info(f"adding {len(tu)} users...\n")
+    # keep track of like source users
+    like_sources = []
     for _, urow in tu.iterrows():
         # need to use create_user to get password hashed and login supported etc.
         # cf. https://stackoverflow.com/a/23482284
@@ -92,7 +94,9 @@ def add_objects():
         dp = udict.pop('default_privacy')
         # hack- manual mappign from test to db formats
         dp = _privacy_mapping[dp]
-        kasm.KidsArtShowUser.objects.create_user(**udict, default_privacy=dp)
+        usr = kasm.KidsArtShowUser.objects.create_user(**udict, default_privacy=dp)
+        if udict['username'].startswith('likeSrc'):
+            like_sources.append(usr)
 
     # now create child artist profiles
     tc = read_test_creators()
@@ -109,7 +113,11 @@ def add_objects():
     # create sample posts
     tp = read_test_posts()
     _log.info(f"adding {len(tp)} posts...\n")
+    # AJB 12/10/18: post data contains an extra column with n_likes, use that to seed likes
+    # likes are provided by users named likeSrc1 to likeSrc20
     for _, prow in tp.iterrows():
+        # pop number of likes since you have to create that by adding users
+        n_likes = prow['n_likes']
         # add post by creating and saving ModelForm
         # get creator object and associated parent user
         c = kasm.ContentCreator.objects.get(profile_name=prow['author'])
@@ -123,7 +131,11 @@ def add_objects():
         # TODO: load privacy
         frm_files = {'image': post_img}
         frm = kasf.CreatePostForm(frm_data, frm_files, user=parent)
-        frm.save()
+        pst = frm.save()
+        if n_likes:
+            # also skip adding likes if the post has 0 likes
+            for like_usr in like_sources[:n_likes]:
+                pst.users_like.add(like_usr)
 
 
 def navigate_to_root(root_dir: str = 'src'):
