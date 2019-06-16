@@ -1,0 +1,142 @@
+<!--
+*MET-CS-699 Term Project Prototype Gallery Page
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Import jquery-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--Sinal browser website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kids Art Show: Gallery</title>
+</head>
+
+
+<body>
+
+<!--NavBar-->
+<nav>
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo">Kid Art Show</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#" class="red">Login</a></li>
+        <li><a href="#">Register</a></li>
+      </ul>
+  </div>
+</nav>
+
+<!-- Heading -->
+<div>
+  <header>
+    <h2>Gallery</h2>
+  </header>
+</div>
+
+
+<!-- Carousel Gallery -->
+<div class="carousel">
+  <a class="carousel-item" href="#one!"><img src="../static/img/a.jpg"></a>
+  <a class="carousel-item" href="#two!"><img src="../static/img/b1.jpg"></a>
+  <a class="carousel-item" href="#three!"><img src="../static/img/c.jpg"></a>
+  <a class="carousel-item" href="#four!"><img src="../static/img/d.jpg"></a>
+  <a class="carousel-item" href="#five!"><img src="../static/img/e.jpg"></a>
+</div>
+
+<!-- Stacked Images -->
+<div class="container ">
+  <div class="row card">
+
+    <div class="col s12 m6 l4">
+      <img src="../static/img/a.jpg" class="materialbox responsive-img card">
+    </div>
+    <div class="col s12 m6 l4">
+      <img src="../static/img/b1.jpg" class="materialbox responsive-img card">
+    </div>
+    <div class="col s12 m6 l4">
+      <img src="../static/img/c.jpg" class="materialbox responsive-img card">
+    </div>
+
+    <div class="col s12 m6 l4">
+      <img src="../static/img/d.jpg" class="materialbox responsive-img card">
+    </div>
+    <div class="col s12 m6 l4">
+      <img src="../static/img/e.jpg" class="materialbox responsive-img card">
+    </div>
+    <div class="col s12 m6 l4">
+      <img src="../static/img/f.jpg" class="materialbox responsive-img card">
+    </div>
+
+    <div class="col s12 m6 l4">
+      <img src="../static/img/a.jpg" class="materialbox responsive-img card">
+    </div>
+    <div class="col s12 m6 l4">
+      <img src="../static/img/b1.jpg" class="materialbox responsive-img card">
+    </div>
+    <div class="col s12 m6 l4">
+      <img src="../static/img/c.jpg" class="materialbox responsive-img card">
+    </div>
+
+    <div class="col s12 m6 l4">
+      <img src="../static/img/a.jpg" class="materialbox responsive-img card">
+    </div>
+    <div class="col s12 m6 l4">
+      <img src="../static/img/b1.jpg" class="materialbox responsive-img card">
+    </div>
+    <div class="col s12 m6 l4">
+      <img src="../static/img/c.jpg" class="materialbox responsive-img card">
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
+
+<!-- Script -->
+<!--Compiled and minified JavaScript at end of body for optimized loading (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+
+$(document).ready(function(){
+  $('.carousel').carousel();
+});
+
+$(document).ready(function(){
+  $('.materialbox').materialbox();
+});
+
+</script>
+
+<!-- Style -->
+<style>
+
+body{
+  background:#ffca28;
+}
+
+nav{
+  background: rgba(0, 0, 0, 0.2);
+  padding:0px 30px;
+}
+
+header{
+  color:#ffffff;
+  text-align:center;
+}
+
+.carousel .carousel-item {
+  width:500px !important;
+  padding:10px 50px;}
+
+.materialbox .container{
+  background: rgba(0, 0, 0, 0.2);
+}
+
+
+</style>

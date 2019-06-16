@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD:src/kids_art_show/settings.py
     'django.contrib.sites',
     'kids_art_show',
     'crispy_forms',
@@ -54,6 +55,13 @@ INSTALLED_APPS = [
     'remember_me',
     'sorl.thumbnail',
     'django.forms',
+=======
+
+    'crispy_forms',
+    
+    'arts',
+    'accounts'
+>>>>>>> 72f5cff90cfb21a573f093fc8bcac38d35458005:src/kidsartshow/settings.py
 ]
 
 MIDDLEWARE = [
